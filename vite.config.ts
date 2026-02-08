@@ -10,6 +10,17 @@ export default defineConfig(({ mode }) => {
       host: '0.0.0.0',
     },
     plugins: [react()],
+    build: {
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom', 'react-router-dom', '@supabase/supabase-js'],
+            ui: ['lucide-react']
+          }
+        }
+      }
+    },
 
     resolve: {
       alias: {

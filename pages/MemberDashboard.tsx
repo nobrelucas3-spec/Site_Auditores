@@ -14,6 +14,8 @@ const MemberDashboard: React.FC = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [member, setMember] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [documents, setDocuments] = useState<any[]>([]);
 
     useEffect(() => {
         const getSession = async () => {
@@ -33,6 +35,14 @@ const MemberDashboard: React.FC = () => {
                 if (memberData) {
                     setMember(memberData);
                 }
+                // Fetch recent documents
+                const { data: docs } = await supabase
+                    .from('documents')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(5);
+
+                if (docs) setDocuments(docs);
             }
             setLoading(false);
         };
