@@ -22,6 +22,7 @@ import FirstAccess from './pages/FirstAccess';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import FinancialDetailed from './pages/FinancialDetailed';
+import AdminDocuments from './pages/AdminDocuments';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -77,6 +78,7 @@ const App: React.FC = () => {
             <Route path="/primeiro-acesso" element={<FirstAccess />} />
             <Route path="/esqueci-senha" element={<ForgotPassword />} />
             <Route path="/redefinir-senha" element={<ResetPassword />} />
+            <Route path="/admin/documentos" element={<AdminDocuments />} />
 
             {/* Fallback */}
             <Route path="/services" element={<Agreements />} /> {/* Redirect services to agreements or keep as placeholder */}
