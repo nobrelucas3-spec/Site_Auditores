@@ -11,6 +11,8 @@ const MemberDashboard: React.FC = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [user, setUser] = useState<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [member, setMember] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,6 +22,17 @@ const MemberDashboard: React.FC = () => {
                 navigate('/area-do-filiado');
             } else {
                 setUser(session.user);
+
+                // Fetch member details
+                const { data: memberData } = await supabase
+                    .from('members')
+                    .select('*')
+                    .eq('email', session.user.email)
+                    .single();
+
+                if (memberData) {
+                    setMember(memberData);
+                }
             }
             setLoading(false);
         };
@@ -53,7 +66,7 @@ const MemberDashboard: React.FC = () => {
 
                     <div className="flex items-center gap-4">
                         <div className="hidden md:flex flex-col text-right">
-                            <span className="text-sm font-bold text-gray-800">{user?.email}</span>
+                            <span className="text-sm font-bold text-gray-800">{member?.full_name || user?.email}</span>
                             <span className="text-xs text-green-600 font-medium">● Ativo</span>
                         </div>
                         <button
@@ -68,7 +81,7 @@ const MemberDashboard: React.FC = () => {
             </header>
 
             <main className="container mx-auto px-4 py-8">
-                <h1 className="text-2xl font-bold text-slate-900 mb-6">Olá, Auditor(a)!</h1>
+                <h1 className="text-2xl font-bold text-slate-900 mb-6">Olá, {member?.full_name?.split(' ')[0] || 'Auditor(a)'}!</h1>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     {/* Carteirinha Virtual Widget */}
@@ -86,17 +99,17 @@ const MemberDashboard: React.FC = () => {
 
                             <div className="z-10">
                                 <p className="text-sm opacity-80 mb-1">Nome do Associado</p>
-                                <p className="font-bold text-lg tracking-wide truncate">{user?.email?.split('@')[0]}</p>
+                                <p className="font-bold text-lg tracking-wide truncate uppercase">{member?.full_name || user?.email}</p>
                             </div>
 
                             <div className="flex justify-between items-end z-10">
                                 <div>
                                     <p className="text-[10px] opacity-70">Matrícula</p>
-                                    <p className="font-mono text-sm">000.123.456</p>
+                                    <p className="font-mono text-sm">{member?.matricula || '000.000.000'}</p>
                                 </div>
                                 <div className="text-right">
                                     <p className="text-[10px] opacity-70">Validade</p>
-                                    <p className="font-mono text-sm">12/2026</p>
+                                    <p className="font-mono text-sm">12/{new Date().getFullYear()}</p>
                                 </div>
                             </div>
                         </div>
