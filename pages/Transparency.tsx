@@ -7,6 +7,9 @@ const Transparency: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [summary, setSummary] = useState({ revenue: 0, expenses: 0, balance: 0 });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [documents, setDocuments] = useState<any[]>([]);
+
   useEffect(() => {
     const fetchFinancialSummary = async () => {
       setLoading(true);
@@ -50,6 +53,16 @@ const Transparency: React.FC = () => {
         balance: calculatedBalance // Accumulated from 2024 to Current
       });
 
+      // Fetch Documents for this year
+      const { data: docs } = await supabase
+        .from('documents')
+        .select('*')
+        .eq('is_public', true)
+        .eq('year', year)
+        .order('created_at', { ascending: false });
+
+      if (docs) setDocuments(docs);
+
       setLoading(false);
     };
 
@@ -58,13 +71,6 @@ const Transparency: React.FC = () => {
 
   const formatCurrency = (val: number) =>
     new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
-
-  const documents = [
-    { title: `Relatório Financeiro Anual ${year - 1}`, date: `15/01/${year}`, size: '2.5 MB' },
-    { title: `Balancete - Dezembro ${year - 1}`, date: `10/01/${year}`, size: '1.2 MB' },
-    { title: 'Ata da Assembleia Geral Ordinária', date: '25/10/2023', size: '3.8 MB' },
-    { title: 'Prestação de Contas - Gestão 2022/2023', date: '30/11/2023', size: '5.0 MB' },
-  ];
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -114,7 +120,7 @@ const Transparency: React.FC = () => {
         {/* Documents Section */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-            <h2 className="font-bold text-lg text-slate-800">Documentos e Relatórios</h2>
+            <h2 className="font-bold text-lg text-slate-800">Documentos e Relatórios - {year}</h2>
             <select
               value={year}
               onChange={(e) => setYear(Number(e.target.value))}
@@ -128,31 +134,33 @@ const Transparency: React.FC = () => {
           </div>
 
           <div className="divide-y divide-gray-100">
-            {documents.map((doc, idx) => (
-              <div key={idx} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
-                <div className="flex items-start gap-4">
-                  <div className="bg-red-50 text-red-600 p-2 rounded">
-                    <FileText size={24} />
+            {documents.length === 0 ? (
+              <div className="p-8 text-center text-gray-500 italic">Nenhum documento público encontrado para {year}.</div>
+            ) : (
+              documents.map((doc, idx) => (
+                <div key={idx} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-blue-50 text-blue-600 p-2 rounded">
+                      <FileText size={24} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-800">{doc.title}</h3>
+                      <p className="text-sm text-gray-500">{doc.category} • Publicado em: {new Date(doc.created_at).toLocaleDateString()}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-slate-800">{doc.title}</h3>
-                    <p className="text-sm text-gray-500">Publicado em: {doc.date} • Tamanho: {doc.size}</p>
+                  <div className="flex gap-2">
+                    <a
+                      href={doc.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded text-gray-700 font-medium hover:bg-white hover:border-primary-500 hover:text-primary-600 transition-colors"
+                    >
+                      <Eye size={16} /> Visualizar
+                    </a>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded text-gray-700 font-medium hover:bg-white hover:border-primary-500 hover:text-primary-600 transition-colors">
-                    <Eye size={16} /> Visualizar
-                  </button>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded font-medium hover:bg-primary-700 transition-colors shadow-sm">
-                    <Download size={16} /> Baixar
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="p-4 bg-gray-50 text-center border-t border-gray-200">
-            <button className="text-primary-600 font-bold text-sm hover:underline">Ver arquivos anteriores</button>
+              ))
+            )}
           </div>
         </div>
       </div>

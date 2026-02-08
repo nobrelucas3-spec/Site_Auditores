@@ -144,28 +144,43 @@ const MemberDashboard: React.FC = () => {
                 </div>
 
                 {/* Área de Documentos Recentes */}
-                <h2 className="text-xl font-bold text-slate-800 mb-4 mt-8">Documentos Restritos</h2>
+                <h2 className="text-xl font-bold text-slate-900 mb-4 mt-8">Documentos Recentes</h2>
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div className="divide-y divide-gray-100">
-                        {[1, 2, 3].map((item) => (
-                            <div key={item} className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                                <div className="flex items-center gap-4">
-                                    <div className="bg-gray-100 p-2 rounded text-gray-500">
-                                        <FileText size={20} />
+                    {loading ? (
+                        <div className="p-8 text-center text-gray-400">Carregando documentos...</div>
+                    ) : documents.length > 0 ? (
+                        <div className="divide-y divide-gray-100">
+                            {documents.map((doc) => (
+                                <div key={doc.id} className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                                    <div className="flex items-center gap-4">
+                                        <div className={`p-2 rounded text-white ${doc.category === 'Financeiro' ? 'bg-green-500' : 'bg-primary-500'}`}>
+                                            <FileText size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-gray-800 text-sm">{doc.title}</p>
+                                            <p className="text-xs text-gray-500">{doc.category} • Publicado em {new Date(doc.created_at).toLocaleDateString()}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="font-bold text-gray-800 text-sm">Ata da Reunião da Diretoria - Jan/2026</p>
-                                        <p className="text-xs text-gray-500">Publicado em 25/01/2026</p>
-                                    </div>
+                                    <a
+                                        href={doc.file_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-gray-400 hover:text-primary-600 transition-colors"
+                                        title="Baixar Arquivo"
+                                    >
+                                        <Download size={18} />
+                                    </a>
                                 </div>
-                                <button className="text-gray-400 hover:text-primary-600 transition-colors">
-                                    <Download size={18} />
-                                </button>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="p-8 text-center text-gray-500">Nenhum documento recente encontrado.</div>
+                    )}
+
                     <div className="p-3 bg-gray-50 text-center border-t border-gray-200">
-                        <button className="text-sm text-primary-600 font-bold hover:underline">Ver todos os documentos</button>
+                        <button onClick={() => navigate('/admin/documentos')} className="text-xs text-gray-500 hover:text-gray-800 underline">
+                            Gerenciar Arquivos (Admin)
+                        </button>
                     </div>
                 </div>
             </main>
