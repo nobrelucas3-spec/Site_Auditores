@@ -1,4 +1,5 @@
 import React from 'react';
+import { supabase } from '../services/supabaseClient';
 import { BOARD_MEMBERS } from '../constants';
 import { FileText, Award, Users } from 'lucide-react';
 
@@ -45,14 +46,23 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
 
         React.useEffect(() => {
           const fetchDocs = async () => {
-            const { data } = await import('../services/supabaseClient').then(m => m.supabase)
-              .from('documents')
-              .select('*')
-              .or('category.ilike.%estatuto%,title.ilike.%estatuto%,title.ilike.%sindicato%') // Fetch both Association and Union statutes
-              .order('created_at', { ascending: false });
+            try {
+              const { data, error } = await supabase
+                .from('documents')
+                .select('*')
+                .or('category.ilike.%estatuto%,title.ilike.%estatuto%,title.ilike.%sindicato%')
+                .order('created_at', { ascending: false });
 
-            if (data) setDocuments(data);
-            setLoadingDocs(false);
+              if (error) {
+                console.error('Error fetching documents:', error);
+              }
+
+              if (data) setDocuments(data);
+            } catch (err) {
+              console.error('Unexpected error:', err);
+            } finally {
+              setLoadingDocs(false);
+            }
           };
           fetchDocs();
         }, []);
@@ -97,18 +107,7 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
               )}
 
               <div className="mt-8 space-y-4">
-                <h3 className="font-bold text-lg text-primary-800 border-b pb-2">Resumo dos Capítulos</h3>
-                <details className="group">
-                  <summary className="flex justify-between items-center font-medium cursor-pointer list-none p-3 bg-gray-50 rounded-lg group-open:bg-primary-50 group-open:text-primary-800 transition-colors">
-                    <span>Capítulo I - Da Denominação, Sede e Fins</span>
-                    <span className="transition group-open:rotate-180">
-                      <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
-                    </span>
-                  </summary>
-                  <p className="text-gray-600 mt-3 group-open:animate-fadeIn px-3 text-sm">
-                    Este capítulo define a natureza jurídica da associação, sua sede na cidade do Recife e seus objetivos principais de representação da classe.
-                  </p>
-                </details>
+                {/* Resumo removido */}
               </div>
             </div>
           </div>

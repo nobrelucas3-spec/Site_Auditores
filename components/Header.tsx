@@ -103,14 +103,14 @@ const Header: React.FC = () => {
         {/* Left Side: Logo & Menu Button (Mobile) */}
         <div className="flex items-center gap-4">
           <button
-            className="text-white focus:outline-none hover:text-secondary-400 transition-colors lg:hidden"
+            className="text-white focus:outline-none hover:text-secondary-400 transition-colors xl:hidden"
             onClick={() => setIsMenuOpen(true)}
           >
             <Menu size={28} />
           </button>
 
           <Link to="/" className="flex items-center gap-3 group shrink-0">
-            <div className="bg-white rounded-full h-12 w-12 md:h-20 md:w-20 flex items-center justify-center shadow-md overflow-hidden shrink-0 border-2 border-primary-100 group-hover:border-secondary-400 transition-colors">
+            <div className="bg-white rounded-full h-12 w-12 md:h-16 md:w-16 flex items-center justify-center shadow-md overflow-hidden shrink-0 border-2 border-primary-100 group-hover:border-secondary-400 transition-colors">
               <img
                 src="/logo.png"
                 alt="Logo Auditores TCE-PE"
@@ -118,8 +118,8 @@ const Header: React.FC = () => {
               />
             </div>
             <div className="leading-tight">
-              <h1 className="font-bold text-lg md:text-2xl uppercase tracking-wide text-white group-hover:text-secondary-400 transition-colors">Auditores TCE-PE</h1>
-              <p className="text-xs md:text-sm text-gray-300 font-light hidden sm:block">Associação e Sindicato dos Auditores de Controle Externo TCE-PE</p>
+              <h1 className="font-bold text-lg md:text-xl uppercase tracking-wide text-white group-hover:text-secondary-400 transition-colors">Auditores TCE-PE</h1>
+              <p className="text-xs text-gray-300 font-light hidden sm:block max-w-[200px] md:max-w-none">Associação e Sindicato dos Auditores de Controle Externo TCE-PE</p>
             </div>
           </Link>
         </div>
@@ -127,7 +127,7 @@ const Header: React.FC = () => {
         {/* Right Side: Desktop Nav & Mobile Member Link */}
         <div className="flex items-center gap-4">
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex gap-6 items-center text-sm font-medium">
+          <nav className="hidden xl:flex gap-5 items-center text-sm font-medium">
             <NavItem title="Início" to="/" />
 
             <NavItem title="Institucional">
@@ -157,7 +157,7 @@ const Header: React.FC = () => {
           </nav>
 
           {/* Mobile Member Shortcut */}
-          <Link to="/area-do-filiado" className="lg:hidden text-white hover:text-secondary-400 p-2">
+          <Link to="/area-do-filiado" className="xl:hidden text-white hover:text-secondary-400 p-2">
             <Lock size={24} />
           </Link>
         </div>
