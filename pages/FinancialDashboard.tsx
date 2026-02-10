@@ -42,7 +42,7 @@ const FinancialDashboard: React.FC = () => {
 
             // 2. Calculate Accumulated Balance from Previous Years (2024 to CurrentYear - 1)
             const currentYear = new Date().getFullYear();
-            const startYear = 2024;
+            const startYear = 2026;
             let previousYearsBalance = 0;
 
             for (let y = startYear; y < currentYear; y++) {

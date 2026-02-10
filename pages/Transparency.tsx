@@ -18,7 +18,7 @@ const Transparency: React.FC = () => {
       let currentRevenue = 0;
       let currentExpenses = 0;
 
-      const startYear = 2024;
+      const startYear = 2026;
 
       // Loop from startYear up to selected year to get accumulated balance
       for (let y = startYear; y <= year; y++) {
@@ -127,9 +127,6 @@ const Transparency: React.FC = () => {
               className="border border-gray-300 rounded px-3 py-1 text-sm bg-white outline-none font-medium text-gray-700"
             >
               <option value={2026}>2026</option>
-              <option value={2025}>2025</option>
-              <option value={2024}>2024</option>
-              <option value={2023}>2023</option>
             </select>
           </div>
 
