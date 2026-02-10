@@ -159,7 +159,13 @@ const FinancialDashboard: React.FC = () => {
 
         if (!acc[key]) acc[key] = { income: 0, expense: 0, sortDate: date.getTime() };
 
-        if (curr.type === 'income') acc[key].income += Number(curr.amount);
+        if (curr.type === 'income') {
+            // STRICT RULE: Only 'Receita' counts for the Monthly Chart
+            if (curr.category === 'Receita') {
+                acc[key].income += Number(curr.amount);
+            }
+        }
+
         if (curr.type === 'expense') acc[key].expense += Number(curr.amount);
 
         return acc;
