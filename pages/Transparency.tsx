@@ -29,19 +29,29 @@ const Transparency: React.FC = () => {
           .select('*');
 
         if (!error && data) {
-          const yearIncome = data
-            .filter((r: any) => r.type === 'income' && r.status === 'paid')
+          // Process Income
+          const yearIncomeData = data.filter((r: any) => r.type === 'income' && r.status === 'paid');
+
+          // Separate Operating Revenue from Carry Over (Saldo Anterior)
+          const operatingRevenue = yearIncomeData
+            .filter((r: any) => r.category !== 'Saldo Anterior' && !r.description.toLowerCase().includes('saldo anterior'))
             .reduce((acc: number, r: any) => acc + Number(r.amount), 0);
+
+          const carryOverRevenue = yearIncomeData
+            .filter((r: any) => r.category === 'Saldo Anterior' || r.description.toLowerCase().includes('saldo anterior'))
+            .reduce((acc: number, r: any) => acc + Number(r.amount), 0);
+
+          const totalYearIncome = operatingRevenue + carryOverRevenue;
 
           const yearExpense = data
             .filter((r: any) => r.type === 'expense' && r.status === 'paid')
             .reduce((acc: number, r: any) => acc + Number(r.amount), 0);
 
-          calculatedBalance += (yearIncome - yearExpense);
+          calculatedBalance += (totalYearIncome - yearExpense);
 
           // If this is the selected year, save specific metrics
           if (y === year) {
-            currentRevenue = yearIncome;
+            currentRevenue = operatingRevenue; // Show only operating revenue in the "Receita" card
             currentExpenses = yearExpense;
           }
         }

@@ -89,19 +89,30 @@ const FinancialDashboard: React.FC = () => {
     const calculateMetrics = (data: FinancialRecord[], initialBalance: number = 0) => {
         let revenue = 0;
         let expenses = 0;
+        let carryOver = 0; // Balance brought from manual entry in current year
 
         data.forEach(item => {
             if (item.status === 'paid') {
                 const val = Math.abs(Number(item.amount));
-                if (item.type === 'income') revenue += val;
+
+                // Identify Carry-Over (Saldo Anterior)
+                const isCarryOver = item.category === 'Saldo Anterior' || item.description.toLowerCase().includes('saldo anterior');
+
+                if (item.type === 'income') {
+                    if (isCarryOver) {
+                        carryOver += val;
+                    } else {
+                        revenue += val;
+                    }
+                }
                 if (item.type === 'expense') expenses += val;
             }
         });
 
         setTotalRevenue(revenue);
         setTotalExpenses(expenses);
-        // Balance = (Previous Years) + (Current Year Revenue - Current Year Expenses)
-        setBalance(initialBalance + (revenue - expenses));
+        // Balance = (Previous Years Calc) + (Manual CarryOver) + (Operating Revenue - Expenses)
+        setBalance(initialBalance + carryOver + (revenue - expenses));
     };
 
     // Helper functions for charts/tables
