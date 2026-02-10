@@ -32,16 +32,17 @@ const Transparency: React.FC = () => {
           // Process Income
           const yearIncomeData = data.filter((r: any) => r.type === 'income' && r.status === 'paid');
 
-          // Separate Operating Revenue from Carry Over (Saldo Anterior)
+          // STRICT RULE: Only category 'Receita' counts as Operating Revenue for the display card
           const operatingRevenue = yearIncomeData
-            .filter((r: any) => r.category !== 'Saldo Anterior' && !r.description.toLowerCase().includes('saldo anterior'))
+            .filter((r: any) => r.category === 'Receita')
             .reduce((acc: number, r: any) => acc + Number(r.amount), 0);
 
-          const carryOverRevenue = yearIncomeData
-            .filter((r: any) => r.category === 'Saldo Anterior' || r.description.toLowerCase().includes('saldo anterior'))
+          // All other income (Saldo, etc.) is counted for Balance but not Revenue
+          const otherIncome = yearIncomeData
+            .filter((r: any) => r.category !== 'Receita')
             .reduce((acc: number, r: any) => acc + Number(r.amount), 0);
 
-          const totalYearIncome = operatingRevenue + carryOverRevenue;
+          const totalYearIncome = operatingRevenue + otherIncome;
 
           const yearExpense = data
             .filter((r: any) => r.type === 'expense' && r.status === 'paid')
@@ -51,7 +52,7 @@ const Transparency: React.FC = () => {
 
           // If this is the selected year, save specific metrics
           if (y === year) {
-            currentRevenue = operatingRevenue; // Show only operating revenue in the "Receita" card
+            currentRevenue = operatingRevenue; // Show only strict 'Receita'
             currentExpenses = yearExpense;
           }
         }

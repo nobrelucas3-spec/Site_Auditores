@@ -89,20 +89,19 @@ const FinancialDashboard: React.FC = () => {
     const calculateMetrics = (data: FinancialRecord[], initialBalance: number = 0) => {
         let revenue = 0;
         let expenses = 0;
-        let carryOver = 0; // Balance brought from manual entry in current year
+        let otherIncome = 0; // Income that is not strictly 'Receita' (e.g., 'Saldo')
 
         data.forEach(item => {
             if (item.status === 'paid') {
                 const val = Math.abs(Number(item.amount));
 
-                // Identify Carry-Over (Saldo Anterior)
-                const isCarryOver = item.category === 'Saldo Anterior' || item.description.toLowerCase().includes('saldo anterior');
-
                 if (item.type === 'income') {
-                    if (isCarryOver) {
-                        carryOver += val;
-                    } else {
+                    // Strict filter: only 'Receita' category counts as Operating Revenue
+                    // Everything else (like 'Saldo') enters the balance but not the Revenue Card
+                    if (item.category === 'Receita') {
                         revenue += val;
+                    } else {
+                        otherIncome += val;
                     }
                 }
                 if (item.type === 'expense') expenses += val;
@@ -111,8 +110,8 @@ const FinancialDashboard: React.FC = () => {
 
         setTotalRevenue(revenue);
         setTotalExpenses(expenses);
-        // Balance = (Previous Years Calc) + (Manual CarryOver) + (Operating Revenue - Expenses)
-        setBalance(initialBalance + carryOver + (revenue - expenses));
+        // Balance includes EVERYTHING: Initial + Other(Saldo) + Revenue - Expenses
+        setBalance(initialBalance + otherIncome + revenue - expenses);
     };
 
     // Helper functions for charts/tables
