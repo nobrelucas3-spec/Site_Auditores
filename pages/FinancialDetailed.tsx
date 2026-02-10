@@ -234,7 +234,7 @@ const FinancialDetailed: React.FC = () => {
                                                                     <tbody className="divide-y divide-gray-100">
                                                                         {monthRecords.map(row => (
                                                                             <tr key={row.id}>
-                                                                                <td className="px-4 py-3">{formatDate(row.transaction_date)}</td>
+                                                                                <td className="px-6 py-4 font-medium text-gray-900">{formatDate(row.transaction_date as string)}</td>
                                                                                 <td className="px-4 py-3">{row.description}</td>
                                                                                 <td className="px-4 py-3">
                                                                                     <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200">
@@ -281,7 +281,7 @@ const FinancialDetailed: React.FC = () => {
                                             {formatCurrency(records.filter(r => r.status === 'paid' && r.type === 'expense').reduce((acc, r) => acc + Math.abs(Number(r.amount)), 0))}
                                         </td>
                                         <td className={`px-6 py-4 text-right text-lg ${records.filter(r => r.status === 'paid').reduce((acc, r) => acc + (r.type === 'income' ? Math.abs(Number(r.amount)) : -Math.abs(Number(r.amount))), 0) >= 0
-                                                ? 'text-blue-600' : 'text-red-600'
+                                            ? 'text-blue-600' : 'text-red-600'
                                             }`}>
                                             {formatCurrency(records
                                                 .filter(r => r.status === 'paid')

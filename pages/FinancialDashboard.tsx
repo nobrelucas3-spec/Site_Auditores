@@ -276,10 +276,11 @@ const FinancialDashboard: React.FC = () => {
                         </h3>
                         {sortedMonths.length > 0 ? (
                             <div className="h-64 flex items-end justify-between gap-2 px-2">
-                                {sortedMonths.map(([key, data]) => {
+                                {sortedMonths.map(([key, rawData]) => {
+                                    const data = rawData as MonthlyData;
                                     // Scale bars relative to max value
-                                    const maxVal = Math.max(...sortedMonths.flatMap((entry: [string, MonthlyData]) => {
-                                        const d = entry[1];
+                                    const maxVal = Math.max(...sortedMonths.flatMap((entry) => {
+                                        const d = entry[1] as MonthlyData;
                                         return [d.income, d.expense];
                                     }));
 
