@@ -232,9 +232,9 @@ const FinancialDetailed: React.FC = () => {
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody className="divide-y divide-gray-100">
-                                                                        {monthRecords.map(row => (
+                                                                        {monthRecords.map((row: FinancialRecord) => (
                                                                             <tr key={row.id}>
-                                                                                <td className="px-6 py-4 font-medium text-gray-900">{formatDate(row.transaction_date as string)}</td>
+                                                                                <td className="px-6 py-4 font-medium text-gray-900">{formatDate(String(row.transaction_date))}</td>
                                                                                 <td className="px-4 py-3">{row.description}</td>
                                                                                 <td className="px-4 py-3">
                                                                                     <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200">

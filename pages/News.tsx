@@ -20,7 +20,7 @@ const News: React.FC = () => {
       const matchesSearch = news.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         news.summary.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesCategory && matchesSearch;
-    });
+    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [selectedCategory, searchTerm]);
 
   // Pagination Logic

@@ -64,9 +64,62 @@ export const MOCK_NEWS: NewsItem[] = [
     date: '2026-02-03',
     imageUrl: '/news/loaud/img1.jpeg',
     category: NewsCategory.INSTITUCIONAL,
-    isHighlight: true,
+    isHighlight: false,
     author: 'Comunicação ANTC'
   },
+  {
+    id: 'novo-site-lancamento',
+    title: 'Auditores do TCE-PE lançam novo portal com foco em transparência e serviços',
+    summary: 'Nova plataforma digital oferece área exclusiva para filiados, prestação de contas em tempo real e acesso facilitado a notícias e atos normativos.',
+    content: `
+      <p class="mb-4">A Associação dos Auditores do TCE-PE dá um passo importante na modernização de sua comunicação com o lançamento do seu novo portal institucional. A plataforma foi desenvolvida para aproximar ainda mais os associados da entidade e garantir total transparência nas ações da gestão.</p>
+
+      <h3 class="text-xl font-bold text-slate-800 mt-6 mb-3">Principais Novidades</h3>
+
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        <li><strong>Área do Filiado:</strong> Espaço exclusivo com login seguro para atualização cadastral e acesso a documentos restritos.</li>
+        <li><strong>Portal da Transparência:</strong> Prestação de contas detalhada, com gráficos interativos de receitas e despesas em tempo real.</li>
+        <li><strong>Acervo Digital:</strong> Repositório organizado de fotos, vídeos e publicações técnicas.</li>
+        <li><strong>Design Responsivo:</strong> Navegação otimizada para celulares e tablets.</li>
+      </ul>
+
+      <p class="mb-4">"O novo site reflete o compromisso da nossa diretoria com a inovação e a transparência. Queremos que cada auditor se sinta parte ativa da associação, tendo acesso fácil a todas as informações relevantes", destaca a presidência.</p>
+
+      <div class="my-8 p-4 bg-blue-50 border-l-4 border-primary-500">
+        <p class="italic text-primary-800">"A tecnologia é uma aliada fundamental para o fortalecimento institucional e para a prestação de contas à sociedade."</p>
+      </div>
+
+      <p>Navegue pelo menu e conheça todas as funcionalidades. A Área do Filiado já está ativa e pode ser acessada com seu email cadastrado.</p>
+    `,
+    date: '2026-02-12',
+    imageUrl: '/news/new_website_launch.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    author: 'Assessoria de Comunicação'
+  },
+  {
+    id: 'nota-ec-68-2025',
+    title: 'NOTA AOS ASSOCIADOS: FUNDAMENTAÇÃO JURÍDICA E DEFESA DA EC Nº 68/2025',
+    summary: 'Associação manifesta entendimento técnico sobre a validade da Emenda Constitucional nº 68/2025 e convoca para assembleia.',
+    content: `
+      <p class="mb-4"><strong>NOTA AOS ASSOCIADOS: FUNDAMENTAÇÃO JURÍDICA E DEFESA DA EC Nº 68/2025</strong></p>
+
+      <p class="mb-4">A Associação dos Auditores do TCE-PE vem a público manifestar seu entendimento técnico sobre a validade da Emenda Constitucional nº 68/2025, especificamente no que concerne à instituição do teto remuneratório único estadual. O anúncio de que o Poder Executivo pretende questionar a norma por meio de uma Ação Direta de Inconstitucionalidade (ADI) exige uma resposta jurídica rigorosa, pautada na defesa da soberania do Poder Legislativo e na higidez do texto promulgado.</p>
+      
+      <p class="mb-4">Não se sustenta a tese de vício de iniciativa sob o argumento de que a matéria seria de competência exclusiva da Governadoria. No ordenamento jurídico brasileiro, é imperativo distinguir o processo legislativo ordinário da atuação da Assembleia Legislativa como Poder Constituinte Derivado Decorrente. No rito de reforma da Constituição Estadual, a iniciativa é concorrente e a própria Constituição Federal, em seu artigo 37, § 12, delega aos Estados a faculdade de instituir o teto único mediante emenda, sem impor restrições quanto à autoria da proposta. Ao promulgar a EC 68/2025, a Assembleia Legislativa exerceu sua competência originária de organizar a estrutura administrativa e remuneratória do Estado.</p>
+      
+      <p class="mb-4">Sob o aspecto material, o texto aprovado é fiel aos parâmetros do pacto federativo ao estabelecer que o limite da remuneração no Estado de Pernambuco passa a ser o "teto remuneratório mensal dos desembargadores do Tribunal de Justiça". Essa escolha técnica é segura e amplamente chancelada pelo Supremo Tribunal Federal, uma vez que utiliza um referencial remuneratório que já possui balizamento constitucional próprio. Diferente de outras unidades da federação que tentaram fixar limites de forma direta e sem as devidas gradações, a norma pernambucana optou por um parâmetro jurídico consolidado, o que afasta qualquer alegação de incompatibilidade com a Constituição da República.</p>
+      
+      <p class="mb-4">A preservação da emenda é fundamental para garantir a segurança jurídica e a valorização das carreiras de auditoria. A Associação atuará com firmeza para assegurar que a eficácia da norma seja respeitada, impedindo que interpretações restritivas comprometam conquistas obtidas no campo legislativo. Conclamamos todos os associados para a reunião plenária da Assembleia Permanente, no dia 24 de fevereiro, às 9h30, na sede do Sindifisco, onde definiremos as estratégias de mobilização e as medidas necessárias para a defesa de nossos direitos.</p>
+      
+      <p class="mt-8 font-bold text-gray-800">Diretoria da Associação dos Auditores do TCE-PE</p>
+    `,
+    date: '2026-02-13',
+    imageUrl: '/news/nota_tecnica_ec68_2025.jpg',
+    category: NewsCategory.JURIDICO, // Using JURIDICO category as defined in enum
+    isHighlight: true,
+    author: 'Diretoria da Associação'
+  }
 ];
 
 export const SERVICES: ServiceLink[] = [

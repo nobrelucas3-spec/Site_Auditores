@@ -23,6 +23,9 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import FinancialDetailed from './pages/FinancialDetailed';
 import AdminDocuments from './pages/AdminDocuments';
+import Legal from './pages/Legal';
+import ArticlesList from './pages/ArticlesList';
+import Publications from './pages/Publications';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -58,17 +61,19 @@ const App: React.FC = () => {
             <Route path="/analise-tecnica" element={<TechnicalAnalysisList />} />
             <Route path="/analise-tecnica/inversao-hierarquica" element={<JuridicalAnalysis />} /> {/* Specific Article */}
 
-            <Route path="/comunicacao/artigos" element={<UnderConstruction title="Artigos" />} />
+            <Route path="/comunicacao/artigos" element={<ArticlesList />} />
             <Route path="/comunicacao/fotos" element={<Gallery type="fotos" />} />
             <Route path="/comunicacao/videos" element={<Gallery type="videos" />} />
-            <Route path="/comunicacao/publicacoes" element={<UnderConstruction title="Publicações" />} />
+            <Route path="/comunicacao/publicacoes" element={<Publications />} />
 
             {/* Outras Páginas */}
             <Route path="/associe-se" element={<JoinUs />} />
             <Route path="/transparencia" element={<Transparency />} />
             <Route path="/convenios" element={<Agreements />} />
             <Route path="/contato" element={<Contact />} />
-            <Route path="/juridico" element={<UnderConstruction title="Jurídico" />} />
+
+            {/* Página Jurídica */}
+            <Route path="/juridico" element={<Legal />} />
 
             {/* Área do Filiado */}
             <Route path="/area-do-filiado" element={<MemberLogin />} />
