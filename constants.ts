@@ -119,6 +119,31 @@ export const MOCK_NEWS: NewsItem[] = [
     category: NewsCategory.JURIDICO, // Using JURIDICO category as defined in enum
     isHighlight: true,
     author: 'Diretoria da Associação'
+  },
+  {
+    id: 'stf-tcu-consenso',
+    title: 'STF ouve argumentos sobre alcance do controle externo em procedimentos consensuais',
+    summary: 'Supremo Tribunal Federal realiza oitivas na ADPF 1183 para debater a constitucionalidade da resolução de conflitos pelo TCU.',
+    content: `
+      <p class="mb-4">O Supremo Tribunal Federal (STF) realizou sessões para ouvir especialistas e partes interessadas sobre o alcance do controle externo em procedimentos consensuais. O debate ocorre no âmbito da Arguição de Descumprimento de Preceito Fundamental (ADPF) 1183, ajuizada pelo Partido Novo.</p>
+
+      <p class="mb-4">A ação questiona a constitucionalidade da Instrução Normativa (IN) 91/2022 do Tribunal de Contas da União (TCU), que instituiu a Secretaria de Controle Externo de Solução Consensual e Prevenção de Conflitos (SecexConsenso). O partido argumenta que a norma expande indevidamente as atribuições da corte de contas, permitindo que o órgão participe da formulação de políticas públicas, uma competência do Executivo e Legislativo.</p>
+
+      <p class="mb-4">Em contrapartida, o TCU e entidades como a Ordem dos Advogados do Brasil (OAB) defendem a iniciativa. Sustentam que a busca por soluções consensuais moderniza o controle externo, promove a eficiência administrativa e reduz a judicialização de grandes projetos de infraestrutura, mantendo-se dentro dos limites constitucionais.</p>
+
+      <div class="my-6 p-4 bg-gray-50 border-l-4 border-secondary-500">
+        <p class="italic text-gray-700">Em sustentação oral, a OAB e a AGU defenderam que o modelo consensual traz "maior racionalidade, eficiência e segurança jurídica", permitindo uma atuação preventiva do tribunal sem substituir o gestor público.</p>
+      </div>
+
+      <p class="mb-4">O relator da ação, ministro Edson Fachin, conduziu as oitivas que servirão de base para a futura decisão do plenário sobre o tema, que tem repercussão direta na atuação de todos os Tribunais de Contas do país.</p>
+
+      <p class="text-sm text-gray-500 mt-4">Fonte: Notícias STF</p>
+    `,
+    date: '2026-02-13', // Today
+    imageUrl: '/news/stf_consensus.jpg',
+    category: NewsCategory.NA_MIDIA,
+    isHighlight: false,
+    author: 'Redação'
   }
 ];
 

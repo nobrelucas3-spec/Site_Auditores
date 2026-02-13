@@ -97,8 +97,9 @@ const FinancialDashboard: React.FC = () => {
 
                 if (item.type === 'income') {
                     // Strict filter: only 'Receita' category counts as Operating Revenue
-                    // Everything else (like 'Saldo') enters the balance but not the Revenue Card
-                    if (item.category === 'Receita') {
+                    // New Rule: Anything that is NOT 'Balance' (Saldo) is Revenue
+                    // This fixes the issue where specific categories (like Mensalidade) were being ignored
+                    if (!item.category.toLowerCase().includes('saldo')) {
                         revenue += val;
                     } else {
                         otherIncome += val;
@@ -160,8 +161,8 @@ const FinancialDashboard: React.FC = () => {
         if (!acc[key]) acc[key] = { income: 0, expense: 0, sortDate: date.getTime() };
 
         if (curr.type === 'income') {
-            // STRICT RULE: Only 'Receita' counts for the Monthly Chart
-            if (curr.category === 'Receita') {
+            // New Rule: Anything that is NOT 'Balance' (Saldo) counts for the Monthly Chart
+            if (!curr.category.toLowerCase().includes('saldo')) {
                 acc[key].income += Number(curr.amount);
             }
         }

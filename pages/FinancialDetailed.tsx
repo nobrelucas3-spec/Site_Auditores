@@ -113,7 +113,7 @@ const FinancialDetailed: React.FC = () => {
     }, {} as Record<string, FinancialRecord[]>);
 
     // Get unique months in order of appearance (which is date desc)
-    const uniqueMonths = Array.from(new Set(records.map(r => getMonthName(r.transaction_date))));
+    const uniqueMonths: string[] = Array.from(new Set(records.map(r => getMonthName(r.transaction_date))));
 
     return (
         <div className="min-h-screen bg-slate-50 pb-12">
