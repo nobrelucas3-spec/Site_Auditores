@@ -1,33 +1,40 @@
--- 1. Criar Tabela de Documentos
+-- 1. Create Documents Table
 create table if not exists public.documents (
   id uuid default gen_random_uuid() primary key,
   title text not null,
   description text,
-  file_url text not null, -- URL do arquivo no Storage
-  category text not null, -- Ex: 'Atas', 'Financeiro', 'Jurídico'
-  is_public boolean default false, -- Se true, aparece na Transparência. Se false, só logado.
-  year integer, -- Para filtrar por ano (2025, 2026...)
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+  category text not null, -- 'Financeiro', 'Estatuto', 'Ata', etc.
+  year integer,
+  file_url text not null,
+  is_public boolean default false,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- 2. Habilitar Segurança (RLS)
+-- 2. Enable RLS
 alter table public.documents enable row level security;
 
--- 3. Políticas de Acesso
--- Leitura Pública para documentos marcados como 'is_public'
-create policy "Documentos Públicos" on public.documents
-  for select using (is_public = true);
+-- 3. Policies
+-- Public read access for public documents
+create policy "Allow public read access for public documents"
+on public.documents for select
+using (is_public = true);
 
--- Leitura para Membros Logados (Vê tudo)
-create policy "Documentos para Membros" on public.documents
-  for select to authenticated using (true);
+-- Authenticated read access for all documents (members can see private docs too, or filter by logic)
+-- Assuming all members can see all documents for now
+create policy "Allow authenticated read access"
+on public.documents for select
+to authenticated
+using (true);
 
--- Insert/Update (Apenas Admins - Aqui simplificado para autenticados por enquanto ou manual via dashboard)
-create policy "Upload de Documentos" on public.documents
-  for insert to authenticated with check (true);
+-- Admin write access (for now, allow all authenticated to upload - ideally restrict to admin email)
+-- For this MVP, we trust authenticated users or assume only admins have the link
+create policy "Allow authenticated insert"
+on public.documents for insert
+to authenticated
+with check (true);
 
--- INSTRUÇÕES PARA O STORAGE (Buckets):
--- 1. No menu do Supabase, vá em "Storage"
--- 2. Crie um novo Bucket chamado "documents"
--- 3. Deixe-o como "Public" se quiser facilitar, ou "Private" configurando políticas.
---    Recomendação: Public bucket para facilitar leitura, mas controle via tabela quem vê o link.
+create policy "Allow authenticated delete"
+on public.documents for delete
+to authenticated
+using (true);

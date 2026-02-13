@@ -24,6 +24,8 @@ const FinancialDashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [isActiveMember, setIsActiveMember] = useState(true); // Can be refined with DB check
     const [records, setRecords] = useState<FinancialRecord[]>([]);
+    const [documents, setDocuments] = useState<any[]>([]);
+    const [expandedYear, setExpandedYear] = useState<number | null>(null); // State for accordion behavior
 
     // Metrics
     const [totalRevenue, setTotalRevenue] = useState(0);
@@ -78,6 +80,24 @@ const FinancialDashboard: React.FC = () => {
             } else if (data) {
                 setRecords(data as FinancialRecord[]);
                 calculateMetrics(data as FinancialRecord[], previousYearsBalance);
+            }
+
+            // 4. Fetch Financial Documents
+            const { data: docsData } = await supabase
+                .from('documents')
+                .select('*')
+                .eq('category', 'Financeiro') // Filter by Finance category
+                // .eq('year', currentYear) // REMOVED: Allow all years to be shown
+                .order('year', { ascending: false }) // Sort by Year Desc
+                .order('created_at', { ascending: false });
+
+            if (docsData) {
+                setDocuments(docsData);
+                // Auto-expand the most recent year if documents exist
+                if (docsData.length > 0) {
+                    const uniqueYears = Array.from(new Set(docsData.map((d: any) => d.year))).sort((a: any, b: any) => Number(b) - Number(a));
+                    if (uniqueYears.length > 0) setExpandedYear(Number(uniqueYears[0]));
+                }
             }
 
             setLoading(false);
@@ -335,6 +355,85 @@ const FinancialDashboard: React.FC = () => {
                                 <p className="text-center text-gray-400 py-10">Nenhuma despesa registrada.</p>
                             )}
                         </div>
+                    </div>
+                </div>
+
+                {/* Documents Section */}
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                    <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                        <h3 className="font-bold text-slate-800 flex items-center gap-2">
+                            <FileText size={18} className="text-gray-400" /> Documentos de Prestação de Contas
+                        </h3>
+                    </div>
+
+                    <div className="p-6">
+                        {documents.length > 0 ? (
+                            <div className="space-y-4">
+                                {Array.from(new Set(documents.map(d => d.year)))
+                                    .sort((a, b) => Number(b) - Number(a)) // Fix lint: ensure number comparison
+                                    .map((year: any) => (
+                                        <div key={year} className="border border-gray-200 rounded-xl overflow-hidden">
+                                            <button
+                                                onClick={() => setExpandedYear(expandedYear === year ? null : year)}
+                                                className="w-full bg-gray-50 p-4 flex justify-between items-center hover:bg-gray-100 transition-colors"
+                                            >
+                                                <h4 className="font-bold text-slate-700 flex items-center gap-2">
+                                                    Exercício {year}
+                                                    <span className="bg-white text-xs font-normal px-2 py-0.5 rounded-full border border-gray-200 text-gray-500">
+                                                        {documents.filter(d => d.year === year).length} docs
+                                                    </span>
+                                                </h4>
+                                                <div className={`transform transition-transform duration-200 ${expandedYear === year ? 'rotate-180' : ''}`}>
+                                                    <TrendingDown size={16} className="text-gray-400" />
+                                                </div>
+                                            </button>
+
+                                            {expandedYear === year && (
+                                                <div className="bg-white p-4 grid grid-cols-1 gap-3 animate-fadeIn">
+                                                    {documents.filter(d => d.year === year).map((doc) => (
+                                                        <div key={doc.id} className="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:bg-slate-50 transition-all group">
+                                                            <div className="flex items-center gap-4 overflow-hidden">
+                                                                <div className="p-2.5 bg-red-50 text-red-600 rounded-lg group-hover:bg-red-100 transition-colors shrink-0">
+                                                                    <FileText size={20} />
+                                                                </div>
+                                                                <div className="min-w-0">
+                                                                    <h4 className="font-bold text-slate-800 truncate text-sm" title={doc.title}>{doc.title}</h4>
+                                                                    <p className="text-xs text-gray-500 truncate">{doc.description || 'Documento oficial de prestação de contas.'}</p>
+                                                                    <div className="flex items-center gap-2 mt-1">
+                                                                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
+                                                                            {doc.category}
+                                                                        </span>
+                                                                        <span className="text-[10px] text-gray-400">
+                                                                            {new Date(doc.created_at).toLocaleDateString()}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <a
+                                                                href={doc.file_url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="ml-4 px-3 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-lg hover:bg-primary-50 hover:text-primary-600 hover:border-primary-100 transition-all text-xs font-bold flex items-center gap-1 shrink-0 shadow-sm"
+                                                                title="Baixar PDF"
+                                                            >
+                                                                <TrendingDown size={14} className="transform rotate-[-45deg]" />
+                                                                <span className="hidden sm:inline">Abrir</span>
+                                                            </a>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-10">
+                                <div className="bg-gray-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 text-gray-400">
+                                    <FileText size={24} />
+                                </div>
+                                <p className="text-gray-500 font-medium">Nenhum documento disponível ainda.</p>
+                            </div>
+                        )}
                     </div>
                 </div>
 

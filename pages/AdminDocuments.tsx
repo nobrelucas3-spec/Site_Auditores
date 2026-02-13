@@ -14,6 +14,7 @@ const AdminDocuments: React.FC = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('Outros');
+    const [year, setYear] = useState(new Date().getFullYear());
     const [isPublic, setIsPublic] = useState(false);
     const [file, setFile] = useState<File | null>(null);
 
@@ -85,7 +86,9 @@ const AdminDocuments: React.FC = () => {
                     category,
                     is_public: isPublic,
                     file_url: publicUrl,
-                    year: new Date().getFullYear() // Default to current year
+                    is_public: isPublic,
+                    file_url: publicUrl,
+                    year: Number(year)
                 }]);
 
             if (dbError) throw dbError;
@@ -191,6 +194,17 @@ const AdminDocuments: React.FC = () => {
                         </div>
 
                         <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Ano de Referência</label>
+                            <input
+                                type="number"
+                                value={year}
+                                onChange={e => setYear(Number(e.target.value))}
+                                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500"
+                                required
+                            />
+                        </div>
+
+                        <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Descrição (Opcional)</label>
                             <input
                                 type="text"
@@ -256,6 +270,8 @@ const AdminDocuments: React.FC = () => {
                                             <p className="font-bold text-gray-800 truncate">{doc.title}</p>
                                             <p className="text-xs text-gray-500 flex gap-2">
                                                 <span>{doc.category}</span>
+                                                <span>•</span>
+                                                <span>{doc.year}</span>
                                                 <span>•</span>
                                                 <span>{new Date(doc.created_at).toLocaleDateString()}</span>
                                                 {doc.is_public && <span className="text-green-600 font-bold">• Público</span>}
