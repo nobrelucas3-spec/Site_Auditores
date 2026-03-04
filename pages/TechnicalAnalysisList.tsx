@@ -1,9 +1,32 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Calendar, User, ArrowRight, BookOpen } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Calendar, User, ArrowRight, BookOpen, Loader } from 'lucide-react';
+import { supabase } from '../services/supabaseClient';
 import { MOCK_ARTICLES } from '../constants';
 
 const TechnicalAnalysisList: React.FC = () => {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                navigate('/area-do-filiado');
+            } else {
+                setLoading(false);
+            }
+        };
+        checkSession();
+    }, [navigate]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <Loader className="animate-spin text-primary-600" size={32} />
+            </div>
+        );
+    }
     return (
         <div className="bg-gray-50 min-h-screen font-sans">
             {/* Header */}

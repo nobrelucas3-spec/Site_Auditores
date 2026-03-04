@@ -57,11 +57,6 @@ const App: React.FC = () => {
             <Route path="/news/:id" element={<Article />} />
             <Route path="/auditorias/:id" element={<Audit />} />
 
-            {/* Análise Técnica Routes */}
-            <Route path="/analise-tecnica" element={<TechnicalAnalysisList />} />
-            <Route path="/analise-tecnica/inversao-hierarquica" element={<JuridicalAnalysis />} /> {/* Specific Article */}
-
-            <Route path="/comunicacao/artigos" element={<ArticlesList />} />
             <Route path="/comunicacao/fotos" element={<Gallery type="fotos" />} />
             <Route path="/comunicacao/videos" element={<Gallery type="videos" />} />
             <Route path="/comunicacao/publicacoes" element={<Publications />} />
@@ -80,6 +75,9 @@ const App: React.FC = () => {
             <Route path="/area-do-filiado/dashboard" element={<MemberDashboard />} />
             <Route path="/area-do-filiado/financeiro" element={<FinancialDashboard />} />
             <Route path="/area-do-filiado/financeiro/detalhes" element={<FinancialDetailed />} />
+            <Route path="/area-do-filiado/analise-tecnica" element={<TechnicalAnalysisList />} />
+            <Route path="/area-do-filiado/analise-tecnica/inversao-hierarquica" element={<JuridicalAnalysis />} /> {/* Specific Article */}
+            <Route path="/area-do-filiado/artigos" element={<ArticlesList />} />
             <Route path="/primeiro-acesso" element={<FirstAccess />} />
             <Route path="/esqueci-senha" element={<ForgotPassword />} />
             <Route path="/redefinir-senha" element={<ResetPassword />} />

@@ -4,6 +4,7 @@ export enum NewsCategory {
   EVENTOS = 'Eventos',
   NA_MIDIA = 'Na Mídia',
   ARTIGOS = 'Artigos',
+  ARQUIVO = 'Arquivo',
 }
 
 export interface NewsItem {

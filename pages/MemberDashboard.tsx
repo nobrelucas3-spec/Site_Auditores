@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, FileText, CreditCard, ShieldCheck, Loader, Download } from 'lucide-react';
+import { LogOut, User, FileText, CreditCard, ShieldCheck, Loader, Download, BookOpen } from 'lucide-react';
 
 import useInactivityTimer from '../hooks/useInactivityTimer';
 
@@ -129,7 +129,7 @@ const MemberDashboard: React.FC = () => {
                     </div>
 
                     {/* Status e Ações Rápidas */}
-                    <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div
                             onClick={() => navigate('/area-do-filiado/financeiro')}
                             className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-center items-center text-center cursor-pointer hover:shadow-md transition-shadow group"
@@ -149,6 +149,18 @@ const MemberDashboard: React.FC = () => {
                             <h3 className="font-bold text-gray-800">Documentos</h3>
                             <p className="text-sm text-gray-500 mb-3">3 novos documentos disponíveis.</p>
                             <button className="text-blue-600 text-sm font-bold hover:underline">Acessar Arquivos</button>
+                        </div>
+
+                        <div
+                            onClick={() => navigate('/area-do-filiado/analise-tecnica')}
+                            className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-center items-center text-center cursor-pointer hover:shadow-md transition-shadow group"
+                        >
+                            <div className="bg-secondary-100 p-3 rounded-full text-secondary-600 mb-3 group-hover:scale-110 transition-transform">
+                                <BookOpen size={24} />
+                            </div>
+                            <h3 className="font-bold text-gray-800">Análise Técnica</h3>
+                            <p className="text-sm text-gray-500 mb-3">Artigos, notas e pareceres da associação.</p>
+                            <span className="bg-secondary-50 text-secondary-700 text-xs font-bold px-3 py-1 rounded-full">Ler Análises</span>
                         </div>
                     </div>
                 </div>

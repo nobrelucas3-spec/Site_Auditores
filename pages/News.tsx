@@ -1,21 +1,24 @@
 import React, { useState, useMemo } from 'react';
 import NewsCard from '../components/NewsCard';
 import { MOCK_NEWS } from '../constants';
+import { OLD_NEWS } from '../old_news';
 import { NewsCategory, NewsItem } from '../types';
 import { Link } from 'react-router-dom';
 import { Search, Filter, X } from 'lucide-react';
+
+const ALL_NEWS = [...MOCK_NEWS, ...OLD_NEWS];
 
 const News: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<NewsCategory | 'Todas'>('Todas');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 12;
 
   const categories = ['Todas', ...Object.values(NewsCategory)];
 
   // Filter Logic
   const filteredNews = useMemo(() => {
-    return MOCK_NEWS.filter(news => {
+    return ALL_NEWS.filter(news => {
       const matchesCategory = selectedCategory === 'Todas' || news.category === selectedCategory;
       const matchesSearch = news.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         news.summary.toLowerCase().includes(searchTerm.toLowerCase());

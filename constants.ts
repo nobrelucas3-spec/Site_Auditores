@@ -98,29 +98,6 @@ export const MOCK_NEWS: NewsItem[] = [
     author: 'Assessoria de Comunicação'
   },
   {
-    id: 'nota-ec-68-2025',
-    title: 'NOTA AOS ASSOCIADOS: FUNDAMENTAÇÃO JURÍDICA E DEFESA DA EC Nº 68/2025',
-    summary: 'Associação manifesta entendimento técnico sobre a validade da Emenda Constitucional nº 68/2025 e convoca para assembleia.',
-    content: `
-      <p class="mb-4"><strong>NOTA AOS ASSOCIADOS: FUNDAMENTAÇÃO JURÍDICA E DEFESA DA EC Nº 68/2025</strong></p>
-
-      <p class="mb-4">A Associação dos Auditores do TCE-PE vem a público manifestar seu entendimento técnico sobre a validade da Emenda Constitucional nº 68/2025, especificamente no que concerne à instituição do teto remuneratório único estadual. O anúncio de que o Poder Executivo pretende questionar a norma por meio de uma Ação Direta de Inconstitucionalidade (ADI) exige uma resposta jurídica rigorosa, pautada na defesa da soberania do Poder Legislativo e na higidez do texto promulgado.</p>
-      
-      <p class="mb-4">Não se sustenta a tese de vício de iniciativa sob o argumento de que a matéria seria de competência exclusiva da Governadoria. No ordenamento jurídico brasileiro, é imperativo distinguir o processo legislativo ordinário da atuação da Assembleia Legislativa como Poder Constituinte Derivado Decorrente. No rito de reforma da Constituição Estadual, a iniciativa é concorrente e a própria Constituição Federal, em seu artigo 37, § 12, delega aos Estados a faculdade de instituir o teto único mediante emenda, sem impor restrições quanto à autoria da proposta. Ao promulgar a EC 68/2025, a Assembleia Legislativa exerceu sua competência originária de organizar a estrutura administrativa e remuneratória do Estado.</p>
-      
-      <p class="mb-4">Sob o aspecto material, o texto aprovado é fiel aos parâmetros do pacto federativo ao estabelecer que o limite da remuneração no Estado de Pernambuco passa a ser o "teto remuneratório mensal dos desembargadores do Tribunal de Justiça". Essa escolha técnica é segura e amplamente chancelada pelo Supremo Tribunal Federal, uma vez que utiliza um referencial remuneratório que já possui balizamento constitucional próprio. Diferente de outras unidades da federação que tentaram fixar limites de forma direta e sem as devidas gradações, a norma pernambucana optou por um parâmetro jurídico consolidado, o que afasta qualquer alegação de incompatibilidade com a Constituição da República.</p>
-      
-      <p class="mb-4">A preservação da emenda é fundamental para garantir a segurança jurídica e a valorização das carreiras de auditoria. A Associação atuará com firmeza para assegurar que a eficácia da norma seja respeitada, impedindo que interpretações restritivas comprometam conquistas obtidas no campo legislativo. Conclamamos todos os associados para a reunião plenária da Assembleia Permanente, no dia 24 de fevereiro, às 9h30, na sede do Sindifisco, onde definiremos as estratégias de mobilização e as medidas necessárias para a defesa de nossos direitos.</p>
-      
-      <p class="mt-8 font-bold text-gray-800">Diretoria da Associação dos Auditores do TCE-PE</p>
-    `,
-    date: '2026-02-13',
-    imageUrl: '/news/nota_tecnica_ec68_2025.jpg',
-    category: NewsCategory.JURIDICO, // Using JURIDICO category as defined in enum
-    isHighlight: true,
-    author: 'Diretoria da Associação'
-  },
-  {
     id: 'stf-tcu-consenso',
     title: 'STF ouve argumentos sobre alcance do controle externo em procedimentos consensuais',
     summary: 'Supremo Tribunal Federal realiza oitivas na ADPF 1183 para debater a constitucionalidade da resolução de conflitos pelo TCU.',
@@ -214,7 +191,7 @@ export const MOCK_ARTICLES = [
     author: 'Lucas Nobre - ACE Obras',
     date: '2023-10-15',
     summary: 'Análise sobre a constitucionalidade da transposição de cargos e funções de chefia.',
-    link: '/analise-tecnica/inversao-hierarquica',
+    link: '/area-do-filiado/analise-tecnica/inversao-hierarquica',
     image: 'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&q=80&w=800'
   }
 ];

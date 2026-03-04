@@ -138,8 +138,6 @@ const Header: React.FC = () => {
 
             <NavItem title="Comunicação">
               <DropdownItem to="/news">Notícias</DropdownItem>
-              <DropdownItem to="/analise-tecnica">Análise Técnica</DropdownItem>
-              <DropdownItem to="/comunicacao/artigos">Artigos</DropdownItem>
               <DropdownItem to="/comunicacao/fotos">Galeria de Fotos</DropdownItem>
               <DropdownItem to="/comunicacao/videos">Galeria de Vídeos</DropdownItem>
               <DropdownItem to="/comunicacao/publicacoes">Publicações</DropdownItem>
@@ -199,32 +197,27 @@ const Header: React.FC = () => {
                 <div className="text-secondary-500 text-xs font-bold uppercase mb-3">Comunicação</div>
                 <div className="pl-3 flex flex-col gap-3">
                   <Link to="/news" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm">Notícias</Link>
-                  <Link to="/analise-tecnica" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm flex items-center justify-between">
-                    Análise Técnica
-                    <span className="bg-secondary-500 text-primary-900 text-[10px] px-1.5 py-0.5 rounded font-bold">Novo</span>
-                  </Link>
-                  <Link to="/comunicacao/artigos" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm">Artigos</Link>
                   <Link to="/comunicacao/fotos" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm">Galeria de Fotos</Link>
                   <Link to="/comunicacao/videos" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm">Galeria de Vídeos</Link>
                 </div>
               </div>
-
-              <Link to="/associe-se" onClick={() => setIsMenuOpen(false)} className="py-3 border-b border-primary-800 text-white font-medium hover:text-secondary-400">Associe-se</Link>
-              <Link to="/area-do-filiado/financeiro" onClick={() => setIsMenuOpen(false)} className="py-3 border-b border-primary-800 text-white font-medium hover:text-secondary-400">Transparência</Link>
-              <Link to="/convenios" onClick={() => setIsMenuOpen(false)} className="py-3 border-b border-primary-800 text-white font-medium hover:text-secondary-400">Convênios</Link>
-              <Link to="/contato" onClick={() => setIsMenuOpen(false)} className="py-3 border-b border-primary-800 text-white font-medium hover:text-secondary-400">Contato</Link>
-
-              <Link to="/area-do-filiado" onClick={() => setIsMenuOpen(false)} className="py-3 mt-4 text-center rounded bg-secondary-500 text-primary-900 font-bold hover:bg-secondary-400 uppercase text-xs flex items-center justify-center gap-2">
-                <Lock size={14} />
-                Área do Filiado
-              </Link>
             </div>
-          </div>
 
-          {/* Sidebar Footer */}
-          <div className="p-4 bg-primary-950 border-t border-primary-800 text-center">
-            <p className="text-xs text-gray-500">Auditores TCE-PE &copy; 2026</p>
+            <Link to="/associe-se" onClick={() => setIsMenuOpen(false)} className="py-3 border-b border-primary-800 text-white font-medium hover:text-secondary-400">Associe-se</Link>
+            <Link to="/area-do-filiado/financeiro" onClick={() => setIsMenuOpen(false)} className="py-3 border-b border-primary-800 text-white font-medium hover:text-secondary-400">Transparência</Link>
+            <Link to="/convenios" onClick={() => setIsMenuOpen(false)} className="py-3 border-b border-primary-800 text-white font-medium hover:text-secondary-400">Convênios</Link>
+            <Link to="/contato" onClick={() => setIsMenuOpen(false)} className="py-3 border-b border-primary-800 text-white font-medium hover:text-secondary-400">Contato</Link>
+
+            <Link to="/area-do-filiado" onClick={() => setIsMenuOpen(false)} className="py-3 mt-4 text-center rounded bg-secondary-500 text-primary-900 font-bold hover:bg-secondary-400 uppercase text-xs flex items-center justify-center gap-2">
+              <Lock size={14} />
+              Área do Filiado
+            </Link>
           </div>
+        </div>
+
+        {/* Sidebar Footer */}
+        <div className="p-4 bg-primary-950 border-t border-primary-800 text-center">
+          <p className="text-xs text-gray-500">Auditores TCE-PE &copy; 2026</p>
         </div>
       </div>
     </header>

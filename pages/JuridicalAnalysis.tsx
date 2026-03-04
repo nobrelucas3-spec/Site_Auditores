@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Share2, Printer, ChevronRight, User, Calendar, Clock, Menu, X, List } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { BookOpen, Share2, Printer, ChevronRight, User, Calendar, Clock, Menu, X, List, Loader } from 'lucide-react';
 import { SectionHeader, SubSectionHeader, Paragraph, PullQuote, InfoBox, AlertBox, CaseStudyCard, ComparisonTable } from '../components/ArticleComponents';
 import { HierarchyChart, SalaryBandChart } from '../components/Charts';
+import { supabase } from '../services/supabaseClient';
 
 interface Section {
     id: string;
@@ -9,8 +11,22 @@ interface Section {
 }
 
 const JuridicalAnalysis: React.FC = () => {
+    const navigate = useNavigate();
     const [activeSection, setActiveSection] = useState<string>('intro');
     const [isMobileTocOpen, setIsMobileTocOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                navigate('/area-do-filiado');
+            } else {
+                setLoading(false);
+            }
+        };
+        checkSession();
+    }, [navigate]);
 
     const sections: Section[] = [
         { id: 'intro', title: 'Introdução' },
@@ -65,6 +81,14 @@ const JuridicalAnalysis: React.FC = () => {
             alert('Link copiado!');
         }
     };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <Loader className="animate-spin text-primary-600" size={32} />
+            </div>
+        );
+    }
 
     return (
         <div className="bg-[#f8f9fa] text-slate-900 font-sans relative">

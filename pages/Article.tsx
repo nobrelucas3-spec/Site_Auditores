@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MOCK_NEWS } from '../constants';
+import { OLD_NEWS } from '../old_news';
 import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, ZoomIn } from 'lucide-react';
 import ImageViewer from '../components/ImageViewer';
+
+const ALL_NEWS = [...MOCK_NEWS, ...OLD_NEWS];
 
 const Article: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   // Find news by ID or use the specific one if it matches the LOAUD context
-  const news = MOCK_NEWS.find(n => n.id === id);
+  const news = ALL_NEWS.find(n => n.id === id);
 
   // Lightbox State
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState('');
   const [currentAlt, setCurrentAlt] = useState('');
+  const [imageError, setImageError] = useState(false);
+
+  const hasImage = !!news?.imageUrl && news?.imageUrl !== '/logo.png' && !imageError;
 
   const openLightbox = (src: string, alt: string) => {
     setCurrentImage(src);
@@ -104,19 +110,22 @@ const Article: React.FC = () => {
           </div>
         </header>
 
-        <div
-          className="w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-xl mb-12 bg-gray-200 relative group cursor-zoom-in"
-          onClick={() => openLightbox(news.imageUrl, news.title)}
-        >
-          <img
-            src={news.imageUrl}
-            alt={news.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-            <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" size={48} />
+        {hasImage && (
+          <div
+            className="w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-xl mb-12 bg-gray-200 relative group cursor-zoom-in"
+            onClick={() => openLightbox(news.imageUrl, news.title)}
+          >
+            <img
+              src={news.imageUrl}
+              alt={news.title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              onError={() => setImageError(true)}
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+              <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" size={48} />
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-sm border border-gray-100">
           <p className="text-xl md:text-2xl text-slate-700 font-medium mb-8 leading-relaxed border-l-4 border-secondary-500 pl-6 italic bg-gray-50 py-4 rounded-r-lg">
