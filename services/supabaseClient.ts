@@ -9,4 +9,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
     console.error('Supabase vars missing!');
 }
 
-export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
+// Fallback prevents the entire React app from crashing (White Screen) if GitHub Action secrets are missing
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co', 
+  supabaseAnonKey || 'placeholder'
+);
