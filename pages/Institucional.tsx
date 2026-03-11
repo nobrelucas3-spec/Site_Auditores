@@ -121,7 +121,7 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
               <h1 className="text-3xl font-bold text-primary-900">Diretoria Executiva</h1>
             </div>
             <p className="text-gray-600 mb-8 max-w-2xl">
-              Conheça os membros eleitos para a gestão 2024-2026, responsáveis pela administração e representação da nossa associação.
+              Conheça os membros eleitos para a gestão 2026-2027, responsáveis pela administração e representação da nossa associação.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
