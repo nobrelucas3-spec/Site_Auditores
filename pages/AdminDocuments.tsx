@@ -26,10 +26,16 @@ const AdminDocuments: React.FC = () => {
     const checkUser = async () => {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
-            navigate('/area-do-filiado'); // Redirect if not logged in
+            navigate('/area-do-filiado');
+            return;
         }
-        // Ideally checking for specific admin email here
-        // if (session?.user.email !== 'auditores.sindical.tce.pe@gmail.com') { ... }
+        
+        // Block non-admin users
+        const adminEmails = ['auditores.sindical.tce.pe@gmail.com', 'lucasalmeida@tcepe.tc.br'];
+        
+        if (!adminEmails.includes(session.user.email)) {
+            navigate('/area-do-filiado/dashboard'); // Send regular users back to their dashboard
+        }
     };
 
     const fetchDocuments = async () => {
@@ -84,8 +90,6 @@ const AdminDocuments: React.FC = () => {
                     title,
                     description,
                     category,
-                    is_public: isPublic,
-                    file_url: publicUrl,
                     is_public: isPublic,
                     file_url: publicUrl,
                     year: Number(year)
