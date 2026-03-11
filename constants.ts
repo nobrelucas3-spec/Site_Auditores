@@ -1,11 +1,24 @@
 import { NewsCategory, NewsItem, ServiceLink } from './types';
 
 export const BOARD_MEMBERS = [
-  { name: 'Carlos Andrade', role: 'Presidente', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Fernanda Lima', role: 'Vice-Presidente', image: 'https://images.unsplash.com/photo-1573496359-e36b6c013310?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Roberto Mendes', role: 'Diretor Financeiro', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Juliana Costa', role: 'Diretora Jurídica', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Ricardo Silva', role: 'Diretor de Comunicação', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Roubier Muniz de Souza', role: 'Presidente', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Nelson Barreto Coutinho Bezerra de Menezes', role: 'Vice-Presidente', image: 'https://images.unsplash.com/photo-1573496359-e36b6c013310?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Lucas Nobre de Almeida', role: 'Diretor Administrativo-Financeiro', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Talita Hermógenes Fernandes', role: 'Diretora para Assuntos Técnicos e Jurídicos', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400' },
+];
+
+export const FISCAL_COUNCIL_ASSOCIATION = [
+  'Camila Cômodo Ferrari Sabino',
+  'Eliana Maria de Paula',
+  'Francisco José Gominho Rosa'
+];
+
+export const FISCAL_COUNCIL_SYNDICATE = [
+  'Camila Cômodo Ferrari Sabino',
+  'Eliana Maria de Paula',
+  'Francisco José Gominho Rosa',
+  'Adolfo Luiz Souza de Sá',
+  'José Ricardo Borges de Oliveira'
 ];
 
 export const PARTNERS = [

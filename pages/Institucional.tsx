@@ -1,6 +1,6 @@
 import React from 'react';
 import { supabase } from '../services/supabaseClient';
-import { BOARD_MEMBERS } from '../constants';
+import { BOARD_MEMBERS, FISCAL_COUNCIL_ASSOCIATION, FISCAL_COUNCIL_SYNDICATE } from '../constants';
 import { FileText, Award, Users } from 'lucide-react';
 
 interface InstitucionalProps {
@@ -135,13 +135,49 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
                       className="w-full h-full object-cover object-top"
                     />
                   </div>
-                  <div className="p-6 text-center">
+                  <div className="p-6 text-center flex flex-col items-center justify-center h-full">
                     <h3 className="text-xl font-bold text-primary-900 mb-1">{member.name}</h3>
                     <p className="text-secondary-600 font-medium uppercase text-sm tracking-wide">{member.role}</p>
                     <div className="w-10 h-1 bg-secondary-400 mx-auto mt-4 rounded-full"></div>
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div className="mt-16">
+              <h2 className="text-2xl font-bold text-primary-900 mb-8 border-b border-gray-200 pb-4">Conselhos Fiscais</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                  <h3 className="text-xl font-bold text-secondary-600 mb-6 flex items-center gap-2">
+                    <Award size={24} />
+                    Da Associação (Auditores TCE/PE)
+                  </h3>
+                  <ul className="space-y-4">
+                    {FISCAL_COUNCIL_ASSOCIATION.map((name, idx) => (
+                      <li key={idx} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-secondary-500"></div>
+                        <span className="font-medium text-gray-800">{name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold text-primary-700 mb-6 flex items-center gap-2">
+                    <Users size={24} />
+                    Do Sindicato (Auditores Sindical)
+                  </h3>
+                  <ul className="space-y-4">
+                    {FISCAL_COUNCIL_SYNDICATE.map((name, idx) => (
+                      <li key={idx} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-primary-500"></div>
+                        <span className="font-medium text-gray-800">{name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         );
