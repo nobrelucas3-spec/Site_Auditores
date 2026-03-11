@@ -155,20 +155,20 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-6xl mx-auto mb-8">
             {[
-              { id: 'DUWQqwXEW6t', img: 'conacon_2026.jpg', text: '9º CONACON 2026' },
+              { id: 'DVn_xmEjSvK', img: 'DVn_xmEjSvK.png', text: 'Atualização', url: 'https://www.instagram.com/auditorestce.pe/p/DVn_xmEjSvK/' },
+              { id: 'DVcN6wmj2Ev', img: 'DVcN6wmj2Ev.png', text: 'Novidades', url: 'https://www.instagram.com/auditorestce.pe/p/DVcN6wmj2Ev/' },
+              { id: 'DVJI4kgDTAk', img: 'DVJI4kgDTAk.png', text: 'Publicação Recente', url: 'https://www.instagram.com/auditorestce.pe/p/DVJI4kgDTAk/' },
+              { id: 'DU-u5U3Ec9i', img: 'DU-u5U3Ec9i.png', text: 'Publicação Sindifisco', url: 'https://www.instagram.com/sindifiscope/p/DU-u5U3Ec9i/' },
+              { id: 'DUWQqwXEW6t', img: 'conacon_2026.jpg', text: '9º CONACON 2026', url: 'https://www.instagram.com/auditorestce.pe/p/DUWQqwXEW6t/' },
               { id: 'DQerrT9jVLR', img: 'DQerrT9jVLR.jpg', text: 'Inauguração Sede' },
               { id: 'DUaubczDiNu', img: 'DUaubczDiNu.jpg', text: 'Visita TCE-PE' },
               { id: 'DTlfCdrj4v0', img: 'DTlfCdrj4v0.jpg', text: 'Encontro ANTC' },
               { id: 'DTlRJ65jzMn', img: 'DTlRJ65jzMn.jpg', text: 'Posse Presidente' },
               { id: 'DQfEPChkbji', img: 'DQfEPChkbji.jpg', text: 'Fortalecendo Laços' },
-              { id: 'DQfZI6iD-oA', img: 'DQfZI6iD-oA.jpg', text: 'Casa do Auditor' },
-              { id: 'DSprN6QjUcz', img: 'DSprN6QjUcz.jpg', text: 'Boas Festas' },
-              { id: 'DSaomXUD4HQ', img: 'DSaomXUD4HQ.jpg', text: 'Sucesso Gestão' },
-              { id: 'DQVkhyYjaN3', img: 'DQVkhyYjaN3.jpg', text: 'Dia do Servidor' },
             ].map((post) => (
               <a
                 key={post.id}
-                href={post.id === 'DUWQqwXEW6t' ? 'https://www.instagram.com/auditorestce.pe/p/DUWQqwXEW6t/' : `https://www.instagram.com/p/${post.id}/`}
+                href={post.url || `https://www.instagram.com/p/${post.id}/`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative aspect-square overflow-hidden rounded-lg block"
@@ -176,7 +176,7 @@ const Home: React.FC = () => {
                 <img
                   src={`/social/${post.img}`}
                   alt={post.text}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 object-center bg-gray-100"
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-bold p-2">
                   <span className="text-center text-xs md:text-sm">{post.text}</span>
