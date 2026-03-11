@@ -33,5 +33,5 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         protocol: ftps
         local-dir: ./dist/
-        server-dir: /domains/auditorestcepe.org.br/public_html/
+        server-dir: ./
         dangerous-clean-slate: false
