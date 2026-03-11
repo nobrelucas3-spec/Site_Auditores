@@ -132,10 +132,10 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
                     <img
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover object-top"
+                      className="w-full h-full object-contain p-8 bg-gray-50"
                     />
                   </div>
-                  <div className="p-6 text-center flex flex-col items-center justify-center h-full">
+                  <div className="p-6 text-center">
                     <h3 className="text-xl font-bold text-primary-900 mb-1">{member.name}</h3>
                     <p className="text-secondary-600 font-medium uppercase text-sm tracking-wide">{member.role}</p>
                     <div className="w-10 h-1 bg-secondary-400 mx-auto mt-4 rounded-full"></div>
