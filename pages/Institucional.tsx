@@ -50,7 +50,7 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
               const { data, error } = await supabase
                 .from('documents')
                 .select('*')
-                .or('category.ilike.%estatuto%,title.ilike.%estatuto%,title.ilike.%sindicato%')
+                .eq('category', 'Estatuto')
                 .order('created_at', { ascending: false });
 
               if (error) {
