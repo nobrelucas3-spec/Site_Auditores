@@ -15,15 +15,15 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
           <div className="animate-fade-in pb-12">
             
             {/* Header Area */}
-            <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-12 shadow-lg">
+            <div className="relative min-h-[220px] md:h-80 rounded-2xl overflow-hidden mb-12 shadow-lg py-8 md:py-0 flex items-center">
               <img
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
                 alt="Sede da Associação"
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-900/95 to-primary-900/50 flex items-center">
-                <div className="px-8 md:px-12">
-                  <div className="flex items-center gap-3 mb-4">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-900/95 to-primary-900/50"></div>
+              <div className="relative px-6 md:px-12 z-10 w-full">
+                <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
                     <Award className="text-secondary-400" size={36} />
                     <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">Quem Somos</h1>
                   </div>
@@ -35,9 +35,9 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
             </div>
 
             {/* Main Text Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 px-2">
-              <div className="lg:col-span-8 space-y-6 text-gray-700 text-lg leading-relaxed font-serif">
-                <p className="first-letter:text-6xl first-letter:font-black first-letter:text-primary-900 first-letter:mr-3 first-letter:float-left">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 mb-16 px-4 md:px-2">
+              <div className="lg:col-span-8 space-y-6 text-gray-700 text-base md:text-lg leading-relaxed font-serif">
+                <p className="first-letter:text-5xl md:first-letter:text-6xl first-letter:font-black first-letter:text-primary-900 first-letter:mr-2 md:first-letter:mr-3 first-letter:float-left first-letter:mt-1">
                   Somos a Associação dos Auditores de Controle Externo do Tribunal de Contas do Estado de Pernambuco (Auditores TCE-PE), uma entidade civil de direito privado, sem fins lucrativos, independente e autônoma, que representa os profissionais responsáveis pelo exercício do controle externo da administração pública no Estado de Pernambuco.
                 </p>
                 <p>
