@@ -30,6 +30,34 @@ export const PARTNERS = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'nota-repudio-tce-pr-2026',
+    title: 'Nota pública de repúdio à nomeação irregular no TCE-PR e à ameaça à independência do controle externo',
+    summary: 'A ANTC divulgou nota pública em que manifesta repúdio à nomeação de um inspetor para a 6ª Inspetoria de Controle Externo do Tribunal de Contas do Estado do Paraná (TCE-PR).',
+    content: `
+      <p class="mb-4">A ANTC divulgou nota pública em que manifesta repúdio à nomeação de um inspetor para a 6ª Inspetoria de Controle Externo do Tribunal de Contas do Estado do Paraná (TCE-PR). A designação é ilegal e representa uma ameaça à independência do controle externo.</p>
+      
+      <p class="mb-4">A nota relata que o cargo passou a ser ocupado por servidor comissionado que não integra a carreira de Auditor de Controle Externo, apesar de a função envolver a coordenação de atividades finalísticas de fiscalização, atribuição que, conforme entendimento consolidado do Supremo Tribunal Federal (STF), na ADI 6655, é exclusiva de Auditores de Controle Externo.</p>
+      
+      <p class="mb-4">A entidade ressalta que tanto a jurisprudência do STF quanto a legislação do próprio estado do Paraná são claras ao estabelecer que a condução das atividades de auditoria e fiscalização deve ser exercida por Auditores de Controle Externo, em razão da complexidade da função e das garantias necessárias à sua atuação independente.</p>
+      
+      <p class="mb-4">Na avaliação da ANTC, a nomeação em desacordo com esses parâmetros compromete não apenas a legalidade do ato, mas também a confiança da sociedade no Sistema Tribunais de Contas. A nota destaca que a atribuição de funções técnicas a agentes estranhos à carreira gera deslegitimação institucional e afeta a imparcialidade do controle.</p>
+      
+      <div class="my-6 p-4 bg-gray-50 border-l-4 border-secondary-500 italic">
+        "Não há que se falar em confiança social no controle externo quando são violados parâmetros constitucionais, legais e jurisprudenciais que estruturam sua atuação"
+        <footer class="text-sm font-bold text-gray-600 mt-2">— ANTC</footer>
+      </div>
+      
+      <p class="mb-4">A ANTC conclui conclamando os integrantes do Sistema Tribunais de Contas a defenderem os fundamentos constitucionais do controle externo e manifesta confiança de que o Ministério Público adotará as medidas necessárias para assegurar a regularidade do caso.</p>
+      
+      <p class="mb-4 mt-6">Veja a nota na íntegra: <a href="https://www.antcbrasil.org.br/images/2026/04/Nota_Publica_Parana_ANTC-CR_assinado_assinado_29_a_260408_070043_assinado_assinado_28129_assinado.pdf" target="_blank" class="text-primary-600 hover:text-primary-800 underline font-semibold">Descarregar PDF - Nota pública de repúdio à nomeação irregular no TCE-PR</a></p>
+    `,
+    date: '2026-04-08',
+    imageUrl: '/news/tce_pr_repudio.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    author: 'ANTC'
+  },
+  {
     id: 'posse-tce-pe-2026',
     title: 'ANTC participa da posse da nova direção do TCE-PE e reforça agenda institucional em Recife',
     summary: 'Associação Nacional marcou presença na cerimônia de posse do conselheiro Carlos Neves como novo presidente do Tribunal de Contas de Pernambuco para o biênio 2026-2027.',
