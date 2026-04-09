@@ -32,9 +32,9 @@ export const MOCK_NEWS: NewsItem[] = [
   {
     id: 'nota-repudio-tce-pr-2026',
     title: 'Auditores de Pernambuco apoiam posicionamento da ANTC em defesa da legalidade no TCE-PR',
-    summary: 'A Associação dos Auditores de Pernambuco manifesta apoio à nota pública divulgada pela Associação Nacional dos Auditores de Controle Externo, que aponta irregularidades na nomeação para a 6ª Inspetoria de Controle Externo do Tribunal de Contas do Estado do Paraná (TCE-PR).',
+    summary: 'Nomeação fora da carreira acende alerta sobre riscos à legalidade e à credibilidade do controle externo no país.',
     content: `
-      <p class="mb-4">A Associação dos Auditores de Pernambuco manifesta apoio à nota pública divulgada pela Associação Nacional dos Auditores de Controle Externo, que aponta irregularidades na nomeação para a 6ª Inspetoria de Controle Externo do Tribunal de Contas do Estado do Paraná (TCE-PR).</p>
+      <p class="mb-4">Nomeação fora da carreira acende alerta sobre riscos à legalidade e à credibilidade do controle externo no país.</p>
       
       <p class="mb-4">O caso envolve a designação de servidor comissionado, não integrante da carreira de Auditor de Controle Externo, para o exercício de funções típicas de auditoria e fiscalização - atividades que, conforme entendimento consolidado do Supremo Tribunal Federal, especialmente no julgamento da ADI 6655, são de atribuição exclusiva de auditores de carreira.</p>
       
