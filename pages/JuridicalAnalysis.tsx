@@ -146,7 +146,7 @@ const JuridicalAnalysis: React.FC = () => {
                     {/* Header */}
                     <header className="mb-12">
                         <div className="inline-block bg-sky-100 text-primary-900 text-xs font-bold px-3 py-1 rounded-sm uppercase tracking-wide mb-4 border border-sky-200">
-                            Nota Técnica Jurídica
+                            Artigo de Opinião
                         </div>
                         <h1 className="text-3xl md:text-5xl font-serif font-black text-gray-900 leading-tight mb-6">
                             A Inversão Hierárquica no Controle Externo: Uma Análise do Caso TCE-PE
@@ -162,7 +162,7 @@ const JuridicalAnalysis: React.FC = () => {
                             </div>
                             <div className="flex items-center gap-2">
                                 <Calendar className="w-4 h-4" />
-                                <span>15 de Outubro, 2023</span>
+                                <span>9 de Abril, 2026</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Clock className="w-4 h-4" />

@@ -86,7 +86,7 @@ export const ComparisonTable: React.FC = () => (
                 </tr>
                 <tr className="bg-gray-50">
                     <td className="px-6 py-4 font-bold text-gray-900">Requisito de Ingresso</td>
-                    <td className="px-6 py-4 bg-blue-50 text-primary-900 font-semibold">Nível Superior Específico</td>
+                    <td className="px-6 py-4 bg-blue-50 text-primary-900 font-semibold">Nível Superior</td>
                     <td className="px-6 py-4 text-gray-600">Nível Médio (Originalmente) / Superior Genérico</td>
                 </tr>
                 <tr className="bg-white">
