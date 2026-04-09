@@ -1,7 +1,7 @@
 import React from 'react';
 import { supabase } from '../services/supabaseClient';
 import { BOARD_MEMBERS, FISCAL_COUNCIL_ASSOCIATION, FISCAL_COUNCIL_SYNDICATE } from '../constants';
-import { FileText, Award, Users } from 'lucide-react';
+import { FileText, Award, Users, Target, Eye, Heart, Shield, CheckCircle } from 'lucide-react';
 
 interface InstitucionalProps {
   type: 'quem-somos' | 'estatuto' | 'diretoria';
@@ -12,30 +12,109 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
     switch (type) {
       case 'quem-somos':
         return (
-          <div className="animate-fade-in">
-            <div className="flex items-center gap-3 mb-6">
-              <Award className="text-secondary-500" size={32} />
-              <h1 className="text-3xl font-bold text-primary-900">Quem Somos</h1>
+          <div className="animate-fade-in pb-12">
+            
+            {/* Header Area */}
+            <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-12 shadow-lg">
+              <img
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
+                alt="Sede da Associação"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-900/95 to-primary-900/50 flex items-center">
+                <div className="px-8 md:px-12">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Award className="text-secondary-400" size={36} />
+                    <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">Quem Somos</h1>
+                  </div>
+                  <p className="text-sky-100 text-lg md:text-xl max-w-2xl font-light">
+                    A voz institucional e independente dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco.
+                  </p>
+                </div>
+              </div>
             </div>
-            <img
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
-              alt="Sede da Associação"
-              className="w-full h-64 md:h-80 object-cover rounded-xl shadow-lg mb-8"
-            />
-            <div className="prose prose-lg text-gray-700 max-w-none">
-              <p className="lead font-medium text-lg">
-                A Associação dos Auditores de Controle Externo do Tribunal de Contas do Estado de Pernambuco (Auditores TCE-PE) é uma entidade civil sem fins lucrativos, fundada com o propósito de congregar e representar os profissionais da área.
-              </p>
-              <p>
-                Nossa missão é defender as prerrogativas da carreira, promover a qualificação técnica contínua e atuar em defesa do controle externo independente, técnico e efetivo, contribuindo para a boa gestão dos recursos públicos em benefício da sociedade pernambucana.
-              </p>
-              <h3 className="text-xl font-bold mt-6 mb-3 text-primary-800">Nossos Valores</h3>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Ética e Transparência</li>
-                <li>Independência Técnica</li>
-                <li>Compromisso Público</li>
-                <li>Solidariedade e União da Categoria</li>
-              </ul>
+
+            {/* Main Text Content */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 px-2">
+              <div className="lg:col-span-8 space-y-6 text-gray-700 text-lg leading-relaxed font-serif">
+                <p className="first-letter:text-6xl first-letter:font-black first-letter:text-primary-900 first-letter:mr-3 first-letter:float-left">
+                  Somos a Associação dos Auditores de Controle Externo do Tribunal de Contas do Estado de Pernambuco (Auditores TCE-PE), uma entidade civil de direito privado, sem fins lucrativos, independente e autônoma, que representa os profissionais responsáveis pelo exercício do controle externo da administração pública no Estado de Pernambuco.
+                </p>
+                <p>
+                  Constituída em 2007, a partir da iniciativa de auditores comprometidos com o fortalecimento da carreira e das instituições de controle, nascemos com o propósito de consolidar uma representação legítima, técnica e articulada da categoria. Desde então, atuamos de forma consistente na defesa das atribuições dos Auditores das Contas Públicas, Auditores da Área de Saúde e Inspetores de Obras Públicas, contribuindo para a valorização profissional e o aprimoramento contínuo das atividades de fiscalização.
+                </p>
+                
+                <div className="p-6 bg-sky-50 border-l-4 border-secondary-500 my-8 rounded-r-lg">
+                  <p className="italic text-primary-900 font-semibold mb-0">
+                    "Ao longo de nossa trajetória, nos consolidamos como uma entidade atuante no fortalecimento do Tribunal de Contas do Estado de Pernambuco, reconhecendo sua função essencial na preservação do interesse público, na promoção da transparência e no aperfeiçoamento da gestão dos recursos públicos."
+                  </p>
+                </div>
+
+                <p>
+                  Nesse contexto, atuamos de forma propositiva e responsável, contribuindo para o desenvolvimento de um controle externo cada vez mais técnico, independente e efetivo.
+                </p>
+                <p>
+                  Nossa atuação institucional se desenvolve por meio do diálogo permanente com os poderes constituídos, órgãos de controle, entidades representativas e a sociedade civil, sempre orientada pela busca de soluções que aprimorem os mecanismos de fiscalização, fortaleçam a governança pública e ampliem a confiança da sociedade nas instituições.
+                </p>
+                <p>
+                  Além da defesa das prerrogativas da carreira, promovemos iniciativas voltadas à qualificação técnica de nossos associados, à produção e disseminação de conhecimento especializado e ao estímulo de boas práticas na administração pública. Dessa forma, reafirmamos o papel estratégico do controle externo como instrumento indispensável à prevenção de irregularidades, à promoção da eficiência administrativa e ao combate à má gestão dos recursos públicos.
+                </p>
+              </div>
+
+              {/* Sidebar Highlights */}
+              <div className="lg:col-span-4 space-y-6">
+                <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                  <div className="w-12 h-12 bg-blue-100 text-primary-600 rounded-lg flex items-center justify-center mb-4">
+                    <Shield size={24} />
+                  </div>
+                  <h3 className="font-bold text-slate-900 mb-2">Autonomia</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">Atuamos de forma autônoma na defesa das prerrogativas técnicas da fiscalização e do controle externo do Estado.</p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                  <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center mb-4">
+                    <CheckCircle size={24} />
+                  </div>
+                  <h3 className="font-bold text-slate-900 mb-2">Marco Histórico</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">Constituída em 2007, unificando a categoria técnica pilar na prevenção de irregularidades administrativas na máquina pública.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* MVP Section (Mission, Vision, Values) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Box Missão */}
+              <div className="bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:-translate-y-1 transition-transform duration-300 flex flex-col h-full">
+                <div className="w-14 h-14 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mb-6 shrink-0">
+                  <Target size={28} />
+                </div>
+                <h3 className="text-2xl font-black text-slate-800 mb-4 tracking-tight">Missão</h3>
+                <p className="text-gray-600 leading-relaxed text-sm flex-grow">
+                  Representar e fortalecer a carreira de Auditor de Controle Externo, defendendo suas prerrogativas e promovendo o aprimoramento técnico contínuo, com o objetivo de contribuir para um controle externo independente, eficiente e comprometido com a boa gestão dos recursos públicos.
+                </p>
+              </div>
+
+              {/* Box Visão */}
+              <div className="bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:-translate-y-1 transition-transform duration-300 flex flex-col h-full">
+                <div className="w-14 h-14 rounded-full bg-secondary-100 text-secondary-600 flex items-center justify-center mb-6 shrink-0">
+                  <Eye size={28} />
+                </div>
+                <h3 className="text-2xl font-black text-slate-800 mb-4 tracking-tight">Visão</h3>
+                <p className="text-gray-600 leading-relaxed text-sm flex-grow">
+                  Ser reconhecida como entidade de referência na defesa institucional do controle externo, destacando-se pela solidez técnica, pela credibilidade e pela contribuição efetiva ao aprimoramento da administração pública.
+                </p>
+              </div>
+
+              {/* Box Valores */}
+              <div className="bg-primary-900 rounded-2xl p-8 shadow-xl hover:-translate-y-1 transition-transform duration-300 flex flex-col h-full">
+                <div className="w-14 h-14 rounded-full bg-sky-800/50 text-secondary-400 flex items-center justify-center mb-6 shrink-0 border border-sky-400/20">
+                  <Heart size={28} />
+                </div>
+                <h3 className="text-2xl font-black text-white mb-4 tracking-tight">Valores</h3>
+                <p className="text-sky-100/90 leading-relaxed text-sm flex-grow">
+                  Nossa atuação é orientada por princípios institucionais sólidos, que se traduzem na integridade como base de todas as nossas ações, na busca permanente pela excelência técnica, na garantia de independência e imparcialidade no exercício do controle externo, no compromisso com a responsabilidade pública e com o interesse coletivo, no fortalecimento das instituições democráticas e na promoção da coesão e da representatividade da categoria.
+                </p>
+              </div>
             </div>
           </div>
         );
