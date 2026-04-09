@@ -7,18 +7,18 @@ import { supabase } from '../services/supabaseClient';
 const ArticlesList: React.FC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
         const checkSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
-                navigate('/area-do-filiado');
-            } else {
-                setLoading(false);
+            if (session) {
+                setIsAuthenticated(true);
             }
+            setLoading(false);
         };
         checkSession();
-    }, [navigate]);
+    }, []);
 
     if (loading) {
         return (
@@ -27,6 +27,9 @@ const ArticlesList: React.FC = () => {
             </div>
         );
     }
+
+    const displayedArticles = isAuthenticated ? MOCK_ARTICLES : MOCK_ARTICLES.filter(a => a.isPublic);
+
     return (
         <div className="min-h-screen bg-slate-50 py-12">
             <div className="container mx-auto px-4">
@@ -40,8 +43,14 @@ const ArticlesList: React.FC = () => {
                     </div>
                 </div>
 
+                {!isAuthenticated && (
+                    <div className="bg-blue-50 text-blue-800 p-4 rounded-lg mb-8 border border-blue-200">
+                        <strong>Área Parcialmente Restrita:</strong> Você está visualizando apenas os artigos públicos. Para ter acesso à íntegra dos artigos técnicos avançados, faça o <Link to="/area-do-filiado" className="underline font-bold">Login na Área do Filiado</Link>.
+                    </div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {MOCK_ARTICLES.map((article) => (
+                    {displayedArticles.map((article) => (
                         <article key={article.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
                             <div className="h-48 overflow-hidden">
                                 <img

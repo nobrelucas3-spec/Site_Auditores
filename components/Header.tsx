@@ -138,6 +138,7 @@ const Header: React.FC = () => {
 
             <NavItem title="Comunicação">
               <DropdownItem to="/news">Notícias</DropdownItem>
+              <DropdownItem to="/comunicacao/artigos">Artigos Técnicos e Opinião</DropdownItem>
               <DropdownItem to="/comunicacao/fotos">Galeria de Fotos</DropdownItem>
               <DropdownItem to="/comunicacao/videos">Galeria de Vídeos</DropdownItem>
               <DropdownItem to="/comunicacao/publicacoes">Publicações</DropdownItem>
@@ -197,8 +198,10 @@ const Header: React.FC = () => {
                 <div className="text-secondary-500 text-xs font-bold uppercase mb-3">Comunicação</div>
                 <div className="pl-3 flex flex-col gap-3">
                   <Link to="/news" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm">Notícias</Link>
+                  <Link to="/comunicacao/artigos" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm">Artigos Técnicos e Opinião</Link>
                   <Link to="/comunicacao/fotos" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm">Galeria de Fotos</Link>
                   <Link to="/comunicacao/videos" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm">Galeria de Vídeos</Link>
+                  <Link to="/comunicacao/publicacoes" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-white text-sm">Publicações</Link>
                 </div>
               </div>
             </div>
