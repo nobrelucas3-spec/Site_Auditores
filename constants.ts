@@ -30,6 +30,29 @@ export const PARTNERS = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'valorizacao-carreira-negociacao-2026',
+    title: 'Associação dos Auditores reforça atuação e acompanha negociações pela valorização da carreira no TCE-PE',
+    summary: 'Entidade segue em diálogo com a gestão do Tribunal e atenta às etapas institucionais necessárias para o avanço das tratativas',
+    content: `
+      <p class="mb-4">A Associação dos Auditores do Tribunal de Contas do Estado de Pernambuco (TCE-PE) segue atuando de forma permanente nas tratativas com a Alta Gestão do Tribunal, com foco na valorização da carreira de Auditor de Controle Externo.</p>
+      
+      <p class="mb-4">As discussões vêm sendo conduzidas com base em critérios técnicos, evidenciando a viabilidade de avanços dentro da realidade orçamentária da instituição. Apesar de um cenário fiscal positivo, fatores externos ainda influenciam o andamento das negociações, exigindo diálogo contínuo e atuação estratégica.</p>
+      
+      <p class="mb-4">O processo também envolve etapas institucionais que dependem de apreciação no âmbito legislativo, o que reforça a importância de acompanhamento atento e atuação articulada ao longo de todo o ciclo.</p>
+      
+      <p class="mb-4">Dessa forma, a Associação mantém sua atuação firme e responsável, representando os interesses da categoria e contribuindo de forma propositiva para o avanço das discussões.</p>
+      
+      <p class="mb-4">A entidade também segue atenta aos desafios enfrentados pela carreira, especialmente no que diz respeito à sua valorização e ao fortalecimento institucional, aspectos fundamentais para a manutenção da qualidade e da eficiência do controle externo.</p>
+      
+      <p>A Associação dos Auditores do TCE-PE reafirma seu compromisso com a defesa dos seus associados e continuará acompanhando de perto cada etapa das negociações.</p>
+    `,
+    date: '2026-04-12',
+    imageUrl: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=800',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    author: 'Diretoria'
+  },
+  {
     id: 'nota-repudio-tce-pr-2026',
     title: 'Auditores de Pernambuco apoiam posicionamento da ANTC em defesa da legalidade no TCE-PR',
     summary: 'Nomeação fora da carreira acende alerta sobre riscos à legalidade e à credibilidade do controle externo no país.',
