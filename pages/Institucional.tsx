@@ -31,7 +31,6 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
                     A voz institucional e independente dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco.
                   </p>
                 </div>
-              </div>
             </div>
 
             {/* Main Text Content */}
