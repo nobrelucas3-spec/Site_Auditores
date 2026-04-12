@@ -255,15 +255,5 @@ export const MOCK_ARTICLES = [
     link: '/area-do-filiado/analise-tecnica/inversao-hierarquica',
     image: 'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&q=80&w=800',
     isPublic: false
-  },
-  {
-    id: 'importancia-controle-externo',
-    title: 'A Importância do Controle Externo Municipal',
-    author: 'Diretoria ANTC',
-    date: '2024-01-10',
-    summary: 'Um panorama geral sobre como o controle externo beneficia diretamente o cidadão na ponta.',
-    link: '#',
-    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=800',
-    isPublic: true
   }
 ];
