@@ -40,10 +40,14 @@ const Agreements: React.FC = () => {
               </div>
               <div className="p-5 flex flex-col flex-grow">
                 <h3 className="font-bold text-lg text-gray-800 mb-1">{partner.name}</h3>
-                <div className="flex items-center gap-2 text-green-600 font-bold text-sm mb-4">
-                  <Tag size={14} />
-                  {partner.discount}
+                <div className="flex items-center gap-2 text-green-600 font-bold text-sm mb-2">
+                  <Tag size={14} className="shrink-0" />
+                  <span className="truncate">{partner.discount}</span>
                 </div>
+                {partner.description && (
+                  <div className="text-gray-600 text-xs mb-4 flex-grow" dangerouslySetInnerHTML={{ __html: partner.description }}>
+                  </div>
+                )}
                 <button className="mt-auto w-full border border-primary-500 text-primary-600 font-semibold py-2 rounded hover:bg-primary-50 transition-colors flex items-center justify-center gap-2 text-sm">
                   Ver Detalhes <ExternalLink size={14} />
                 </button>

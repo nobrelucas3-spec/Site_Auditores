@@ -22,10 +22,21 @@ export const FISCAL_COUNCIL_SYNDICATE = [
 ];
 
 export const PARTNERS = [
-  { name: 'Faculdade Alpha', discount: '20% de desconto', category: 'Educação', image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=200' },
-  { name: 'Academia FitLife', discount: 'Mensalidade corporativa', category: 'Saúde', image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=200' },
-  { name: 'Clínica Sorriso', discount: '15% em procedimentos', category: 'Saúde', image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=200' },
-  { name: 'Livraria Leitura', discount: '10% em todo o site', category: 'Cultura', image: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=200' },
+  { 
+    name: 'CLUBS & Wellhub (Gympass)', 
+    discount: 'Planos a partir de R$ 35,90 ou 100% Isento na Promoção', 
+    category: 'Saúde e Bem-estar', 
+    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=600',
+    description: `
+      <p class="mb-2"><strong>Adesão em 3 passos:</strong></p>
+      <ol class="list-decimal pl-4 space-y-1">
+        <li>Filiação à entidade estadual (AudTCE/PE).</li>
+        <li>Autorização de uso de dados no site da ANTC.</li>
+        <li>Adesão na plataforma CLUBS.</li>
+      </ol>
+      <p class="mt-3 text-primary-700 font-bold">O acesso será custeado integralmente pela ANTC!</p>
+    `
+  }
 ];
 
 export const MOCK_NEWS: NewsItem[] = [
