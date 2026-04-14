@@ -125,10 +125,11 @@ const JoinUs: React.FC = () => {
             const userEmail = formData.emailInstitutional || formData.emailPersonal;
             if (formData.sendCopyToUser && userEmail) {
                 const userEmailBody = {
-                    _subject: `Cópia da sua Solicitação de Filiação - Site Auditores TCE-PE`,
+                    _subject: `Solicitação de Filiação Recebida - Auditores TCE-PE`,
                     _template: 'table',
                     _captcha: 'false',
                     _language: 'pt',
+                    Mensagem: 'Sua solicitação de filiação foi recebida com sucesso e está em análise pela nossa diretoria. Você receberá um novo e-mail assim que seu acesso ao portal for liberado.',
                     Link_Ficha_Oficial: linkFicha,
                     ...mappedData
                 };

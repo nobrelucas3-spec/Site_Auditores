@@ -87,8 +87,33 @@ const ApplicationsTab: React.FC = () => {
             // 2. Update application
             await supabase.from('membership_applications').update({ status: 'Aprovado' }).eq('id', app.id);
 
+            // 3. Enviar E-mail de Boas-vindas/Aprovação
+            try {
+                const firstAccessLink = `${window.location.origin}${window.location.pathname}#/primeiro-acesso`;
+                const emailBody = {
+                    _subject: 'Boas-vindas! Sua filiação foi aprovada - Auditores TCE-PE',
+                    _template: 'table',
+                    _captcha: 'false',
+                    _language: 'pt',
+                    Mensagem: `Olá ${app.full_name}, sua solicitação de filiação foi aprovada pela diretoria! Agora você já pode criar seu acesso ao portal exclusivo.`,
+                    Link_para_Primeiro_Acesso: firstAccessLink,
+                    Observacao: 'Utilize o e-mail cadastrado e sua matrícula para validar seu primeiro acesso.'
+                };
+
+                await fetch(`https://formsubmit.co/ajax/${email}`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(emailBody)
+                });
+            } catch (emailErr) {
+                console.warn('Membro aprovado, mas falha ao enviar e-mail de boas-vindas:', emailErr);
+            }
+
             setApplications(prev => prev.map(a => a.id === app.id ? { ...a, status: 'Aprovado' } : a));
-            alert('Aprovado com sucesso!');
+            alert('Aprovado com sucesso! O associado receberá um e-mail com as instruções de acesso.');
         } catch (err: any) {
             setError(err.message || 'Erro ao aprovar.');
         } finally {
