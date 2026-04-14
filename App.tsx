@@ -27,6 +27,7 @@ import Legal from './pages/Legal';
 import ArticlesList from './pages/ArticlesList';
 import Publications from './pages/Publications';
 import ArticleCalicesPrivilegio from './pages/ArticleCalicesPrivilegio';
+import MembershipSuccess from './pages/MembershipSuccess';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -66,6 +67,7 @@ const App: React.FC = () => {
 
             {/* Outras Páginas */}
             <Route path="/associe-se" element={<JoinUs />} />
+            <Route path="/associe-se/sucesso" element={<MembershipSuccess />} />
             <Route path="/transparencia" element={<Transparency />} />
             <Route path="/convenios" element={<Agreements />} />
             <Route path="/contato" element={<Contact />} />
