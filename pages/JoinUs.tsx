@@ -21,6 +21,7 @@ const JoinUs: React.FC = () => {
         // Passo 2: Dados Funcionais
         matricula: '',
         role: 'Auditor de CE - Contas',
+        isRetired: false,
         emailInstitutional: '',
         emailPersonal: '',
         phoneFixed: '',
@@ -34,7 +35,10 @@ const JoinUs: React.FC = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
-        const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+        let val: any = value;
+        if (type === 'checkbox') val = (e.target as HTMLInputElement).checked;
+        if (name === 'isRetired') val = value === 'true';
+        
         setFormData(prev => ({ ...prev, [name]: val }));
     };
 
@@ -59,6 +63,7 @@ const JoinUs: React.FC = () => {
                     address: formData.address,
                     matricula: formData.matricula,
                     role: formData.role,
+                    is_retired: formData.isRetired,
                     email_institutional: formData.emailInstitutional,
                     email_personal: formData.emailPersonal,
                     phone_fixed: formData.phoneFixed,
@@ -207,9 +212,22 @@ const JoinUs: React.FC = () => {
                                     <option>Analista de Controle Externo</option>
                                 </select>
                             </div>
+                            <div className="md:col-span-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Situação Funcional <span className="text-red-500">*</span></label>
+                                <div className="flex gap-4">
+                                    <label className={`flex-1 flex items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer transition-all ${!formData.isRetired ? 'border-primary-500 bg-primary-50 text-primary-700 ring-1 ring-primary-500' : 'border-gray-200 hover:bg-gray-50 text-gray-600'}`}>
+                                        <input type="radio" name="isRetired" value="false" checked={!formData.isRetired} onChange={handleInputChange} className="hidden" />
+                                        <span>Auditor na Ativa</span>
+                                    </label>
+                                    <label className={`flex-1 flex items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer transition-all ${formData.isRetired ? 'border-primary-500 bg-primary-50 text-primary-700 ring-1 ring-primary-500' : 'border-gray-200 hover:bg-gray-50 text-gray-600'}`}>
+                                        <input type="radio" name="isRetired" value="true" checked={formData.isRetired} onChange={handleInputChange} className="hidden" />
+                                        <span>Auditor Aposentado</span>
+                                    </label>
+                                </div>
+                            </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional <span className="text-xs text-gray-400 font-normal ml-1">(Pelo menos um e-mail é obrigatório)</span></label>
-                                <input name="emailInstitutional" type="email" value={formData.emailInstitutional} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="seuemail@tce.pe.gov.br" />
+                                <input name="emailInstitutional" type="email" value={formData.emailInstitutional} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="seuemail@tcepe.tc.br" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">E-mail Particular</label>

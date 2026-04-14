@@ -17,6 +17,7 @@ interface MembershipData {
     phone_fixed: string;
     phone_mobile: string;
     affiliation_type: string;
+    is_retired: boolean;
     created_at: string;
 }
 
@@ -139,6 +140,7 @@ const MembershipFichaView: React.FC = () => {
                         <div><span className="font-bold">E-mail Particular:</span> {data.email_personal || 'N/A'}</div>
                         <div><span className="font-bold">Telefone Fixo:</span> {data.phone_fixed || 'N/A'}</div>
                         <div><span className="font-bold">Celular / WhatsApp:</span> {data.phone_mobile}</div>
+                        <div className="col-span-2"><span className="font-bold">Situação Funcional:</span> {data.is_retired ? 'Aposentado' : 'Auditores na Ativa'}</div>
                     </div>
 
                     <div className="bg-slate-100 p-2 font-bold uppercase text-sm border-y border-black">3. Filiação Solicitada</div>

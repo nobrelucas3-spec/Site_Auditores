@@ -18,6 +18,7 @@ interface Member {
     email_institutional?: string;
     email_personal?: string;
     matricula: string;
+    is_retired: boolean;
     status: string;
     is_associado: boolean;
     is_filiado: boolean;
@@ -30,6 +31,7 @@ const MembersTab: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'inactive'>('all');
     const [filterVinculo, setFilterVinculo] = useState<'all' | 'associado' | 'filiado' | 'ambos' | 'nenhum'>('all');
+    const [filterRetired, setFilterRetired] = useState<'all' | 'active' | 'retired'>('all');
 
     const [searchTerm, setSearchTerm] = useState('');
     const [processingId, setProcessingId] = useState<string | null>(null);
@@ -148,6 +150,9 @@ const MembersTab: React.FC = () => {
                              matricula.includes(search);
         
         const matchesStatus = filterStatus === 'all' || m.status === filterStatus;
+        const matchesRetired = filterRetired === 'all' || 
+                              (filterRetired === 'retired' && m.is_retired) || 
+                              (filterRetired === 'active' && !m.is_retired);
 
         let matchesVinculo = true;
         if (filterVinculo === 'associado') matchesVinculo = m.is_associado && !m.is_filiado;
@@ -155,7 +160,7 @@ const MembersTab: React.FC = () => {
         else if (filterVinculo === 'ambos') matchesVinculo = m.is_associado && m.is_filiado;
         else if (filterVinculo === 'nenhum') matchesVinculo = !m.is_associado && !m.is_filiado;
 
-        return matchesSearch && matchesStatus && matchesVinculo;
+        return matchesSearch && matchesStatus && matchesVinculo && matchesRetired;
     });
 
     return (
@@ -192,7 +197,18 @@ const MembersTab: React.FC = () => {
                                     </th>
                                     <th className="px-6 py-4">
                                         <div className="text-xs font-bold text-gray-500 uppercase mb-2">Matrícula</div>
-                                        {/* Filtro implícito pela busca já existente */}
+                                    </th>
+                                    <th className="px-6 py-4">
+                                        <div className="text-xs font-bold text-gray-500 uppercase mb-2">Situação</div>
+                                        <select 
+                                            value={filterRetired}
+                                            onChange={(e) => setFilterRetired(e.target.value as any)}
+                                            className="text-[10px] border rounded px-1 py-0.5 outline-none focus:ring-1 focus:ring-primary-500 bg-white"
+                                        >
+                                            <option value="all">Todos</option>
+                                            <option value="active">Na Ativa</option>
+                                            <option value="retired">Aposentado</option>
+                                        </select>
                                     </th>
                                     <th className="px-6 py-4">
                                         <div className="text-xs font-bold text-gray-500 uppercase mb-2">Vínculo</div>
@@ -233,15 +249,22 @@ const MembersTab: React.FC = () => {
                                                 <div className="font-bold text-slate-900">{member.full_name}</div>
                                                 <div className="text-xs text-gray-500">{member.email}</div>
                                                 <div className="flex gap-2 mt-1">
-                                                    {member.email_institutional && member.email_institutional !== member.email && (
+                                                    {member.email_institutional && member.email_institutional.toLowerCase().trim() !== member.email.toLowerCase().trim() && (
                                                         <span className="text-[10px] text-gray-400 bg-gray-50 px-1 rounded" title="Institucional">Inst: {member.email_institutional}</span>
                                                     )}
-                                                    {member.email_personal && member.email_personal !== member.email && (
+                                                    {member.email_personal && member.email_personal.toLowerCase().trim() !== member.email.toLowerCase().trim() && member.email_personal.toLowerCase().trim() !== member.email_institutional?.toLowerCase().trim() && (
                                                         <span className="text-[10px] text-gray-400 bg-gray-50 px-1 rounded" title="Pessoal">Pers: {member.email_personal}</span>
                                                     )}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 text-gray-600 font-mono">{member.matricula}</td>
+                                            <td className="px-6 py-4">
+                                                {member.is_retired ? (
+                                                    <span className="px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100 text-[10px] font-bold uppercase">Aposentado</span>
+                                                ) : (
+                                                    <span className="px-2 py-0.5 rounded-full bg-gray-50 text-gray-500 border border-gray-100 text-[10px] font-bold uppercase">Ativa</span>
+                                                )}
+                                            </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex gap-2 flex-wrap">
                                                     <button 
@@ -292,7 +315,7 @@ const MembersTab: React.FC = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={5} className="py-20 text-center text-gray-400 italic">
+                                        <td colSpan={6} className="py-20 text-center text-gray-400 italic">
                                             Nenhum membro encontrado com os filtros selecionados.
                                         </td>
                                     </tr>

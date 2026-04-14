@@ -18,6 +18,7 @@ interface Application {
     email_personal: string;
     matricula: string;
     affiliation_type: string;
+    is_retired: boolean;
     status: string;
     created_at: string;
 }
@@ -71,6 +72,7 @@ const ApplicationsTab: React.FC = () => {
                     email_institutional: app.email_institutional,
                     email_personal: app.email_personal,
                     matricula: app.matricula,
+                    is_retired: app.is_retired,
                     status: 'active',
                     is_associado: isAssociado,
                     is_filiado: isFiliado,
