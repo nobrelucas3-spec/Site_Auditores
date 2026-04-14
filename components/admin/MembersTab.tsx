@@ -15,6 +15,8 @@ interface Member {
     id: string;
     full_name: string;
     email: string;
+    email_institutional?: string;
+    email_personal?: string;
     matricula: string;
     status: string;
     is_associado: boolean;
@@ -133,12 +135,16 @@ const MembersTab: React.FC = () => {
 
     const filteredMembers = members.filter(m => {
         const name = m.full_name?.toLowerCase() || '';
-        const email = m.email?.toLowerCase() || '';
+        const emailPrimary = m.email?.toLowerCase() || '';
+        const emailInst = m.email_institutional?.toLowerCase() || '';
+        const emailPers = m.email_personal?.toLowerCase() || '';
         const matricula = m.matricula || '';
         const search = searchTerm.toLowerCase();
         
         const matchesSearch = name.includes(search) || 
-                             email.includes(search) ||
+                             emailPrimary.includes(search) ||
+                             emailInst.includes(search) ||
+                             emailPers.includes(search) ||
                              matricula.includes(search);
         
         const matchesStatus = filterStatus === 'all' || m.status === filterStatus;
@@ -226,6 +232,14 @@ const MembersTab: React.FC = () => {
                                             <td className="px-6 py-4">
                                                 <div className="font-bold text-slate-900">{member.full_name}</div>
                                                 <div className="text-xs text-gray-500">{member.email}</div>
+                                                <div className="flex gap-2 mt-1">
+                                                    {member.email_institutional && member.email_institutional !== member.email && (
+                                                        <span className="text-[10px] text-gray-400 bg-gray-50 px-1 rounded" title="Institucional">Inst: {member.email_institutional}</span>
+                                                    )}
+                                                    {member.email_personal && member.email_personal !== member.email && (
+                                                        <span className="text-[10px] text-gray-400 bg-gray-50 px-1 rounded" title="Pessoal">Pers: {member.email_personal}</span>
+                                                    )}
+                                                </div>
                                             </td>
                                             <td className="px-6 py-4 text-gray-600 font-mono">{member.matricula}</td>
                                             <td className="px-6 py-4">

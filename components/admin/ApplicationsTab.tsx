@@ -67,7 +67,9 @@ const ApplicationsTab: React.FC = () => {
                 .from('members')
                 .insert([{
                     full_name: app.full_name,
-                    email: email,
+                    email: email, // O e-mail principal (de login) escolhido
+                    email_institutional: app.email_institutional,
+                    email_personal: app.email_personal,
                     matricula: app.matricula,
                     status: 'active',
                     is_associado: isAssociado,

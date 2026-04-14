@@ -9,31 +9,62 @@ const MemberLogin: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
+        // Capturar erro de redirecionamento, se houver
+        if (location.state?.error) {
+            setError(location.state.error);
+        }
+
         const checkSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
-                navigate('/area-do-filiado/dashboard');
+                // Verificar se ainda é ativo antes de manter logado
+                const { data: member } = await supabase
+                    .from('members')
+                    .select('status')
+                    .eq('email', session.user.email)
+                    .maybeSingle();
+
+                if (member?.status === 'active') {
+                    navigate('/area-do-filiado/dashboard');
+                } else {
+                    await supabase.auth.signOut();
+                }
             }
         };
         checkSession();
-    }, [navigate]);
+    }, [navigate, location]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
 
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error: loginError } = await supabase.auth.signInWithPassword({
             email,
             password,
         });
 
-        if (error) {
-            setError(error.message === 'Invalid login credentials'
+        if (loginError) {
+            setError(loginError.message === 'Invalid login credentials'
                 ? 'E-mail ou senha incorretos. Tente novamente.'
-                : `Erro: ${error.message}`);
+                : `Erro: ${loginError.message}`);
+            setLoading(false);
+            return;
+        }
+
+        // NOVO: Verificar se o membro está na tabela e está ativo
+        const { data: member, error: memberError } = await supabase
+            .from('members')
+            .select('status')
+            .eq('email', email)
+            .maybeSingle();
+
+        if (memberError || !member || member.status !== 'active') {
+            await supabase.auth.signOut();
+            setError('Sua conta está inativa ou não foi encontrada no cadastro da associação. Entre em contato com o suporte.');
             setLoading(false);
         } else {
             navigate('/area-do-filiado/dashboard');

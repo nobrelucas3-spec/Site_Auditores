@@ -25,16 +25,22 @@ const MemberDashboard: React.FC = () => {
             } else {
                 setUser(session.user);
 
-                // Fetch member details
-                const { data: memberData } = await supabase
+                // Fetch member details and verify status
+                const { data: memberData, error: memberError } = await supabase
                     .from('members')
                     .select('*')
                     .eq('email', session.user.email)
-                    .single();
+                    .maybeSingle();
 
-                if (memberData) {
-                    setMember(memberData);
+                if (memberError || !memberData || memberData.status !== 'active') {
+                    console.error('Acesso negado: Perfil inexistente ou inativo.');
+                    await supabase.auth.signOut();
+                    navigate('/area-do-filiado', { state: { error: 'Acesso restrito a membros ativos. Verifique sua situação com a associação.' } });
+                    return;
                 }
+
+                setMember(memberData);
+                
                 // Fetch recent documents
                 const { data: docs } = await supabase
                     .from('documents')

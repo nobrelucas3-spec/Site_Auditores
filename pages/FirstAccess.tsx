@@ -31,18 +31,28 @@ const FirstAccess: React.FC = () => {
         }
 
         try {
-            // 1. Check if email and matricula exist in members table
+            // 1. Check if matricula exists and if email matches ANY of the 3 columns
             const { data: memberData, error: memberError } = await supabase
                 .from('members')
                 .select('*')
-                .eq('email', email)
                 .eq('matricula', matricula)
-                .single();
+                .or(`email.eq.${email},email_institutional.eq.${email},email_personal.eq.${email}`)
+                .maybeSingle();
 
             if (memberError || !memberData) {
                 setError('Dados não encontrados. Verifique se o E-mail e Matrícula conferem com seu cadastro na associação.');
                 setLoading(false);
                 return;
+            }
+
+            // Se o e-mail usado para criar a conta for diferente do e-mail 'principal', atualizamos o principal
+            if (memberData.email !== email) {
+                const { error: updateEmailError } = await supabase
+                    .from('members')
+                    .update({ email: email })
+                    .eq('id', memberData.id);
+                
+                if (updateEmailError) throw updateEmailError;
             }
 
             if (memberData.status !== 'active') {
