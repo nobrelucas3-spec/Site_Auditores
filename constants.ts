@@ -163,7 +163,7 @@ export const MOCK_NEWS: NewsItem[] = [
 
       <p>Navegue pelo menu e conheça todas as funcionalidades. A Área do Filiado já está ativa e pode ser acessada com seu email cadastrado.</p>
     `,
-    date: '2026-02-12',
+    date: '2026-04-27',
     imageUrl: '/news/new_website_launch.png',
     category: NewsCategory.INSTITUCIONAL,
     isHighlight: true,
