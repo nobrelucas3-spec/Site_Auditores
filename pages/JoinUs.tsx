@@ -20,7 +20,7 @@ const JoinUs: React.FC = () => {
         
         // Passo 2: Dados Funcionais
         matricula: '',
-        role: 'Auditor de Controle Externo',
+        role: 'Auditor de CE - Contas',
         emailInstitutional: '',
         emailPersonal: '',
         phoneFixed: '',
@@ -28,7 +28,8 @@ const JoinUs: React.FC = () => {
 
         // Passo 3: Filiação
         affiliationType: 'Ambos', // 'Associação', 'Sindicato', 'Ambos'
-        termsAccepted: false
+        termsAccepted: false,
+        sendCopyToUser: true
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -47,7 +48,7 @@ const JoinUs: React.FC = () => {
 
         try {
             // 1. Salvar no Supabase
-            const { error: supabaseError } = await supabase
+            const { data: appData, error: supabaseError } = await supabase
                 .from('membership_applications')
                 .insert([{
                     full_name: formData.fullName,
@@ -64,27 +65,70 @@ const JoinUs: React.FC = () => {
                     phone_mobile: formData.phoneMobile,
                     affiliation_type: formData.affiliationType,
                     terms_accepted: formData.termsAccepted
-                }]);
+                }])
+                .select()
+                .single();
 
             if (supabaseError) throw supabaseError;
 
             // 2. Enviar via FormSubmit (Email)
-            // Para fazer o envio sem redirecionar a página, podemos usar fetch
+            const appId = appData?.id;
+            const linkFicha = `${window.location.origin}${window.location.pathname}#/filiados/ficha/${appId}`;
+
+            const mappedData = {
+                'Nome Completo': formData.fullName,
+                'CPF': formData.cpf,
+                'RG': formData.rg,
+                'Data de Nascimento': formData.birthDate,
+                'Naturalidade': formData.birthplace,
+                'Endereço': formData.address,
+                'Matrícula TCE-PE': formData.matricula,
+                'Cargo': formData.role,
+                'E-mail Institucional': formData.emailInstitutional,
+                'E-mail Particular': formData.emailPersonal,
+                'Telefone Fixo': formData.phoneFixed,
+                'Celular/WhatsApp': formData.phoneMobile,
+                'Tipo de Adesão': formData.affiliationType,
+                'Receber Cópia por E-mail': formData.sendCopyToUser ? 'Sim' : 'Não',
+                'Aceitou os Termos': formData.termsAccepted ? 'Sim' : 'Não'
+            };
+
             const emailBody = {
                 _subject: `Nova Solicitação de Filiação: ${formData.fullName}`,
                 _template: 'table',
                 _captcha: 'false',
-                ...formData
+                _language: 'pt',
+                Link_Ficha_Oficial: linkFicha,
+                ...mappedData
             };
 
-            await fetch('https://formsubmit.co/ajax/auditores.sindical.tce.pe@gmail.com', {
+            await fetch('https://formsubmit.co/ajax/13ae6adc7181116bc0173267ef273d47', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(emailBody)
             });
 
+            // 2.1 Enviar cópia para o usuário (se habilitado)
+            const userEmail = formData.emailInstitutional || formData.emailPersonal;
+            if (formData.sendCopyToUser && userEmail) {
+                const userEmailBody = {
+                    _subject: `Cópia da sua Solicitação de Filiação - Site Auditores TCE-PE`,
+                    _template: 'table',
+                    _captcha: 'false',
+                    _language: 'pt',
+                    Link_Ficha_Oficial: linkFicha,
+                    ...mappedData
+                };
+                
+                await fetch(`https://formsubmit.co/ajax/${userEmail}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userEmailBody)
+                });
+            }
+
             // 3. Sucesso
-            navigate('/associe-se/sucesso', { state: { name: formData.fullName, type: formData.affiliationType } });
+            navigate('/associe-se/sucesso', { state: { ...formData } });
 
         } catch (err: any) {
             console.error(err);
@@ -101,31 +145,46 @@ const JoinUs: React.FC = () => {
                     <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Nome Completo <span className="text-red-500">*</span></label>
                                 <input name="fullName" value={formData.fullName} onChange={handleInputChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="Como no RG" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">CPF <span className="text-red-500">*</span></label>
                                 <input name="cpf" value={formData.cpf} onChange={handleInputChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="000.000.000-00" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">RG</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">RG <span className="text-red-500">*</span></label>
                                 <input name="rg" value={formData.rg} onChange={handleInputChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="Órgão Emissor" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento <span className="text-red-500">*</span></label>
                                 <input name="birthDate" type="date" value={formData.birthDate} onChange={handleInputChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Naturalidade</label>
-                                <input name="birthplace" value={formData.birthplace} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="Cidade - UF" />
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Naturalidade <span className="text-red-500">*</span></label>
+                                <input name="birthplace" value={formData.birthplace} onChange={handleInputChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="Cidade - UF" />
                             </div>
                             <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Endereço Completo</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Endereço Completo <span className="text-red-500">*</span></label>
                                 <textarea name="address" value={formData.address} onChange={handleInputChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none h-20" placeholder="Rua, número, complemento, bairro, cidade e CEP" />
                             </div>
                         </div>
-                        <button onClick={nextStep} className="w-full bg-primary-900 text-white font-bold py-3 rounded-lg hover:bg-primary-800 transition-colors flex items-center justify-center gap-2">
+                        {error && step === 1 && (
+                            <div className="p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-100">
+                                {error}
+                            </div>
+                        )}
+                        <button 
+                            onClick={() => {
+                                if (!formData.fullName || !formData.cpf || !formData.rg || !formData.birthDate || !formData.birthplace || !formData.address) {
+                                    setError('Por favor, preencha todos os campos obrigatórios marcados com *.');
+                                    return;
+                                }
+                                setError(null);
+                                nextStep();
+                            }} 
+                            className="w-full bg-primary-900 text-white font-bold py-3 rounded-lg hover:bg-primary-800 transition-colors flex items-center justify-center gap-2"
+                        >
                             Avançar <ArrowRight size={18} />
                         </button>
                     </div>
@@ -135,22 +194,22 @@ const JoinUs: React.FC = () => {
                     <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Matrícula TCE-PE</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Matrícula TCE-PE <span className="text-red-500">*</span></label>
                                 <input name="matricula" value={formData.matricula} onChange={handleInputChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="Ex: 12345" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Cargo <span className="text-red-500">*</span></label>
                                 <select name="role" value={formData.role} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none bg-white">
-                                    <option>Auditor de Controle Externo</option>
-                                    <option>Auditor de Controle Externo (Obras)</option>
-                                    <option>Auditor de Controle Externo (TI)</option>
-                                    <option>Auditor de Controle Externo (Saúde)</option>
+                                    <option>Auditor de CE - Contas</option>
+                                    <option>Auditor de CE - Obras</option>
+                                    <option>Auditor de CE - TI</option>
+                                    <option>Auditor de CE - Saúde</option>
                                     <option>Analista de Controle Externo</option>
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional</label>
-                                <input name="emailInstitutional" type="email" value={formData.emailInstitutional} onChange={handleInputChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="seuemail@tce.pe.gov.br" />
+                                <label className="block text-sm font-medium text-gray-700 mb-1">E-mail Institucional <span className="text-xs text-gray-400 font-normal ml-1">(Pelo menos um e-mail é obrigatório)</span></label>
+                                <input name="emailInstitutional" type="email" value={formData.emailInstitutional} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="seuemail@tce.pe.gov.br" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">E-mail Particular</label>
@@ -161,15 +220,34 @@ const JoinUs: React.FC = () => {
                                 <input name="phoneFixed" value={formData.phoneFixed} onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="(81) 0000-0000" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Celular / WhatsApp</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Celular / WhatsApp <span className="text-red-500">*</span></label>
                                 <input name="phoneMobile" value={formData.phoneMobile} onChange={handleInputChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" placeholder="(81) 90000-0000" />
                             </div>
                         </div>
+                        {error && step === 2 && (
+                            <div className="p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-100">
+                                {error}
+                            </div>
+                        )}
                         <div className="flex gap-4">
-                            <button onClick={prevStep} className="flex-1 bg-gray-100 text-gray-600 font-bold py-3 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                            <button onClick={() => { setError(null); prevStep(); }} className="flex-1 bg-gray-100 text-gray-600 font-bold py-3 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
                                 <ArrowLeft size={18} /> Voltar
                             </button>
-                            <button onClick={nextStep} className="flex-1 bg-primary-900 text-white font-bold py-3 rounded-lg hover:bg-primary-800 transition-colors flex items-center justify-center gap-2">
+                            <button 
+                                onClick={() => {
+                                    if (!formData.matricula || !formData.phoneMobile) {
+                                        setError('Por favor, preencha os campos obrigatórios marcados com *.');
+                                        return;
+                                    }
+                                    if (!formData.emailInstitutional && !formData.emailPersonal) {
+                                        setError('Por favor, preencha pelo menos um e-mail (Institucional ou Particular).');
+                                        return;
+                                    }
+                                    setError(null);
+                                    nextStep();
+                                }} 
+                                className="flex-1 bg-primary-900 text-white font-bold py-3 rounded-lg hover:bg-primary-800 transition-colors flex items-center justify-center gap-2"
+                            >
                                 Avançar <ArrowRight size={18} />
                             </button>
                         </div>
@@ -222,7 +300,14 @@ const JoinUs: React.FC = () => {
                            <div className="flex items-start gap-3">
                                <input type="checkbox" id="terms" name="termsAccepted" checked={formData.termsAccepted} onChange={handleInputChange} className="mt-1 w-4 h-4 rounded text-primary-600 focus:ring-primary-500" required />
                                <label htmlFor="terms" className="text-xs text-gray-600 leading-relaxed">
-                                   Solicito a minha inclusão conforme selecionado acima e **autorizo o débito da contribuição mensal** em minha conta corrente ou por desconto direto em meus vencimentos na folha de pagamento do TCE-PE. Declaro estar ciente e de acordo com as regras estatutárias das entidades.
+                                   Solicito a minha inclusão conforme selecionado acima e <span className="font-bold">autorizo o débito da contribuição mensal</span> em minha conta corrente ou por desconto direto em meus vencimentos na folha de pagamento do TCE-PE. Declaro estar ciente e de acordo com as regras estatutárias das entidades.
+                               </label>
+                           </div>
+
+                           <div className="flex items-center gap-3 mt-4 pt-4 border-t border-gray-100">
+                               <input type="checkbox" id="sendCopy" name="sendCopyToUser" checked={formData.sendCopyToUser} onChange={handleInputChange} className="w-4 h-4 rounded text-primary-600 focus:ring-primary-500" />
+                               <label htmlFor="sendCopy" className="text-sm text-gray-700 font-medium cursor-pointer">
+                                   Desejo receber uma cópia desta ficha no meu e-mail
                                </label>
                            </div>
                         </div>

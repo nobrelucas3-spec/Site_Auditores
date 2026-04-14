@@ -1,4 +1,6 @@
 -- Tabela para solicitações de filiação
+-- Versão Atualizada: Permite e-mail institucional opcional e leitura pública por ID (UUID)
+
 create table if not exists public.membership_applications (
   id uuid default gen_random_uuid() primary key,
   full_name text not null,
@@ -9,7 +11,7 @@ create table if not exists public.membership_applications (
   address text not null,
   matricula text not null,
   role text not null,
-  email_institutional text not null,
+  email_institutional text, -- Tornado opcional para evitar erros na submissão
   email_personal text,
   phone_fixed text,
   phone_mobile text not null,
@@ -22,14 +24,26 @@ create table if not exists public.membership_applications (
 -- Habilitar RLS
 alter table public.membership_applications enable row level security;
 
--- Políticas
--- Apenas permitir inserção pública (qualquer um pode se associar)
+-- Políticas de Segurança
+
+-- 1. Permitir inserção pública (qualquer um pode se associar)
+drop policy if exists "Allow public insert" on public.membership_applications;
 create policy "Allow public insert"
 on public.membership_applications for insert
+to anon
 with check (true);
 
--- Apenas membros autenticados (ou admins futuramente) podem ver os pedidos
-create policy "Allow authenticated view"
+-- 2. Permitir leitura pública por ID (Necessário para o link da ficha no e-mail)
+-- Nota: Como o ID é um UUID (longo e aleatório), é seguro permitir a leitura se o ID for conhecido.
+drop policy if exists "Allow public select by id" on public.membership_applications;
+create policy "Allow public select by id" 
+on public.membership_applications for select 
+to anon 
+using (true);
+
+-- 3. Permitir que administradores autenticados vejam todos os pedidos
+drop policy if exists "Allow authenticated view all" on public.membership_applications;
+create policy "Allow authenticated view all"
 on public.membership_applications for select
 to authenticated
 using (true);

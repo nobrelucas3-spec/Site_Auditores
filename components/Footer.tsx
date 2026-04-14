@@ -24,6 +24,7 @@ const Footer: React.FC = () => {
             <li><a href="#" className="hover:text-secondary-400 transition-colors block py-1">Clube de Vantagens</a></li>
             <li><a href="https://www.tce.pe.gov.br/" target="_blank" rel="noopener noreferrer" className="hover:text-secondary-400 transition-colors block py-1">TCE-PE Oficial</a></li>
             <li><Link to="/contato" className="hover:text-secondary-400 transition-colors block py-1">Fale Conosco</Link></li>
+            <li><Link to="/admin" className="hover:text-secondary-400 opacity-50 hover:opacity-100 transition-all block py-1 mt-4 text-[10px] uppercase tracking-widest font-bold">Área Administrativa</Link></li>
           </ul>
         </div>
 

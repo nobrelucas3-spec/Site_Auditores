@@ -28,6 +28,8 @@ import ArticlesList from './pages/ArticlesList';
 import Publications from './pages/Publications';
 import ArticleCalicesPrivilegio from './pages/ArticleCalicesPrivilegio';
 import MembershipSuccess from './pages/MembershipSuccess';
+import MembershipFichaView from './pages/MembershipFichaView';
+import AdminPortal from './pages/AdminPortal';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -68,6 +70,10 @@ const App: React.FC = () => {
             {/* Outras Páginas */}
             <Route path="/associe-se" element={<JoinUs />} />
             <Route path="/associe-se/sucesso" element={<MembershipSuccess />} />
+            <Route path="/filiados/ficha/:id" element={<MembershipFichaView />} />
+            <Route path="/admin" element={<AdminPortal />} />
+            <Route path="/admin/solicitacoes" element={<AdminPortal />} />
+            <Route path="/admin/documentos" element={<AdminPortal />} />
             <Route path="/transparencia" element={<Transparency />} />
             <Route path="/convenios" element={<Agreements />} />
             <Route path="/contato" element={<Contact />} />
@@ -86,7 +92,7 @@ const App: React.FC = () => {
             <Route path="/primeiro-acesso" element={<FirstAccess />} />
             <Route path="/esqueci-senha" element={<ForgotPassword />} />
             <Route path="/redefinir-senha" element={<ResetPassword />} />
-            <Route path="/admin/documentos" element={<AdminDocuments />} />
+            <Route path="/redefinir-senha" element={<ResetPassword />} />
 
             {/* Fallback */}
             <Route path="/services" element={<Agreements />} /> {/* Redirect services to agreements or keep as placeholder */}

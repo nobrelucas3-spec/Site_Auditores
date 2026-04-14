@@ -2,9 +2,26 @@ import React from 'react';
 import { useLocation, Link, Navigate } from 'react-router-dom';
 import { CheckCircle, Download, ArrowRight, Printer, Mail } from 'lucide-react';
 
+interface MembershipState {
+    fullName: string;
+    cpf: string;
+    rg: string;
+    birthDate: string;
+    birthplace: string;
+    address: string;
+    matricula: string;
+    role: string;
+    emailInstitutional: string;
+    emailPersonal: string;
+    phoneFixed: string;
+    phoneMobile: string;
+    affiliationType: string;
+    termsAccepted: boolean;
+}
+
 const MembershipSuccess: React.FC = () => {
     const location = useLocation();
-    const state = location.state as { name: string; type: string } | null;
+    const state = location.state as MembershipState | null;
 
     if (!state) {
         return <Navigate to="/associe-se" />;
@@ -14,9 +31,26 @@ const MembershipSuccess: React.FC = () => {
         window.print();
     };
 
+    const getTodayDetails = () => {
+        const today = new Date();
+        return {
+            day: today.getDate(),
+            month: today.toLocaleString('pt-BR', { month: 'long' }),
+            year: today.getFullYear()
+        };
+    };
+
+    const formatDate = (dateStr: string) => {
+        if (!dateStr) return '';
+        const [year, month, day] = dateStr.split('-');
+        return `${day}/${month}/${year}`;
+    };
+
+    const today = getTodayDetails();
+
     return (
-        <div className="min-h-screen bg-slate-50 py-20 px-4">
-            <div className="max-w-3xl mx-auto">
+        <div className="min-h-screen bg-slate-50 pt-20 pb-20 px-4">
+            <div className="max-w-3xl mx-auto no-print">
                 <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
                     
                     {/* Top Accent */}
@@ -28,12 +62,11 @@ const MembershipSuccess: React.FC = () => {
                         </div>
 
                         <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                            Solicitação Recebida com Sucesso!
+                            Solicitação Recebida!
                         </h1>
                         
                         <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
-                            Olá, <span className="font-bold text-slate-800">{state.name}</span>! Sua proposta de filiação como 
-                            <span className="font-bold text-primary-700"> {state.type}</span> foi registrada em nosso sistema.
+                            Olá, <span className="font-bold text-slate-800">{state.fullName}</span>! Sua solicitação de filiação foi registrada com sucesso.
                         </p>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 text-left">
@@ -45,15 +78,11 @@ const MembershipSuccess: React.FC = () => {
                                 <ul className="text-sm text-gray-600 space-y-3">
                                     <li className="flex gap-2">
                                         <span className="text-primary-500 font-bold">•</span>
-                                        Nossa secretaria vai conferir seus dados funcionais junto ao TCE-PE.
+                                        Nossa secretaria validará sua matrícula junto ao TCE-PE.
                                     </li>
                                     <li className="flex gap-2">
                                         <span className="text-primary-500 font-bold">•</span>
-                                        Você receberá um e-mail de confirmação em até 48 horas úteis.
-                                    </li>
-                                    <li className="flex gap-2">
-                                        <span className="text-primary-500 font-bold">•</span>
-                                        Após a aprovação, seu acesso à Área do Filiado será liberado.
+                                        Aguarde o e-mail de confirmação (até 48h úteis).
                                     </li>
                                 </ul>
                             </div>
@@ -61,54 +90,128 @@ const MembershipSuccess: React.FC = () => {
                             <div className="bg-slate-50 p-6 rounded-2xl border border-gray-100 flex flex-col justify-between">
                                 <div className="flex items-center gap-3 mb-3 text-secondary-600">
                                     <Download size={20} />
-                                    <h3 className="font-bold">Cópia da Ficha</h3>
+                                    <h3 className="font-bold">Sua Ficha de Filiação</h3>
                                 </div>
                                 <p className="text-sm text-gray-600 mb-4">
-                                    Recomendamos que salve ou imprima uma cópia dos dados enviados para seu controle.
+                                    Gere o documento oficial com seus dados para seu arquivo pessoal ou entrega física.
                                 </p>
                                 <button 
                                     onClick={handlePrint}
-                                    className="w-full flex items-center justify-center gap-2 bg-white border border-gray-200 py-2 rounded-lg text-sm font-bold text-gray-700 hover:bg-gray-100 transition-colors"
+                                    className="w-full flex items-center justify-center gap-2 bg-secondary-500 text-primary-900 py-3 rounded-lg text-sm font-bold hover:bg-secondary-600 transition-colors shadow-sm"
                                 >
-                                    <Printer size={16} /> Imprimir Resumo
+                                    <Printer size={18} /> Gerar Ficha para Impressão
                                 </button>
                             </div>
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link 
-                                to="/" 
-                                className="bg-primary-900 text-white font-bold py-3 px-8 rounded-xl hover:bg-primary-800 transition-all shadow-lg flex items-center justify-center gap-2"
-                            >
+                            <Link to="/" className="bg-primary-900 text-white font-bold py-3 px-8 rounded-xl hover:bg-primary-800 transition-all flex items-center justify-center gap-2">
                                 Voltar para o Início
                             </Link>
-                            <Link 
-                                to="/news" 
-                                className="bg-white text-primary-900 font-bold py-3 px-8 rounded-xl border border-gray-200 hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
-                            >
-                                Ver Notícias <ArrowRight size={18} />
-                            </Link>
                         </div>
-                    </div>
-
-                    {/* Footer Info */}
-                    <div className="bg-slate-900 text-slate-400 p-6 text-center text-xs">
-                        Qualquer dúvida, entre em contato através do e-mail: 
-                        <a href="mailto:auditores.sindical.tce.pe@gmail.com" className="text-primary-400 hover:underline ml-1">
-                            auditores.sindical.tce.pe@gmail.com
-                        </a>
                     </div>
                 </div>
             </div>
 
-            {/* Print Styles */}
+            {/* FORMULÁRIO PARA IMPRESSÃO (Visível apenas no print) */}
+            <div className="only-print p-8 text-black bg-white font-serif max-w-4xl mx-auto border-2 border-black">
+                <div className="text-center mb-6 border-b-2 border-black pb-4">
+                    <h1 className="text-xl font-bold uppercase">Formulário de Admissão de Membro</h1>
+                    <p className="text-sm">Associação e Sindicato dos Auditores de Controle Externo do TCE-PE</p>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="bg-gray-100 p-2 font-bold uppercase text-sm border-y border-black">Dados Pessoais</div>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
+                        <div className="col-span-2"><span className="font-bold">Nome:</span> {state.fullName}</div>
+                        <div><span className="font-bold">CPF:</span> {state.cpf}</div>
+                        <div><span className="font-bold">RG:</span> {state.rg}</div>
+                        <div><span className="font-bold">Data de Nascimento:</span> {formatDate(state.birthDate)}</div>
+                        <div><span className="font-bold">Naturalidade:</span> {state.birthplace}</div>
+                        <div className="col-span-2"><span className="font-bold">Endereço:</span> {state.address}</div>
+                    </div>
+
+                    <div className="bg-gray-100 p-2 font-bold uppercase text-sm border-y border-black">Dados Funcionais e Contato</div>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
+                        <div><span className="font-bold">Matrícula TCE-PE:</span> {state.matricula}</div>
+                        <div><span className="font-bold">Cargo:</span> {state.role}</div>
+                        <div><span className="font-bold">E-mail Institucional:</span> {state.emailInstitutional}</div>
+                        <div><span className="font-bold">E-mail Particular:</span> {state.emailPersonal}</div>
+                        <div><span className="font-bold">Telefone Fixo:</span> {state.phoneFixed || 'N/A'}</div>
+                        <div><span className="font-bold">Celular:</span> {state.phoneMobile}</div>
+                    </div>
+
+                    <div className="bg-gray-100 p-2 font-bold uppercase text-sm border-y border-black">Filiação Solicitada</div>
+                    <div className="text-sm italic">
+                        <span className="font-bold">Entidade(s):</span> {
+                            state.affiliationType === 'Ambos' 
+                            ? 'Associação dos Auditores de Controle Externo do TCE-PE e Sindicato dos Auditores do TCE-PE'
+                            : state.affiliationType === 'Associação'
+                            ? 'Associação dos Auditores de Controle Externo do Tribunal de Contas do Estado de Pernambuco'
+                            : 'Sindicato dos Auditores do Tribunal de Contas do Estado de Pernambuco'
+                        }
+                    </div>
+
+                    <div className="mt-10 p-4 border border-black text-xs leading-relaxed">
+                        <p className="mb-4">
+                            Solicito a minha inclusão conforme selecionado acima e <span className="font-bold underline">autorizo o débito da contribuição mensal</span> em minha conta corrente ou por desconto direto em meus vencimentos na folha de pagamento do TCE-PE. Declaro estar ciente e de acordo com as regras estatutárias das entidades representativas.
+                        </p>
+                        <div className="flex justify-between items-end mt-12">
+                            <div>
+                                <p>Recife - PE, {today.day} de {today.month} de {today.year}</p>
+                            </div>
+                            <div className="text-center w-64 border-t border-black pt-2">
+                                <p>Assinatura do Membro</p>
+                                <p className="text-[10px] text-gray-500">{state.fullName}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-8 text-[10px] text-gray-400 text-center">
+                        Documento gerado digitalmente em {new Date().toLocaleString('pt-BR')} - {state.cpf}
+                    </div>
+                </div>
+            </div>
+
             <style>{`
+                /* Hide print layout in standard view */
+                .only-print { display: none; }
+
                 @media print {
-                    nav, footer, button, .no-print { display: none !important; }
-                    .min-h-screen { py-0; background: white; }
-                    .max-w-3xl { max-width: 100%; border: none; shadow: none; }
-                    .rounded-3xl { border-radius: 0; }
-                    .bg-slate-50 { background: white; }
+                    /* Hide site elements */
+                    nav, footer, .no-print { display: none !important; }
+                    
+                    /* Show print element */
+                    .only-print { 
+                        display: block !important;
+                        visibility: visible;
+                    }
+
+                    body {
+                        background: white !important;
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    /* Reset container styles for print */
+                    .min-h-screen { 
+                        padding: 0 !important;
+                        background: white !important;
+                    }
+
+                    @page {
+                        margin: 1.5cm;
+                        size: auto;
+                    }
+
+                    footer, .no-print {
+                        display: none !important;
+                    }
+
+                    html, body {
+                        height: auto !important;
+                        overflow: visible !important;
+                    }
                 }
             `}</style>
         </div>

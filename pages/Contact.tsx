@@ -85,7 +85,7 @@ const Contact: React.FC = () => {
           <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
             <h2 className="text-xl font-bold text-slate-800 mb-6">Envie uma Mensagem</h2>
             <form
-              action="https://formsubmit.co/auditores.sindical.tce.pe@gmail.com"
+              action="https://formsubmit.co/13ae6adc7181116bc0173267ef273d47"
               method="POST"
               className="space-y-4"
             >
@@ -93,7 +93,8 @@ const Contact: React.FC = () => {
               <input type="hidden" name="_subject" value="Novo contato via Site Auditores TCE-PE" />
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_next" value="http://localhost:3000/convenios#/contato?success=true" />
+              <input type="hidden" name="_language" value="pt" />
+              <input type="hidden" name="_next" value={window.location.href + "?success=true"} />
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
