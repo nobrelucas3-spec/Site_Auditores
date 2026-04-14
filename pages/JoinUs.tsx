@@ -89,6 +89,7 @@ const JoinUs: React.FC = () => {
                 'Endereço': formData.address,
                 'Matrícula TCE-PE': formData.matricula,
                 'Cargo': formData.role,
+                'Situação Funcional': formData.isRetired ? 'Aposentado' : 'Auditores na Ativa',
                 'E-mail Institucional': formData.emailInstitutional,
                 'E-mail Particular': formData.emailPersonal,
                 'Telefone Fixo': formData.phoneFixed,
@@ -107,11 +108,18 @@ const JoinUs: React.FC = () => {
                 ...mappedData
             };
 
-            await fetch('https://formsubmit.co/ajax/13ae6adc7181116bc0173267ef273d47', {
+            const mainEmailRes = await fetch('https://formsubmit.co/ajax/13ae6adc7181116bc0173267ef273d47', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify(emailBody)
             });
+
+            if (!mainEmailRes.ok) {
+                console.warn('Falha ao enviar e-mail para a associação, mas os dados foram salvos no banco.');
+            }
 
             // 2.1 Enviar cópia para o usuário (se habilitado)
             const userEmail = formData.emailInstitutional || formData.emailPersonal;
@@ -125,11 +133,18 @@ const JoinUs: React.FC = () => {
                     ...mappedData
                 };
                 
-                await fetch(`https://formsubmit.co/ajax/${userEmail}`, {
+                const userEmailRes = await fetch(`https://formsubmit.co/ajax/${userEmail}`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify(userEmailBody)
                 });
+                
+                if (!userEmailRes.ok) {
+                    console.warn('Falha ao enviar e-mail de cópia para o usuário.');
+                }
             }
 
             // 3. Sucesso
