@@ -266,5 +266,15 @@ export const MOCK_ARTICLES = [
     link: '/area-do-filiado/analise-tecnica/inversao-hierarquica',
     image: 'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?auto=format&fit=crop&q=80&w=800',
     isPublic: false
+  },
+  {
+    id: 'calices-de-privilegio',
+    title: 'Cálices de privilégio e copos de plástico: quando o macro ignora o ralo da execução',
+    author: 'Rafael Barbosa Brito da Matta',
+    date: '2026-04-14',
+    summary: 'O Estado brasileiro pode ser perfeitamente compreendido através da metáfora da "hidráulica social". Imagine o erário, o recurso público...',
+    link: '/comunicacao/artigos/calices-de-privilegio',
+    image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=800',
+    isPublic: true
   }
 ];
