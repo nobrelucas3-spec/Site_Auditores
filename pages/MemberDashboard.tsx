@@ -32,10 +32,22 @@ const MemberDashboard: React.FC = () => {
                     .ilike('email', session.user.email)
                     .maybeSingle();
 
-                if (memberError || !memberData || memberData.status !== 'active') {
-                    console.error('Acesso negado: Perfil inexistente ou inativo.');
+                if (memberError) {
                     await supabase.auth.signOut();
-                    navigate('/area-do-filiado', { state: { error: 'Acesso restrito a membros ativos. Verifique sua situação com a associação.' } });
+                    navigate('/area-do-filiado', { state: { error: `Erro de Segurança (RLS): ${memberError.message}. Verifique o SQL.` } });
+                    return;
+                }
+
+                if (!memberData) {
+                    await supabase.auth.signOut();
+                    navigate('/area-do-filiado', { state: { error: `E-mail (${session.user.email}) não encontrado no cadastro de sócios.` } });
+                    return;
+                }
+
+                if (memberData.status !== 'active') {
+                    await supabase.auth.signOut();
+                    const statusMsg = memberData.status === 'pending' ? 'Sua filiação ainda está pendente de aprovação.' : `Sua conta está com status "${memberData.status}".`;
+                    navigate('/area-do-filiado', { state: { error: statusMsg } });
                     return;
                 }
 

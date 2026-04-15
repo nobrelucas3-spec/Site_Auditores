@@ -56,19 +56,35 @@ const MemberLogin: React.FC = () => {
         }
 
         // Restaurado: Verificar o status apenas pela coluna 'email' principal, mas ignorando diferença de maiúsculas
+        const cleanEmail = email.trim();
         const { data: member, error: memberError } = await supabase
             .from('members')
-            .select('status')
-            .ilike('email', email)
+            .select('status, name')
+            .ilike('email', cleanEmail)
             .maybeSingle();
 
-        if (memberError || !member || member.status !== 'active') {
+        if (memberError) {
             await supabase.auth.signOut();
-            setError('Sua conta está inativa ou não foi encontrada no cadastro da associação. Entre em contato com o suporte.');
+            setError(`Erro de Banco de Dados (RLS): ${memberError.message}. Por favor, verifique se executou o script SQL.`);
             setLoading(false);
-        } else {
-            navigate('/area-do-filiado/dashboard');
+            return;
         }
+
+        if (!member) {
+            await supabase.auth.signOut();
+            setError(`O e-mail "${cleanEmail}" não foi encontrado no cadastro de membros. Verifique se este é o seu e-mail oficial de sócio.`);
+            setLoading(false);
+            return;
+        }
+
+        if (member.status !== 'active') {
+            await supabase.auth.signOut();
+            setError(`Sua conta está com o status "${member.status}". Apenas membros com status "active" podem acessar o portal.`);
+            setLoading(false);
+            return;
+        }
+
+        navigate('/area-do-filiado/dashboard');
     };
 
     return (
