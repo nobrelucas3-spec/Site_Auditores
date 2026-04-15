@@ -12,13 +12,5 @@ if (!supabaseUrl || !supabaseAnonKey) {
 // Fallback prevents the entire React app from crashing (White Screen) if GitHub Action secrets are missing
 export const supabase = createClient(
   supabaseUrl || 'https://placeholder.supabase.co', 
-  supabaseAnonKey || 'placeholder',
-  {
-    auth: {
-      storage: window.sessionStorage, // Login expira ao fechar a aba/navegador (mais rígido)
-      autoRefreshToken: true,
-      persistSession: true,
-      detectSessionInUrl: true
-    }
-  }
+  supabaseAnonKey || 'placeholder'
 );

@@ -7,7 +7,7 @@ import useInactivityTimer from '../hooks/useInactivityTimer';
 
 const MemberDashboard: React.FC = () => {
     const navigate = useNavigate();
-    useInactivityTimer(15); // Auto-logout after 15 minutes
+    useInactivityTimer(240); // Auto-logout after 4 hours (240 minutes) of inactivity
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [user, setUser] = useState<any>(null);
