@@ -7,6 +7,7 @@ const MemberLogin: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [checkingSession, setCheckingSession] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     const location = useLocation();
@@ -18,20 +19,27 @@ const MemberLogin: React.FC = () => {
         }
 
         const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                // Verificar se ainda é ativo antes de manter logado
-                const { data: member } = await supabase
-                    .from('members')
-                    .select('status')
-                    .ilike('email', session.user.email)
-                    .maybeSingle();
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session) {
+                    // Verificar se ainda é ativo antes de manter logado
+                    const { data: member } = await supabase
+                        .from('members')
+                        .select('status')
+                        .ilike('email', session.user.email)
+                        .maybeSingle();
 
-                if (member?.status === 'active') {
-                    navigate('/area-do-filiado/dashboard');
-                } else {
-                    await supabase.auth.signOut();
+                    if (member?.status === 'active') {
+                        navigate('/area-do-filiado/dashboard');
+                        return; // Manter checkingSession true pois vamos navegar
+                    } else {
+                        await supabase.auth.signOut();
+                    }
                 }
+            } catch (err) {
+                console.error('Erro ao verificar sessão:', err);
+            } finally {
+                setCheckingSession(false);
             }
         };
         checkSession();
@@ -86,6 +94,17 @@ const MemberLogin: React.FC = () => {
 
         navigate('/area-do-filiado/dashboard');
     };
+
+    if (checkingSession) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+                <div className="text-center">
+                    <Loader2 className="animate-spin text-primary-600 mx-auto mb-4" size={40} />
+                    <p className="text-gray-500 font-medium tracking-tight">Verificando acesso...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
