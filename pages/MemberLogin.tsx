@@ -59,7 +59,7 @@ const MemberLogin: React.FC = () => {
         const cleanEmail = email.trim();
         const { data: member, error: memberError } = await supabase
             .from('members')
-            .select('status, name')
+            .select('status, full_name')
             .ilike('email', cleanEmail)
             .maybeSingle();
 
