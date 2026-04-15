@@ -25,11 +25,11 @@ const MemberDashboard: React.FC = () => {
             } else {
                 setUser(session.user);
 
-                // Fetch member details and verify status (search in all email columns using ilike)
+                // Fetch member details and verify status (strictly via 'email' column, case-insensitive)
                 const { data: memberData, error: memberError } = await supabase
                     .from('members')
                     .select('*')
-                    .or(`email.ilike.${session.user.email},email_institutional.ilike.${session.user.email},email_personal.ilike.${session.user.email}`)
+                    .ilike('email', session.user.email)
                     .maybeSingle();
 
                 if (memberError || !memberData || memberData.status !== 'active') {

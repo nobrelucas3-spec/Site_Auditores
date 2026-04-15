@@ -24,7 +24,7 @@ const MemberLogin: React.FC = () => {
                 const { data: member } = await supabase
                     .from('members')
                     .select('status')
-                    .or(`email.ilike.${session.user.email},email_institutional.ilike.${session.user.email},email_personal.ilike.${session.user.email}`)
+                    .ilike('email', session.user.email)
                     .maybeSingle();
 
                 if (member?.status === 'active') {
@@ -55,11 +55,11 @@ const MemberLogin: React.FC = () => {
             return;
         }
 
-        // NOVO: Verificar se o membro está na tabela e está ativo (buscando em todas as colunas com ilike)
+        // Restaurado: Verificar o status apenas pela coluna 'email' principal, mas ignorando diferença de maiúsculas
         const { data: member, error: memberError } = await supabase
             .from('members')
             .select('status')
-            .or(`email.ilike.${email},email_institutional.ilike.${email},email_personal.ilike.${email}`)
+            .ilike('email', email)
             .maybeSingle();
 
         if (memberError || !member || member.status !== 'active') {
