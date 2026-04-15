@@ -24,7 +24,7 @@ const MemberLogin: React.FC = () => {
                 const { data: member } = await supabase
                     .from('members')
                     .select('status')
-                    .or(`email.eq.${session.user.email},email_institutional.eq.${session.user.email},email_personal.eq.${session.user.email}`)
+                    .or(`email.ilike.${session.user.email},email_institutional.ilike.${session.user.email},email_personal.ilike.${session.user.email}`)
                     .maybeSingle();
 
                 if (member?.status === 'active') {
@@ -55,11 +55,11 @@ const MemberLogin: React.FC = () => {
             return;
         }
 
-        // NOVO: Verificar se o membro está na tabela e está ativo (buscando em todas as colunas)
+        // NOVO: Verificar se o membro está na tabela e está ativo (buscando em todas as colunas com ilike)
         const { data: member, error: memberError } = await supabase
             .from('members')
             .select('status')
-            .or(`email.eq.${email},email_institutional.eq.${email},email_personal.eq.${email}`)
+            .or(`email.ilike.${email},email_institutional.ilike.${email},email_personal.ilike.${email}`)
             .maybeSingle();
 
         if (memberError || !member || member.status !== 'active') {
