@@ -25,11 +25,11 @@ const MemberDashboard: React.FC = () => {
             } else {
                 setUser(session.user);
 
-                // Fetch member details and verify status
+                // Fetch member details and verify status (search in all email columns)
                 const { data: memberData, error: memberError } = await supabase
                     .from('members')
                     .select('*')
-                    .eq('email', session.user.email)
+                    .or(`email.eq.${session.user.email},email_institutional.eq.${session.user.email},email_personal.eq.${session.user.email}`)
                     .maybeSingle();
 
                 if (memberError || !memberData || memberData.status !== 'active') {

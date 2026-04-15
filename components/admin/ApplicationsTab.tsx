@@ -121,6 +121,54 @@ const ApplicationsTab: React.FC = () => {
         }
     };
 
+    const handleReject = async (app: Application) => {
+        if (!window.confirm(`Tem certeza que deseja REJEITAR a filiação de ${app.full_name}?`)) return;
+
+        setProcessingId(app.id);
+        setError(null);
+
+        try {
+            // 1. Update application status
+            const { error: updateError } = await supabase
+                .from('membership_applications')
+                .update({ status: 'Rejeitado' })
+                .eq('id', app.id);
+
+            if (updateError) throw updateError;
+
+            // 2. Enviar E-mail de Notificação de Rejeição (Opcional, mas recomendado)
+            try {
+                const email = app.email_institutional || app.email_personal;
+                const emailBody = {
+                    _subject: 'Atualização sobre sua solicitação de filiação - Auditores TCE-PE',
+                    _template: 'table',
+                    _captcha: 'false',
+                    _language: 'pt',
+                    Mensagem: `Olá ${app.full_name}, agradecemos seu interesse. No momento, sua solicitação de filiação não pôde ser aprovada seguindo os critérios internos da associação.`,
+                    Observacao: 'Caso acredite que houve um equívoco ou queira fornecer dados adicionais, sinta-se à vontade para entrar em contato conosco.'
+                };
+
+                await fetch(`https://formsubmit.co/ajax/${email}`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(emailBody)
+                });
+            } catch (emailErr) {
+                console.warn('Solicitação rejeitada, mas falha ao enviar e-mail de aviso:', emailErr);
+            }
+
+            setApplications(prev => prev.map(a => a.id === app.id ? { ...a, status: 'Rejeitado' } : a));
+            alert('Solicitação rejeitada com sucesso.');
+        } catch (err: any) {
+            setError(err.message || 'Erro ao rejeitar.');
+        } finally {
+            setProcessingId(null);
+        }
+    };
+
     const filteredApps = applications.filter(app => {
         const matchesSearch = app.full_name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                              app.matricula.includes(searchTerm);
@@ -142,7 +190,7 @@ const ApplicationsTab: React.FC = () => {
                     />
                 </div>
                 <div className="flex bg-gray-100 p-1 rounded-lg">
-                    {(['Pendente', 'Aprovado', 'Todos'] as const).map(s => (
+                    {(['Pendente', 'Aprovado', 'Rejeitado', 'Todos'] as const).map(s => (
                         <button 
                             key={s}
                             onClick={() => setFilterStatus(s)}
@@ -183,15 +231,25 @@ const ApplicationsTab: React.FC = () => {
                                     <td className="px-6 py-4 text-right space-x-3">
                                         <Link to={`/filiados/ficha/${app.id}`} target="_blank" className="text-primary-600 hover:underline inline-flex items-center gap-1 font-bold">Ficha <ExternalLink size={12}/></Link>
                                         {app.status === 'Pendente' && (
-                                            <button 
-                                                onClick={() => handleApprove(app)}
-                                                disabled={!!processingId}
-                                                className="bg-green-600 text-white px-3 py-1 rounded-md text-xs font-bold hover:bg-green-700 disabled:opacity-50"
-                                            >
-                                                {processingId === app.id ? <Loader2 size={12} className="animate-spin" /> : 'Aprovar'}
-                                            </button>
+                                            <>
+                                                <button 
+                                                    onClick={() => handleReject(app)}
+                                                    disabled={!!processingId}
+                                                    className="text-red-600 hover:text-red-700 text-xs font-bold px-2 py-1"
+                                                >
+                                                    Rejeitar
+                                                </button>
+                                                <button 
+                                                    onClick={() => handleApprove(app)}
+                                                    disabled={!!processingId}
+                                                    className="bg-green-600 text-white px-3 py-1 rounded-md text-xs font-bold hover:bg-green-700 disabled:opacity-50"
+                                                >
+                                                    {processingId === app.id ? <Loader2 size={12} className="animate-spin" /> : 'Aprovar'}
+                                                </button>
+                                            </>
                                         )}
                                         {app.status === 'Aprovado' && <span className="text-green-600 font-bold text-xs">✓ Aprovado</span>}
+                                        {app.status === 'Rejeitado' && <span className="text-red-600 font-bold text-xs">✕ Rejeitado</span>}
                                     </td>
                                 </tr>
                             ))}
