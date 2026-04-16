@@ -23,6 +23,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import FinancialDetailed from './pages/FinancialDetailed';
 import AdminDocuments from './pages/AdminDocuments';
+import MemberDocuments from './pages/MemberDocuments';
 import Legal from './pages/Legal';
 import ArticlesList from './pages/ArticlesList';
 import Publications from './pages/Publications';
@@ -84,6 +85,7 @@ const App: React.FC = () => {
             {/* Área do Filiado */}
             <Route path="/area-do-filiado" element={<MemberLogin />} />
             <Route path="/area-do-filiado/dashboard" element={<MemberDashboard />} />
+            <Route path="/area-do-filiado/documentos" element={<MemberDocuments />} />
             <Route path="/area-do-filiado/financeiro" element={<FinancialDashboard />} />
             <Route path="/area-do-filiado/financeiro/detalhes" element={<FinancialDetailed />} />
             <Route path="/area-do-filiado/analise-tecnica" element={<TechnicalAnalysisList />} />

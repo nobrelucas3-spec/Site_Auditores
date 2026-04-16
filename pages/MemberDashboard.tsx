@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, FileText, CreditCard, ShieldCheck, Loader, Download, BookOpen } from 'lucide-react';
+import { LogOut, User, FileText, CreditCard, ShieldCheck, Loader, Download, BookOpen, ShieldAlert, Mail, Calendar, Hash, Info } from 'lucide-react';
 
 import useInactivityTimer from '../hooks/useInactivityTimer';
+import Modal from '../components/Modal';
 
 const MemberDashboard: React.FC = () => {
     const navigate = useNavigate();
@@ -14,6 +15,8 @@ const MemberDashboard: React.FC = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [member, setMember] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [documents, setDocuments] = useState<any[]>([]);
 
@@ -31,6 +34,15 @@ const MemberDashboard: React.FC = () => {
                     .select('*')
                     .ilike('email', session.user.email)
                     .maybeSingle();
+
+                // Check if user is an admin
+                const { data: adminData } = await supabase
+                    .from('admins')
+                    .select('id')
+                    .ilike('email', session.user.email)
+                    .maybeSingle();
+
+                setIsAdmin(!!adminData);
 
                 if (memberError) {
                     await supabase.auth.signOut();
@@ -70,6 +82,13 @@ const MemberDashboard: React.FC = () => {
     const handleLogout = async () => {
         await supabase.auth.signOut();
         navigate('/area-do-filiado');
+    };
+
+    const scrollToDocuments = () => {
+        const element = document.getElementById('recent-documents');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     if (loading) {
@@ -141,8 +160,11 @@ const MemberDashboard: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <button className="w-full mt-4 bg-white border border-gray-200 text-gray-700 py-2 rounded-lg font-bold text-sm shadow-sm hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
-                            <User size={16} /> Ver Dados Completos
+                        <button 
+                            onClick={() => setIsProfileModalOpen(true)}
+                            className="w-full mt-4 bg-white border border-gray-200 text-gray-700 py-3 rounded-xl font-bold text-sm shadow-sm hover:bg-gray-50 transition-all flex items-center justify-center gap-2 group"
+                        >
+                            <User size={16} className="text-primary-600" /> Ver Dados Completos
                         </button>
                     </div>
 
@@ -160,13 +182,23 @@ const MemberDashboard: React.FC = () => {
                             <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Acessar</span>
                         </div>
 
-                        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-center items-center text-center">
-                            <div className="bg-blue-100 p-3 rounded-full text-blue-600 mb-3">
+                        <div
+                            onClick={scrollToDocuments}
+                            className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-center items-center text-center cursor-pointer hover:shadow-md transition-shadow group"
+                        >
+                            <div className="bg-blue-100 p-3 rounded-full text-blue-600 mb-3 group-hover:scale-110 transition-transform">
                                 <FileText size={24} />
                             </div>
                             <h3 className="font-bold text-gray-800">Documentos</h3>
-                            <p className="text-sm text-gray-500 mb-3">3 novos documentos disponíveis.</p>
-                            <button className="text-blue-600 text-sm font-bold hover:underline">Acessar Arquivos</button>
+                            <p className="text-sm text-gray-500 mb-3">
+                                {documents.length > 0 ? `${documents.length} documentos recentes.` : 'Nenhum documento disponível.'}
+                            </p>
+                            <button 
+                                onClick={() => navigate('/area-do-filiado/documentos')}
+                                className="text-blue-600 text-sm font-bold hover:underline"
+                            >
+                                Acessar Arquivos
+                            </button>
                         </div>
 
                         <div
@@ -184,7 +216,7 @@ const MemberDashboard: React.FC = () => {
                 </div>
 
                 {/* Área de Documentos Recentes */}
-                <h2 className="text-xl font-bold text-slate-900 mb-4 mt-8">Documentos Recentes</h2>
+                <h2 id="recent-documents" className="text-xl font-bold text-slate-900 mb-4 mt-8">Documentos Recentes</h2>
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                     {loading ? (
                         <div className="p-8 text-center text-gray-400">Carregando documentos...</div>
@@ -217,13 +249,70 @@ const MemberDashboard: React.FC = () => {
                         <div className="p-8 text-center text-gray-500">Nenhum documento recente encontrado.</div>
                     )}
 
-                    <div className="p-3 bg-gray-50 text-center border-t border-gray-200">
-                        <button onClick={() => navigate('/admin/documentos')} className="text-xs text-gray-500 hover:text-gray-800 underline">
-                            Gerenciar Arquivos (Admin)
-                        </button>
-                    </div>
+                    {isAdmin && (
+                        <div className="p-4 bg-primary-50 text-center border-t border-primary-100">
+                            <button 
+                                onClick={() => navigate('/admin/documentos')} 
+                                className="text-sm font-bold text-primary-700 hover:text-primary-800 flex items-center justify-center gap-2 mx-auto"
+                            >
+                                <ShieldAlert size={16} /> Painel de Gerenciamento (Administrador)
+                            </button>
+                        </div>
+                    )}
                 </div>
             </main>
+
+            {/* Profile Modal */}
+            <Modal 
+                isOpen={isProfileModalOpen} 
+                onClose={() => setIsProfileModalOpen(false)} 
+                title="Dados do Associado"
+            >
+                <div className="space-y-6">
+                    <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <div className="bg-primary-600 text-white p-3 rounded-full">
+                            <User size={24} />
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-slate-900 text-lg uppercase">{member?.full_name}</h4>
+                            <p className="text-sm text-slate-500">Filiado em {new Date(member?.created_at).toLocaleDateString()}</p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="p-3 bg-white border border-slate-100 rounded-lg">
+                            <div className="flex items-center gap-2 text-slate-400 mb-1">
+                                <Hash size={14} /> <span className="text-[10px] font-bold uppercase tracking-wider">Matrícula</span>
+                            </div>
+                            <p className="font-mono text-slate-800 font-bold">{member?.matricula || 'Não informada'}</p>
+                        </div>
+                        <div className="p-3 bg-white border border-slate-100 rounded-lg">
+                            <div className="flex items-center gap-2 text-slate-400 mb-1">
+                                <Info size={14} /> <span className="text-[10px] font-bold uppercase tracking-wider">Status Atual</span>
+                            </div>
+                            <p className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-green-100 text-green-700 capitalize">
+                                {member?.status}
+                            </p>
+                        </div>
+                        <div className="p-3 bg-white border border-slate-100 rounded-lg sm:col-span-2">
+                            <div className="flex items-center gap-2 text-slate-400 mb-1">
+                                <Mail size={14} /> <span className="text-[10px] font-bold uppercase tracking-wider">E-mail Cadastrado</span>
+                            </div>
+                            <p className="text-slate-800 font-medium">{member?.email}</p>
+                        </div>
+                        <div className="p-3 bg-white border border-slate-100 rounded-lg sm:col-span-2">
+                            <div className="flex items-center gap-2 text-slate-400 mb-1">
+                                <Calendar size={14} /> <span className="text-[10px] font-bold uppercase tracking-wider">Situação Funcional</span>
+                            </div>
+                            <p className="text-slate-800 font-medium">{member?.is_retired ? 'Aposentado' : 'Ativo na Carreira'}</p>
+                        </div>
+                    </div>
+
+                    <p className="text-[10px] text-slate-400 text-center uppercase tracking-widest mt-6">
+                        Associação dos Auditores de Controle Externo do TCE-PE
+                    </p>
+                </div>
+            </Modal>
         </div>
     );
 };
