@@ -210,7 +210,7 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
                     <img
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-contain p-8 bg-gray-50"
+                      className={`w-full h-full ${member.image === '/logo.png' ? 'object-contain p-8 bg-gray-50' : 'object-cover transition-transform duration-500 group-hover:scale-110'}`}
                     />
                   </div>
                   <div className="p-6 text-center">
