@@ -43,11 +43,7 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
                   Constituída em 2007, a partir da iniciativa de auditores comprometidos com o fortalecimento da carreira e das instituições de controle, nascemos com o propósito de consolidar uma representação legítima, técnica e articulada da categoria. Desde então, atuamos de forma consistente na defesa das atribuições dos Auditores das Contas Públicas, Auditores da Área de Saúde e Inspetores de Obras Públicas, contribuindo para a valorização profissional e o aprimoramento contínuo das atividades de fiscalização.
                 </p>
                 
-                <div className="p-6 bg-sky-50 border-l-4 border-secondary-500 my-8 rounded-r-lg">
-                  <p className="italic text-primary-900 font-semibold mb-0">
-                    "Ao longo de nossa trajetória, nos consolidamos como uma entidade atuante no fortalecimento do Tribunal de Contas do Estado de Pernambuco, reconhecendo sua função essencial na preservação do interesse público, na promoção da transparência e no aperfeiçoamento da gestão dos recursos públicos."
-                  </p>
-                </div>
+
 
                 <p>
                   Nesse contexto, atuamos de forma propositiva e responsável, contribuindo para o desenvolvimento de um controle externo cada vez mais técnico, independente e efetivo.
@@ -105,12 +101,12 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
               </div>
 
               {/* Box Valores */}
-              <div className="bg-primary-900 rounded-2xl p-8 shadow-xl hover:-translate-y-1 transition-transform duration-300 flex flex-col h-full">
-                <div className="w-14 h-14 rounded-full bg-sky-800/50 text-secondary-400 flex items-center justify-center mb-6 shrink-0 border border-sky-400/20">
+              <div className="bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:-translate-y-1 transition-transform duration-300 flex flex-col h-full">
+                <div className="w-14 h-14 rounded-full bg-blue-100 text-primary-600 flex items-center justify-center mb-6 shrink-0 border border-blue-50">
                   <Heart size={28} />
                 </div>
-                <h3 className="text-2xl font-black text-white mb-4 tracking-tight">Valores</h3>
-                <p className="text-sky-100/90 leading-relaxed text-sm flex-grow">
+                <h3 className="text-2xl font-black text-slate-800 mb-4 tracking-tight">Valores</h3>
+                <p className="text-gray-600 leading-relaxed text-sm flex-grow">
                   Nossa atuação é orientada por princípios institucionais sólidos, que se traduzem na integridade como base de todas as nossas ações, na busca permanente pela excelência técnica, na garantia de independência e imparcialidade no exercício do controle externo, no compromisso com a responsabilidade pública e com o interesse coletivo, no fortalecimento das instituições democráticas e na promoção da coesão e da representatividade da categoria.
                 </p>
               </div>
@@ -205,12 +201,12 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {BOARD_MEMBERS.map((member, idx) => (
                 <div key={idx} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100 group">
-                  <div className="h-64 overflow-hidden relative">
+                  <div className="h-80 overflow-hidden relative">
                     <div className="absolute inset-0 bg-primary-900/10 group-hover:bg-transparent transition-colors z-10"></div>
                     <img
                       src={member.image}
                       alt={member.name}
-                      className={`w-full h-full ${member.image === '/logo.png' ? 'object-contain p-8 bg-gray-50' : 'object-cover transition-transform duration-500 group-hover:scale-110'}`}
+                      className={`w-full h-full ${member.image === '/logo.png' ? 'object-contain p-8 bg-gray-50' : 'object-cover object-top transition-transform duration-500 group-hover:scale-110'}`}
                     />
                   </div>
                   <div className="p-6 text-center">

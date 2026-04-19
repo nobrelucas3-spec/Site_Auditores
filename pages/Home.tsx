@@ -31,7 +31,7 @@ const Home: React.FC = () => {
               <ListFilter size={16} className="text-secondary-600" />
               <span className="text-secondary-600 font-semibold uppercase text-sm tracking-wide">Ordem Cronológica</span>
             </div>
-            <h2 className="text-3xl font-bold text-slate-900">Últimas Notícias</h2>
+            <h2 className="text-3xl font-bold text-slate-900">Últimas notícias</h2>
           </div>
           <Link to="/news" className="hidden md:flex items-center gap-2 text-primary-700 font-bold hover:text-primary-900 transition-colors">
             Ver todas as notícias <ArrowRight size={18} />
