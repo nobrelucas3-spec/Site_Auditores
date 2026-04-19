@@ -201,7 +201,7 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {BOARD_MEMBERS.map((member, idx) => (
                 <div key={idx} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100 group">
-                  <div className="h-80 overflow-hidden relative">
+                  <div className={`w-full ${member.image === '/logo.png' ? 'h-64' : 'aspect-[920/953]'} overflow-hidden relative`}>
                     <div className="absolute inset-0 bg-primary-900/10 group-hover:bg-transparent transition-colors z-10"></div>
                     <img
                       src={member.image}
