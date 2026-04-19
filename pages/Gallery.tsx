@@ -10,6 +10,16 @@ const Gallery: React.FC<GalleryProps> = ({ type }) => {
   const title = isVideo ? 'Galeria de Vídeos' : 'Galeria de Fotos';
   const Icon = isVideo ? PlayCircle : Image;
 
+  return (
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center gap-3 mb-8">
+           <div className="bg-white p-3 rounded-full shadow-sm text-secondary-500">
+             <Icon size={32} />
+           </div>
+           <h1 className="text-3xl font-bold text-primary-900 capitalize">{title}</h1>
+        </div>
+
         <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="h-64 md:h-auto relative">

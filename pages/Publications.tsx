@@ -1,7 +1,20 @@
 import React from 'react';
-import { FileText, Download, Search, Book } from 'lucide-react';
+import { FileText, Book } from 'lucide-react';
 
 const Publications: React.FC = () => {
+    return (
+        <div className="min-h-screen bg-slate-50 py-12">
+            <div className="container mx-auto px-4">
+                <div className="flex items-center gap-3 mb-12">
+                    <div className="p-3 bg-primary-100 rounded-lg text-primary-600">
+                        <Book size={28} />
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-bold text-slate-900">Publicações</h1>
+                        <p className="text-gray-600">Biblioteca digital de relatórios, cartilhas e livros.</p>
+                    </div>
+                </div>
+
                 <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
                     <div className="flex flex-col md:flex-row">
                         <div className="md:w-1/2 h-64 md:h-auto relative">
