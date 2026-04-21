@@ -204,12 +204,6 @@ export const SERVICES: ServiceLink[] = [
     link: '/area-do-filiado'
   },
   {
-    title: 'Jurídico',
-    image: '/access/legal.png',
-    description: 'Consulte processos e agende atendimento.',
-    link: '/juridico'
-  },
-  {
     title: 'Convênios',
     image: '/access/partners.png',
     description: 'Descontos em escolas, academias e serviços.',

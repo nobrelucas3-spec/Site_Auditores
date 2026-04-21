@@ -24,7 +24,6 @@ import ResetPassword from './pages/ResetPassword';
 import FinancialDetailed from './pages/FinancialDetailed';
 import AdminDocuments from './pages/AdminDocuments';
 import MemberDocuments from './pages/MemberDocuments';
-import Legal from './pages/Legal';
 import ArticlesList from './pages/ArticlesList';
 import Publications from './pages/Publications';
 import ArticleCalicesPrivilegio from './pages/ArticleCalicesPrivilegio';
@@ -78,9 +77,6 @@ const App: React.FC = () => {
             <Route path="/transparencia" element={<Transparency />} />
             <Route path="/convenios" element={<Agreements />} />
             <Route path="/contato" element={<Contact />} />
-
-            {/* Página Jurídica */}
-            <Route path="/juridico" element={<Legal />} />
 
             {/* Área do Filiado */}
             <Route path="/area-do-filiado" element={<MemberLogin />} />
