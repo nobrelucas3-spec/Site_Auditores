@@ -204,6 +204,12 @@ export const SERVICES: ServiceLink[] = [
     link: '/area-do-filiado'
   },
   {
+    title: 'Associe-se',
+    image: '/access/membership.png',
+    description: 'Faça parte da associação e fortaleça a nossa carreira.',
+    link: '/associe-se'
+  },
+  {
     title: 'Convênios',
     image: '/access/partners.png',
     description: 'Descontos em escolas, academias e serviços.',
