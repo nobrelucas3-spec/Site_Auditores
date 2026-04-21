@@ -31,6 +31,7 @@ const FinancialDashboard: React.FC = () => {
     const [totalRevenue, setTotalRevenue] = useState(0);
     const [totalExpenses, setTotalExpenses] = useState(0);
     const [balance, setBalance] = useState(0);
+    const [totalInvested, setTotalInvested] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -98,6 +99,16 @@ const FinancialDashboard: React.FC = () => {
                     const uniqueYears = Array.from(new Set(docsData.map((d: any) => d.year))).sort((a: any, b: any) => Number(b) - Number(a));
                     if (uniqueYears.length > 0) setExpandedYear(Number(uniqueYears[0]));
                 }
+            }
+
+            // 5. Fetch Fixed Investments Portfolio
+            const { data: invData } = await supabase
+                .from('fixed_investments')
+                .select('amount');
+            
+            if (invData) {
+                const total = invData.reduce((acc, curr) => acc + Number(curr.amount), 0);
+                setTotalInvested(total);
             }
 
             setLoading(false);
@@ -242,7 +253,7 @@ const FinancialDashboard: React.FC = () => {
             <main className="container mx-auto px-4 py-8">
 
                 {/* Executive Summary Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     {/* Revenue */}
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                         <div className="flex justify-between items-start mb-4">
@@ -254,7 +265,7 @@ const FinancialDashboard: React.FC = () => {
                                 <TrendingUp size={20} />
                             </div>
                         </div>
-                        <p className="text-xs text-gray-500">Total acumulado</p>
+                        <p className="text-xs text-gray-500">Total acumulado {new Date().getFullYear()}</p>
                     </div>
 
                     {/* Expenses */}
@@ -268,23 +279,66 @@ const FinancialDashboard: React.FC = () => {
                                 <TrendingDown size={20} />
                             </div>
                         </div>
-                        <p className="text-xs text-gray-500">Total acumulado</p>
+                        <p className="text-xs text-gray-500">Total acumulado {new Date().getFullYear()}</p>
                     </div>
 
-                    {/* Balance */}
+                    {/* Cash Balance */}
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                         <div className="flex justify-between items-start mb-4">
                             <div>
                                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">Saldo em Caixa</p>
-                                <h3 className={`text-2xl font-bold mt-1 ${balance >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
+                                <h3 className={`text-2xl font-bold mt-1 ${balance >= 0 ? 'text-slate-800' : 'text-red-600'}`}>
                                     {formatCurrency(balance)}
                                 </h3>
                             </div>
-                            <div className={`p-2 rounded-lg ${balance >= 0 ? 'bg-blue-100 text-blue-600' : 'bg-red-100 text-red-600'}`}>
+                            <div className={`p-2 rounded-lg ${balance >= 0 ? 'bg-slate-100 text-slate-600' : 'bg-red-100 text-red-600'}`}>
                                 <DollarSign size={20} />
                             </div>
                         </div>
-                        <p className="text-xs text-blue-600 font-bold">Disponível</p>
+                        <p className="text-xs text-slate-500 font-medium">Disponibilidade Imediata</p>
+                    </div>
+
+                    {/* Investment Portfolio */}
+                    <div className="bg-slate-900 p-6 rounded-xl shadow-lg border border-slate-800 text-white">
+                        <div className="flex justify-between items-start mb-4">
+                            <div>
+                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Investimentos (CDB/LC)</p>
+                                <h3 className="text-2xl font-bold mt-1">
+                                    {formatCurrency(totalInvested)}
+                                </h3>
+                            </div>
+                            <div className="bg-primary-500 p-2 rounded-lg text-white">
+                                <TrendingUp size={20} />
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-between mt-2">
+                             <p className="text-xs text-slate-400">Total Aplicado</p>
+                             <span className="text-[10px] font-bold bg-white/10 px-2 py-0.5 rounded uppercase tracking-tighter text-secondary-400">Patrimônio</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Total Equity Banner */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-primary-100 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <div className="bg-primary-600 text-white p-3 rounded-full shadow-lg shadow-primary-200">
+                            <DollarSign size={28} />
+                        </div>
+                        <div>
+                            <h2 className="text-slate-900 font-black text-2xl">Patrimônio Total: {formatCurrency(balance + totalInvested)}</h2>
+                            <p className="text-gray-500 text-sm">Consolidação de Disponibilidades (Caixa) + Portfólio de Longo Prazo (Investimentos Fixos)</p>
+                        </div>
+                    </div>
+                    <div className="hidden md:block h-12 w-px bg-gray-100 mx-4"></div>
+                    <div className="flex items-center gap-6">
+                        <div className="text-center">
+                            <p className="text-[10px] font-bold text-gray-400 uppercase mb-1">Disponível</p>
+                            <p className="text-sm font-bold text-slate-800">{((balance / (balance + totalInvested || 1)) * 100).toFixed(1)}%</p>
+                        </div>
+                        <div className="text-center">
+                            <p className="text-[10px] font-bold text-gray-400 uppercase mb-1">Aplicado</p>
+                            <p className="text-sm font-bold text-primary-600">{((totalInvested / (balance + totalInvested || 1)) * 100).toFixed(1)}%</p>
+                        </div>
                     </div>
                 </div>
 

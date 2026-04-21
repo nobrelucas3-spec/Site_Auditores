@@ -9,17 +9,19 @@ import {
     ChevronLeft, 
     LogOut,
     LayoutDashboard,
-    Loader2
+    Loader2,
+    DollarSign
 } from 'lucide-react';
 
 // Tab Components
 import ApplicationsTab from '../components/admin/ApplicationsTab';
 import MembersTab from '../components/admin/MembersTab';
 import DocumentsTab from '../components/admin/DocumentsTab';
+import FinancesTab from '../components/admin/FinancesTab';
 
 const AdminPortal: React.FC = () => {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<'applications' | 'members' | 'documents'>('applications');
+    const [activeTab, setActiveTab] = useState<'applications' | 'members' | 'documents' | 'finances'>('applications');
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const [adminUser, setAdminUser] = useState<any>(null);
@@ -124,6 +126,13 @@ const AdminPortal: React.FC = () => {
                         <FileText size={20} />
                         <span className="font-bold">Arquivos</span>
                     </button>
+                    <button 
+                        onClick={() => setActiveTab('finances')}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${activeTab === 'finances' ? 'bg-primary-600 text-white shadow-lg' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+                    >
+                        <DollarSign size={20} />
+                        <span className="font-bold">Financeiro</span>
+                    </button>
                 </nav>
 
                 <div className="p-4 border-t border-white/10 space-y-4">
@@ -158,6 +167,7 @@ const AdminPortal: React.FC = () => {
                          <button onClick={() => setActiveTab('applications')} className={`p-2 rounded ${activeTab === 'applications' ? 'bg-primary-100 text-primary-700' : 'text-gray-400'}`}><UserCheck size={20}/></button>
                          <button onClick={() => setActiveTab('members')} className={`p-2 rounded ${activeTab === 'members' ? 'bg-primary-100 text-primary-700' : 'text-gray-400'}`}><Users size={20}/></button>
                          <button onClick={() => setActiveTab('documents')} className={`p-2 rounded ${activeTab === 'documents' ? 'bg-primary-100 text-primary-700' : 'text-gray-400'}`}><FileText size={20}/></button>
+                         <button onClick={() => setActiveTab('finances')} className={`p-2 rounded ${activeTab === 'finances' ? 'bg-primary-100 text-primary-700' : 'text-gray-400'}`}><DollarSign size={20}/></button>
                     </div>
                 </header>
 
@@ -171,11 +181,13 @@ const AdminPortal: React.FC = () => {
                             {activeTab === 'applications' && 'Solicitações de Filiação'}
                             {activeTab === 'members' && 'Gestão de Membros Efetivos'}
                             {activeTab === 'documents' && 'Centro de Documentação'}
+                            {activeTab === 'finances' && 'Gestão de Patrimônio e Investimentos'}
                         </h2>
                         <p className="text-gray-500 mt-2">
                             {activeTab === 'applications' && 'Analise novos dados e migre auditores para a base oficial de membros.'}
                             {activeTab === 'members' && 'Controle o status e mantenha os dados da categoria atualizados.'}
                             {activeTab === 'documents' && 'Envie arquivos restritos ou públicos para o site.'}
+                            {activeTab === 'finances' && 'Atualize saldos de CDBs, LCs e gerencie o portfólio de investimentos fixos.'}
                         </p>
                     </div>
 
@@ -184,6 +196,7 @@ const AdminPortal: React.FC = () => {
                         {activeTab === 'applications' && <ApplicationsTab />}
                         {activeTab === 'members' && <MembersTab />}
                         {activeTab === 'documents' && <DocumentsTab />}
+                        {activeTab === 'finances' && <FinancesTab />}
                     </div>
                 </div>
             </main>
