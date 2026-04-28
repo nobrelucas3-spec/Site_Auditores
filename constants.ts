@@ -1,7 +1,7 @@
 import { NewsCategory, NewsItem, ServiceLink } from './types';
 
 export const BOARD_MEMBERS = [
-  { name: 'Roubier Muniz de Souza', role: 'Presidente', image: '/logo.png' },
+  { name: 'Roubier Muniz de Souza', role: 'Presidente', image: '/diretoria/roubier_muniz.png' },
   { name: 'Nelson Barreto Coutinho Bezerra de Menezes', role: 'Vice-Presidente', image: '/logo.png' },
   { name: 'Lucas Nobre de Almeida', role: 'Diretor Administrativo-Financeiro', image: '/diretoria/lucas_nobre.jpg' },
   { name: 'Talita Hermógenes Fernandes', role: 'Diretora para Assuntos Técnicos e Jurídicos', image: '/logo.png' },
