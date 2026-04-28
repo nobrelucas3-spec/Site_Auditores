@@ -50,6 +50,15 @@ const Agreements: React.FC = () => {
 
   const handleWhatsAppRedirect = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Se for um parceiro com link direto (ex: Wellhub)
+    if (selectedPartner?.link) {
+      window.open(selectedPartner.link, '_blank');
+      setIsModalOpen(false);
+      return;
+    }
+
+    // Se for contato via WhatsApp
     const text = `Olá! Sou ${formData.nome} (Matrícula: ${formData.matricula}). Gostaria de saber mais informações sobre o convênio da ${selectedPartner?.name}.`;
     const encodedText = encodeURIComponent(text);
     window.open(`https://wa.me/558191630278?text=${encodedText}`, '_blank');
@@ -111,14 +120,12 @@ const Agreements: React.FC = () => {
                 )}
                 
                 {partner.link ? (
-                  <a 
-                    href={partner.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
+                  <button 
+                    onClick={() => handleContactClick(partner)}
                     className="mt-auto w-full bg-primary-600 text-white text-center font-bold py-2 rounded hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 text-sm shadow-sm"
                   >
                     Aderir ao Convênio <ExternalLink size={14} />
-                  </a>
+                  </button>
                 ) : (
                   <button 
                     onClick={() => handleContactClick(partner)}
@@ -184,7 +191,8 @@ const Agreements: React.FC = () => {
                 type="submit"
                 className="w-full bg-secondary-500 text-primary-900 font-extrabold py-4 rounded-xl shadow-lg hover:bg-secondary-600 transition-all flex items-center justify-center gap-3 active:scale-[0.98]"
               >
-                Prosseguir para o WhatsApp <Send size={20} />
+                {selectedPartner?.link ? 'Acessar Formulário de Adesão' : 'Prosseguir para o WhatsApp'} 
+                {selectedPartner?.link ? <ExternalLink size={20} /> : <Send size={20} />}
               </button>
             </form>
           </div>
