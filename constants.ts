@@ -353,3 +353,20 @@ export const MOCK_ARTICLES = [
     isPublic: true
   }
 ];
+
+export const PHOTO_ALBUMS = [
+  {
+    id: 'dia-do-auditor-2026',
+    title: 'Dia do Auditor de Controle Externo 2026',
+    description: 'Registros do encontro comemorativo realizado em Recife.',
+    date: '2026-04-27',
+    cover: '/gallery/dia-do-auditor-2026/foto1.jpg',
+    photos: [
+      '/gallery/dia-do-auditor-2026/foto1.jpg',
+      '/gallery/dia-do-auditor-2026/foto2.jpg',
+      '/gallery/dia-do-auditor-2026/foto3.jpg',
+      '/gallery/dia-do-auditor-2026/foto4.jpg',
+      '/gallery/dia-do-auditor-2026/foto5.jpg'
+    ]
+  }
+];
