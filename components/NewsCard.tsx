@@ -20,7 +20,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, layout = 'grid' }) => {
             <img
               src={news.imageUrl}
               alt={news.title}
-              className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
+              className={`w-full h-full object-cover transition-transform hover:scale-105 duration-500 ${news.imagePosition === 'top' ? 'object-top' : news.imagePosition === 'bottom' ? 'object-bottom' : 'object-center'}`}
               onError={() => setImageError(true)}
             />
           </div>
@@ -58,7 +58,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, layout = 'grid' }) => {
           <img
             src={news.imageUrl}
             alt={news.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            className={`w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ${news.imagePosition === 'top' ? 'object-top' : news.imagePosition === 'bottom' ? 'object-bottom' : 'object-center'}`}
             onError={() => setImageError(true)}
           />
           <div className="absolute top-4 left-4">

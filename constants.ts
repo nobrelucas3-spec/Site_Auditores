@@ -42,8 +42,8 @@ export const PARTNERS = [
 export const MOCK_NEWS: NewsItem[] = [
   {
     id: 'conacon-2026',
-    title: 'Vem aí o 9º CONACON em Curitiba! Garanta sua vaga na caravana do TCE-PE',
-    summary: 'A Associação convoca os auditores a manifestarem interesse em participar do maior evento de Controle Externo do Brasil. Preencha o formulário e faça parte da caravana estadual.',
+    title: 'Vem aí o 9º CONACON em Curitiba! Manifeste seu interesse em participar',
+    summary: 'A Associação convoca os auditores a manifestarem interesse em participar do maior evento de Controle Externo do Brasil. Preencha o formulário para facilitar nossa articulação institucional.',
     content: '',
     date: '2026-04-28',
     imageUrl: '/news/conacon2026.png',
@@ -51,6 +51,38 @@ export const MOCK_NEWS: NewsItem[] = [
     isHighlight: true,
     author: 'Diretoria',
     customLink: '/conacon'
+  },
+  {
+    id: 'dia-do-auditor-integracao-2026',
+    title: 'Auditores do Tribunal de Contas de Pernambuco celebram data com evento de integração',
+    summary: 'Encontro destacou o papel dos auditores como fiscais da sociedade e reforçou a importância da independência do controle externo.',
+    content: `
+      <p class="mb-4">A Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco realizou, nesta segunda-feira (27), um encontro especial em comemoração ao Dia do Auditor de Controle Externo.</p>
+      
+      <div class="my-8">
+        <img src="/news/dia-do-auditor-2026.jpg" alt="Encontro do Dia do Auditor" class="w-full h-auto rounded-lg shadow-md mb-2" />
+        <p class="text-sm text-gray-500 text-center italic">Roubier Muniz, presidente da Associação dos Auditores de Controle Externo; Francisco Gominho, fundador da Associação e Lilian Santiago, diretora da Associação Nacional dos Auditores de Controle Externo dos Tribunais de Conta do Brasil.</p>
+      </div>
+
+      <p class="mb-4">O evento reuniu associados na Casa do Auditor, em Santo Amaro, em um momento de confraternização, integração e fortalecimento institucional da categoria.</p>
+      
+      <p class="mb-4">Durante o encontro, foi reforçado que a data vai além de uma celebração. Para o presidente da Associação, Roubier Muniz, o momento também é de resgate histórico e de reafirmação do propósito da profissão.</p>
+      
+      <p class="mb-4">“O 27 de abril nos remete a 1893, a um gesto que definiu o DNA da nossa profissão: a defesa da independência do controle externo. O controle externo não existe sem independência e essa deve ser sempre fiel ao interesse público”, destacou.</p>
+      
+      <p class="mb-4">O presidente também enfatizou o papel essencial dos auditores na sociedade.<br/>“Inspirados por esse legado, carregamos hoje o título que tanto nos orgulha: nós somos os fiscais da sociedade", afirmou.</p>
+      
+      <p class="mb-4">Ele ainda ressaltou que a atuação vai além dos números e relatórios.<br/>“Não estamos apenas lidando com processos fiscais. Estamos defendendo o patrimônio público e garantindo que o imposto pago com tanto esforço pelo cidadão se transforme em serviços de qualidade".</p>
+      
+      <p>Roubier Muniz também destacou os desafios da profissão e a importância da responsabilidade no exercício da função. Por fim, reforçou o valor da categoria e o orgulho da instituição.<br/>“O Tribunal de Contas só é a instituição forte e respeitada que é hoje porque tem, em sua base, os Auditores de Controle Externo”, concluiu.</p>
+    `,
+    date: '2026-04-28',
+    imageUrl: '/news/dia-do-auditor-2026.jpg',
+    imagePosition: 'top',
+    hideCoverInArticle: true,
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    author: 'Diretoria'
   },
   {
     id: 'valorizacao-carreira-negociacao-2026',
@@ -70,7 +102,8 @@ export const MOCK_NEWS: NewsItem[] = [
       <p>A Associação dos Auditores do TCE-PE reafirma seu compromisso com a defesa dos seus associados e continuará acompanhando de perto cada etapa das negociações.</p>
     `,
     date: '2026-04-12',
-    imageUrl: '/news/fachada-tce.jpg',
+    imageUrl: '/news/reuniao-valorizacao.jpg',
+    imagePosition: 'top',
     category: NewsCategory.INSTITUCIONAL,
     isHighlight: true,
     author: 'Diretoria'

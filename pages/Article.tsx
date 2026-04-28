@@ -19,6 +19,7 @@ const Article: React.FC = () => {
   const [imageError, setImageError] = useState(false);
 
   const hasImage = !!news?.imageUrl && news?.imageUrl !== '/logo.png' && !imageError;
+  const showCover = hasImage && !news?.hideCoverInArticle;
 
   const openLightbox = (src: string, alt: string) => {
     setCurrentImage(src);
@@ -110,20 +111,27 @@ const Article: React.FC = () => {
           </div>
         </header>
 
-        {hasImage && (
-          <div
-            className="w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-xl mb-12 bg-gray-200 relative group cursor-zoom-in"
-            onClick={() => openLightbox(news.imageUrl, news.title)}
-          >
-            <img
-              src={news.imageUrl}
-              alt={news.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              onError={() => setImageError(true)}
-            />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-              <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" size={48} />
+        {showCover && (
+          <div className="mb-12">
+            <div
+              className="w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-xl bg-gray-200 relative group cursor-zoom-in"
+              onClick={() => openLightbox(news.imageUrl, news.title)}
+            >
+              <img
+                src={news.imageUrl}
+                alt={news.title}
+                className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${news.imagePosition === 'top' ? 'object-top' : news.imagePosition === 'bottom' ? 'object-bottom' : 'object-center'}`}
+                onError={() => setImageError(true)}
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" size={48} />
+              </div>
             </div>
+            {news.imageCaption && (
+              <p className="text-sm text-gray-500 text-center italic mt-4 px-4">
+                {news.imageCaption}
+              </p>
+            )}
           </div>
         )}
 

@@ -100,15 +100,15 @@ const Conacon: React.FC = () => {
 
                                 <div className="bg-primary-50 border-l-4 border-primary-500 p-6 rounded-r-xl my-8">
                                     <h3 className="font-bold text-primary-900 text-lg mb-2 flex items-center gap-2">
-                                        <Info size={20} /> Formação de Caravana TCE-PE
+                                        <Info size={20} /> Vagas Institucionais e Participação
                                     </h3>
                                     <p className="text-primary-800 text-sm m-0 leading-relaxed">
-                                        A Associação dos Auditores do TCE-PE está verificando a viabilidade de formar uma caravana estadual para facilitar o deslocamento, hospedagem e participação dos nossos filiados no evento. 
+                                        A Associação dos Auditores do TCE-PE tem o objetivo de pleitear junto ao Tribunal a disponibilização de vagas institucionais suficientes para garantir a participação ativa dos nossos filiados neste importante congresso.
                                     </p>
                                 </div>
 
                                 <p>
-                                    Para que possamos organizar a logística e pleitear condições especiais, é fundamental medirmos o interesse da nossa base. Preencha o formulário ao lado e garanta que você receba as atualizações em primeira mão sobre os pacotes e condições exclusivas.
+                                    Para que possamos embasar nosso pleito e organizar nossa delegação estadual, é fundamental medirmos o interesse da nossa base. Preencha o formulário ao lado e garanta que você receba todas as atualizações sobre o assunto em primeira mão.
                                 </p>
 
                                 <div className="pt-6">
@@ -149,7 +149,7 @@ const Conacon: React.FC = () => {
                                     <div className="text-center mb-6">
                                         <h3 className="text-2xl font-bold text-slate-800">Vamos a Curitiba?</h3>
                                         <p className="text-sm text-gray-500 mt-2">
-                                            Preencha os dados abaixo para receber informações sobre a nossa caravana.
+                                            Preencha os dados abaixo para fortalecer nosso pleito institucional.
                                         </p>
                                     </div>
 

@@ -33,7 +33,8 @@ const HomeBanner: React.FC<HomeBannerProps> = ({ featuredNews }) => {
             description: news.summary,
             date: news.date,
             link: news.customLink || `/news/${news.id}`,
-            isCustomLink: !!news.customLink
+            isCustomLink: !!news.customLink,
+            imagePosition: news.imagePosition
         }))
     ];
 
@@ -64,7 +65,7 @@ const HomeBanner: React.FC<HomeBannerProps> = ({ featuredNews }) => {
                 >
                     {/* Background Image */}
                     <div
-                        className="absolute inset-0 bg-cover bg-center"
+                        className={`absolute inset-0 bg-cover ${slide.imagePosition === 'top' ? 'bg-top' : slide.imagePosition === 'bottom' ? 'bg-bottom' : 'bg-center'}`}
                         style={{ backgroundImage: `url('${slide.image}')` }}
                     ></div>
 

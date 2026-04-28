@@ -18,6 +18,9 @@ export interface NewsItem {
   author?: string;
   isHighlight?: boolean;
   customLink?: string;
+  imagePosition?: 'top' | 'center' | 'bottom';
+  imageCaption?: string;
+  hideCoverInArticle?: boolean;
 }
 
 export interface ServiceLink {
