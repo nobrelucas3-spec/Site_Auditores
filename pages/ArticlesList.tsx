@@ -97,7 +97,7 @@ const ArticlesList: React.FC = () => {
                     {MOCK_ARTICLES.length < 3 && (
                         <div className="border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center p-8 text-center bg-gray-50 h-full min-h-[400px]">
                             <p className="text-gray-500 font-medium mb-2">Espaço para novos artigos</p>
-                            <p className="text-sm text-gray-400">Envie sua contribuição para a diretoria de comunicação.</p>
+                            <p className="text-sm text-gray-400">Envie sua contribuição.</p>
                         </div>
                     )}
                 </div>

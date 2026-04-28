@@ -31,3 +31,12 @@ export interface ServiceLink {
   description: string;
   link: string;
 }
+
+export interface PartnerLink {
+  name: string;
+  discount: string;
+  category: string;
+  image: string;
+  description: string;
+  link?: string;
+}

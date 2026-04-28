@@ -1,4 +1,4 @@
-import { NewsCategory, NewsItem, ServiceLink } from './types';
+import { NewsCategory, NewsItem, ServiceLink, PartnerLink } from './types';
 
 export const BOARD_MEMBERS = [
   { name: 'Roubier Muniz de Souza', role: 'Presidente', image: '/diretoria/roubier_muniz.png' },
@@ -21,21 +21,52 @@ export const FISCAL_COUNCIL_SYNDICATE = [
   'José Ricardo Borges de Oliveira'
 ];
 
-export const PARTNERS = [
+export const PARTNERS: PartnerLink[] = [
   { 
-    name: 'CLUBS & Wellhub (Gympass)', 
-    discount: 'Planos a partir de R$ 35,90 ou 100% Isento na Promoção', 
+    name: 'Wellhub (Antigo Gympass) via Clubs', 
+    discount: 'Planos corporativos a partir de R$ 35,90', 
     category: 'Saúde e Bem-estar', 
     image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=600',
+    link: 'https://docs.google.com/forms/d/1IVmD_b8Ocnweqz9iatppaZxoJik1ZXNoYSerLl8RRDY/viewform',
     description: `
-      <p class="mb-2"><strong>Adesão em 3 passos:</strong></p>
-      <ol class="list-decimal pl-4 space-y-1">
-        <li>Filiação à entidade estadual (AudTCE/PE).</li>
-        <li>Autorização de uso de dados no site da ANTC.</li>
-        <li>Adesão na plataforma CLUBS.</li>
+      <p class="mb-2">Benefício exclusivo via parceria ANTC/Clubs para promoção da saúde e qualidade de vida.</p>
+      <p class="mb-2"><strong>Como aderir:</strong></p>
+      <ol class="list-decimal pl-4 space-y-1 mb-3">
+        <li>Preencha o formulário de adesão oficial.</li>
+        <li>Aguarde o contato da ANTC (prazo médio de 3 dias úteis).</li>
+        <li>Siga as instruções enviadas por e-mail para ativar sua conta.</li>
       </ol>
-      <p class="mt-3 text-primary-700 font-bold">O acesso será custeado integralmente pela ANTC!</p>
+      <p class="text-primary-700 font-bold mb-1">Dúvidas? (61) 2017-6600</p>
+      <p class="text-xs text-gray-500 italic"><a href="https://wellhub.com/pt-br/search/" target="_blank" class="underline">Clique aqui para buscar academias</a></p>
     `
+  },
+  {
+    name: 'Universidade Católica de Pernambuco',
+    discount: 'Descontos especiais em graduação e pós',
+    category: 'Educação',
+    image: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80&w=600',
+    description: '<p>Condições exclusivas para associados e dependentes em cursos de graduação, especialização, mestrado e doutorado oferecidos pela Unicap.</p>'
+  },
+  {
+    name: 'ACE-Clube Escola de Tênis Ltda',
+    discount: 'Condições especiais para aulas e locações',
+    category: 'Lazer e Esportes',
+    image: 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&q=80&w=600',
+    description: '<p>Descontos especiais na matrícula, aulas e aluguel de quadras para a prática esportiva.</p>'
+  },
+  {
+    name: 'AABB – Associação Atlética Banco do Brasil',
+    discount: 'Isenção na joia e descontos na mensalidade',
+    category: 'Lazer e Esportes',
+    image: 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&q=80&w=600',
+    description: '<p>Acesso completo à infraestrutura de lazer, esportes e eventos da AABB Recife para o filiado e sua família com valor subsidiado.</p>'
+  },
+  {
+    name: 'Uniodonto Recife',
+    discount: 'Planos odontológicos empresariais',
+    category: 'Saúde',
+    image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=600',
+    description: '<p>Ampla cobertura odontológica com rede credenciada de excelência e mensalidades com desconto direto para os associados.</p>'
   }
 ];
 
