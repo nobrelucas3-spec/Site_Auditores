@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const Conacon: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [matricula, setMatricula] = useState('');
     const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -19,13 +20,14 @@ const Conacon: React.FC = () => {
         try {
             const { error } = await supabase
                 .from('conacon_interest')
-                .insert([{ name, email, phone }]);
+                .insert([{ name, email, matricula, phone }]);
 
             if (error) throw error;
 
             setSuccess(true);
             setName('');
             setEmail('');
+            setMatricula('');
             setPhone('');
         } catch (error: any) {
             console.error('Erro ao salvar interesse:', error);
@@ -98,7 +100,7 @@ const Conacon: React.FC = () => {
                                     Nesta edição, sob o tema <em>"Auditoria de Controle Externo que transforma: impacto social e simetria constitucional"</em>, o evento reunirá especialistas, gestores públicos e auditores de todo o Brasil para debater os rumos da nossa atuação e os desafios para o fortalecimento do sistema de controle.
                                 </p>
 
-                                <div className="bg-primary-50 border-l-4 border-primary-500 p-6 rounded-r-xl my-8">
+                                <div className="bg-primary-50 border-l-4 border-primary-500 p-6 rounded-r-xl my-8 text-left">
                                     <h3 className="font-bold text-primary-900 text-lg mb-2 flex items-center gap-2">
                                         <Info size={20} /> Vagas Institucionais e Participação
                                     </h3>
@@ -173,6 +175,33 @@ const Conacon: React.FC = () => {
                                             />
                                         </div>
 
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label htmlFor="matricula" className="block text-xs font-bold text-gray-500 uppercase mb-1">Matrícula</label>
+                                                <input 
+                                                    type="text" 
+                                                    id="matricula"
+                                                    required
+                                                    value={matricula}
+                                                    onChange={(e) => setMatricula(e.target.value)}
+                                                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all bg-slate-50 focus:bg-white"
+                                                    placeholder="000.000"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="phone" className="block text-xs font-bold text-gray-500 uppercase mb-1">WhatsApp</label>
+                                                <input 
+                                                    type="tel" 
+                                                    id="phone"
+                                                    required
+                                                    value={phone}
+                                                    onChange={(e) => setPhone(e.target.value)}
+                                                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all bg-slate-50 focus:bg-white"
+                                                    placeholder="(81) 90000-0000"
+                                                />
+                                            </div>
+                                        </div>
+
                                         <div>
                                             <label htmlFor="email" className="block text-xs font-bold text-gray-500 uppercase mb-1">E-mail</label>
                                             <input 
@@ -183,19 +212,6 @@ const Conacon: React.FC = () => {
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all bg-slate-50 focus:bg-white"
                                                 placeholder="seu@email.com"
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="phone" className="block text-xs font-bold text-gray-500 uppercase mb-1">Telefone / WhatsApp</label>
-                                            <input 
-                                                type="tel" 
-                                                id="phone"
-                                                required
-                                                value={phone}
-                                                onChange={(e) => setPhone(e.target.value)}
-                                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all bg-slate-50 focus:bg-white"
-                                                placeholder="(81) 90000-0000"
                                             />
                                         </div>
 
