@@ -102,8 +102,7 @@ export const MOCK_NEWS: NewsItem[] = [
       <p>A Associação dos Auditores do TCE-PE reafirma seu compromisso com a defesa dos seus associados e continuará acompanhando de perto cada etapa das negociações.</p>
     `,
     date: '2026-04-12',
-    imageUrl: '/news/reuniao-valorizacao.jpg',
-    imagePosition: 'top',
+    imageUrl: '/news/valorizacao_carreira_reuniao.png',
     category: NewsCategory.INSTITUCIONAL,
     isHighlight: true,
     author: 'Diretoria'
