@@ -30,6 +30,7 @@ import ArticleCalicesPrivilegio from './pages/ArticleCalicesPrivilegio';
 import MembershipSuccess from './pages/MembershipSuccess';
 import MembershipFichaView from './pages/MembershipFichaView';
 import AdminPortal from './pages/AdminPortal';
+import Conacon from './pages/Conacon';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -71,6 +72,7 @@ const App: React.FC = () => {
             <Route path="/associe-se" element={<JoinUs />} />
             <Route path="/associe-se/sucesso" element={<MembershipSuccess />} />
             <Route path="/filiados/ficha/:id" element={<MembershipFichaView />} />
+            <Route path="/conacon" element={<Conacon />} />
             <Route path="/admin" element={<AdminPortal />} />
             <Route path="/admin/solicitacoes" element={<AdminPortal />} />
             <Route path="/admin/documentos" element={<AdminPortal />} />

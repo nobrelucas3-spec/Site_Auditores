@@ -41,6 +41,18 @@ export const PARTNERS = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'conacon-2026',
+    title: 'Vem aí o 9º CONACON em Curitiba! Garanta sua vaga na caravana do TCE-PE',
+    summary: 'A Associação convoca os auditores a manifestarem interesse em participar do maior evento de Controle Externo do Brasil. Preencha o formulário e faça parte da caravana estadual.',
+    content: '',
+    date: '2026-04-28',
+    imageUrl: '/news/conacon2026.png',
+    category: NewsCategory.EVENTOS,
+    isHighlight: true,
+    author: 'Diretoria',
+    customLink: '/conacon'
+  },
+  {
     id: 'valorizacao-carreira-negociacao-2026',
     title: 'Associação dos Auditores reforça atuação e acompanha negociações pela valorização da carreira no TCE-PE',
     summary: 'Entidade segue em diálogo com a gestão do Tribunal e atenta às etapas institucionais necessárias para o avanço das tratativas',

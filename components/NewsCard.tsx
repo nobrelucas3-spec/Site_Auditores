@@ -34,7 +34,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, layout = 'grid' }) => {
               <Calendar size={12} /> {new Date(news.date).toLocaleDateString('pt-BR')}
             </span>
           </div>
-          <Link to={`/news/${news.id}`}>
+          <Link to={news.customLink || `/news/${news.id}`}>
             <h3 className="text-xl font-bold text-slate-800 mb-2 hover:text-primary-700 transition-colors line-clamp-2">
               {news.title}
             </h3>
@@ -42,7 +42,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, layout = 'grid' }) => {
           <p className="text-gray-600 text-sm mb-4 line-clamp-3">
             {news.summary}
           </p>
-          <Link to={`/news/${news.id}`} className="text-primary-600 font-semibold text-sm hover:underline mt-auto">
+          <Link to={news.customLink || `/news/${news.id}`} className="text-primary-600 font-semibold text-sm hover:underline mt-auto">
             Ler notícia completa &rarr;
           </Link>
         </div>
@@ -80,7 +80,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, layout = 'grid' }) => {
           <Calendar size={12} />
           {new Date(news.date).toLocaleDateString('pt-BR')}
         </div>
-        <Link to={`/news/${news.id}`}>
+        <Link to={news.customLink || `/news/${news.id}`}>
           <h3 className="text-lg font-bold text-slate-800 mb-3 hover:text-primary-700 transition-colors line-clamp-2">
             {news.title}
           </h3>
@@ -88,7 +88,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news, layout = 'grid' }) => {
         <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
           {news.summary}
         </p>
-        <Link to={`/news/${news.id}`} className="text-primary-600 font-semibold text-sm hover:underline mt-auto">
+        <Link to={news.customLink || `/news/${news.id}`} className="text-primary-600 font-semibold text-sm hover:underline mt-auto">
           Ler mais &rarr;
         </Link>
       </div>

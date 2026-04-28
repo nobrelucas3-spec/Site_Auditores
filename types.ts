@@ -17,6 +17,7 @@ export interface NewsItem {
   category: NewsCategory;
   author?: string;
   isHighlight?: boolean;
+  customLink?: string;
 }
 
 export interface ServiceLink {

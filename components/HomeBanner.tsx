@@ -32,7 +32,8 @@ const HomeBanner: React.FC<HomeBannerProps> = ({ featuredNews }) => {
             title: news.title,
             description: news.summary,
             date: news.date,
-            link: `/news/${news.id}`
+            link: news.customLink || `/news/${news.id}`,
+            isCustomLink: !!news.customLink
         }))
     ];
 
@@ -106,7 +107,7 @@ const HomeBanner: React.FC<HomeBannerProps> = ({ featuredNews }) => {
                                     </>
                                 ) : (
                                     <Link to={slide.link!} className="bg-secondary-500 hover:bg-secondary-600 text-primary-900 font-bold py-2 px-6 md:py-3 md:px-8 text-sm md:text-base rounded shadow-lg transition-transform hover:-translate-y-1 flex items-center gap-2">
-                                        Ler Notícia Completa <ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />
+                                        {slide.isCustomLink ? 'Saber Mais & Participar' : 'Ler Notícia Completa'} <ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />
                                     </Link>
                                 )}
                             </div>
