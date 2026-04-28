@@ -92,7 +92,8 @@ const MemberLogin: React.FC = () => {
             return;
         }
 
-        navigate('/area-do-filiado/dashboard');
+        const destination = location.state?.from || '/area-do-filiado/dashboard';
+        navigate(destination);
     };
 
     if (checkingSession) {

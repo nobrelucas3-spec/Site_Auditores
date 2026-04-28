@@ -215,7 +215,7 @@ const Agreements: React.FC = () => {
               
               <div className="flex flex-col gap-3">
                 <button 
-                  onClick={() => navigate('/area-do-filiado')}
+                  onClick={() => navigate('/area-do-filiado', { state: { from: '/convenios' } })}
                   className="w-full bg-primary-600 text-white font-bold py-4 rounded-xl shadow-md hover:bg-primary-700 transition-all"
                 >
                   Fazer Login Agora
