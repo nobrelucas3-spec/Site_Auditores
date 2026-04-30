@@ -80,7 +80,7 @@ export const MOCK_NEWS: NewsItem[] = [
     category: NewsCategory.INSTITUCIONAL,
     isHighlight: false,
     hideCoverInArticle: true,
-    author: 'TCE-PE / GEJO',
+    author: 'Auditores TCE-PE',
     content: `
       <div class="mb-8">
         <img src="/news/pleno-tce-pe.jpg" alt="Sessão do Pleno TCE-PE" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
@@ -118,7 +118,7 @@ export const MOCK_NEWS: NewsItem[] = [
     category: NewsCategory.INSTITUCIONAL,
     isHighlight: true,
     hideCoverInArticle: true,
-    author: 'Diretoria',
+    author: 'Auditores TCE-PE',
     content: `
       <div class="mb-8">
         <img src="/news/imparcialidade-controle.jpg" alt="Imparcialidade no Controle Externo" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
