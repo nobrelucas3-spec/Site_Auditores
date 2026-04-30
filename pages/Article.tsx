@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MOCK_NEWS } from '../constants';
 import { OLD_NEWS } from '../old_news';
-import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, ZoomIn } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, ZoomIn, MessageCircle } from 'lucide-react';
 import ImageViewer from '../components/ImageViewer';
 
 const ALL_NEWS = [...MOCK_NEWS, ...OLD_NEWS];
@@ -38,17 +38,33 @@ const Article: React.FC = () => {
     );
   }
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: news.title,
-        text: news.summary,
-        url: window.location.href,
-      }).catch(console.error);
-    } else {
-      // Fallback
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copiado para a área de transferência!');
+  const handleShare = (platform: string) => {
+    const url = window.location.href;
+    const title = news.title;
+    const text = news.summary;
+
+    switch (platform) {
+      case 'facebook':
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'twitter':
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'linkedin':
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'whatsapp':
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank');
+        break;
+      case 'copy':
+        navigator.clipboard.writeText(url);
+        alert('Link copiado para a área de transferência!');
+        break;
+      case 'native':
+        if (navigator.share) {
+          navigator.share({ title, text, url }).catch(console.error);
+        }
+        break;
     }
   };
 
@@ -158,18 +174,32 @@ const Article: React.FC = () => {
 
             <div className="flex items-center gap-3">
               <span className="text-sm font-bold text-gray-400 uppercase tracking-wider hidden md:block">Compartilhar:</span>
-              <button onClick={handleShare} className="p-2 text-gray-500 hover:text-white hover:bg-blue-600 rounded-full transition-all" title="Compartilhar no Facebook">
+              
+              <button onClick={() => handleShare('whatsapp')} className="p-2 text-gray-500 hover:text-white hover:bg-green-500 rounded-full transition-all" title="Compartilhar no WhatsApp">
+                <MessageCircle size={20} />
+              </button>
+
+              <button onClick={() => handleShare('facebook')} className="p-2 text-gray-500 hover:text-white hover:bg-blue-600 rounded-full transition-all" title="Compartilhar no Facebook">
                 <Facebook size={20} />
               </button>
-              <button onClick={handleShare} className="p-2 text-gray-500 hover:text-white hover:bg-sky-500 rounded-full transition-all" title="Compartilhar no Twitter">
+              
+              <button onClick={() => handleShare('twitter')} className="p-2 text-gray-500 hover:text-white hover:bg-sky-500 rounded-full transition-all" title="Compartilhar no Twitter">
                 <Twitter size={20} />
               </button>
-              <button onClick={handleShare} className="p-2 text-gray-500 hover:text-white hover:bg-blue-700 rounded-full transition-all" title="Compartilhar no LinkedIn">
+              
+              <button onClick={() => handleShare('linkedin')} className="p-2 text-gray-500 hover:text-white hover:bg-blue-700 rounded-full transition-all" title="Compartilhar no LinkedIn">
                 <Linkedin size={20} />
               </button>
-              <button onClick={handleShare} className="p-2 text-gray-500 hover:text-white hover:bg-gray-700 rounded-full transition-all" title="Copiar Link">
+              
+              <button onClick={() => handleShare('copy')} className="p-2 text-gray-500 hover:text-white hover:bg-gray-700 rounded-full transition-all" title="Copiar Link">
                 <Copy size={20} />
               </button>
+
+              {navigator.share && (
+                <button onClick={() => handleShare('native')} className="p-2 text-gray-500 hover:text-white hover:bg-primary-600 rounded-full transition-all" title="Outras opções">
+                  <Share2 size={20} />
+                </button>
+              )}
             </div>
           </div>
         </div>

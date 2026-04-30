@@ -79,6 +79,7 @@ export const MOCK_NEWS: NewsItem[] = [
     imageUrl: '/news/pleno-tce-pe.jpg',
     category: NewsCategory.INSTITUCIONAL,
     isHighlight: false,
+    hideCoverInArticle: true,
     author: 'TCE-PE / GEJO',
     content: `
       <div class="mb-8">
@@ -116,6 +117,7 @@ export const MOCK_NEWS: NewsItem[] = [
     imageUrl: '/news/imparcialidade-controle.jpg',
     category: NewsCategory.INSTITUCIONAL,
     isHighlight: true,
+    hideCoverInArticle: true,
     author: 'Diretoria',
     content: `
       <div class="mb-8">

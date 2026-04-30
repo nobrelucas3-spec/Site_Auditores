@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Share2, Printer, ChevronRight, User, Calendar, Clock, X, List } from 'lucide-react';
+import { BookOpen, Share2, Printer, ChevronRight, User, Calendar, Clock, X, List, MessageCircle, Facebook, Twitter, Linkedin, Copy } from 'lucide-react';
 import { SectionHeader, Paragraph, PullQuote, InfoBox } from '../components/ArticleComponents';
 
 interface Section {
@@ -51,15 +51,32 @@ const ArticleCalicesPrivilegio: React.FC = () => {
         window.print();
     };
 
-    const handleShare = () => {
-        if (navigator.share) {
-            navigator.share({
-                title: 'Cálices de privilégio e copos de plástico',
-                url: window.location.href,
-            }).catch(console.error);
-        } else {
-            navigator.clipboard.writeText(window.location.href);
-            alert('Link copiado!');
+    const handleShare = (platform: string) => {
+        const url = window.location.href;
+        const title = 'Cálices de privilégio e copos de plástico';
+
+        switch (platform) {
+            case 'facebook':
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+                break;
+            case 'twitter':
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
+                break;
+            case 'linkedin':
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+                break;
+            case 'whatsapp':
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank');
+                break;
+            case 'copy':
+                navigator.clipboard.writeText(url);
+                alert('Link copiado!');
+                break;
+            case 'native':
+                if (navigator.share) {
+                    navigator.share({ title, url }).catch(console.error);
+                }
+                break;
         }
     };
 
@@ -141,9 +158,18 @@ const ArticleCalicesPrivilegio: React.FC = () => {
                                 <Clock className="w-4 h-4" />
                                 <span>6 min de leitura</span>
                             </div>
-                            <div className="flex gap-2 ml-auto">
-                                <button onClick={handleShare} className="p-2 hover:bg-gray-100 rounded-full transition text-primary-800"><Share2 className="w-4 h-4" /></button>
-                                <button onClick={handlePrint} className="p-2 hover:bg-gray-100 rounded-full transition text-primary-800"><Printer className="w-4 h-4" /></button>
+                            <div className="flex items-center gap-4 ml-auto">
+                                <div className="flex items-center gap-2 pr-4 border-r border-gray-200">
+                                    <button onClick={() => handleShare('whatsapp')} className="p-2 hover:bg-green-50 text-green-600 rounded-full transition" title="Compartilhar no WhatsApp"><MessageCircle className="w-4 h-4" /></button>
+                                    <button onClick={() => handleShare('facebook')} className="p-2 hover:bg-blue-50 text-blue-600 rounded-full transition" title="Compartilhar no Facebook"><Facebook className="w-4 h-4" /></button>
+                                    <button onClick={() => handleShare('copy')} className="p-2 hover:bg-gray-100 text-gray-600 rounded-full transition" title="Copiar Link"><Copy className="w-4 h-4" /></button>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    {navigator.share && (
+                                        <button onClick={() => handleShare('native')} className="p-2 hover:bg-gray-100 rounded-full transition text-primary-800" title="Outras opções"><Share2 className="w-4 h-4" /></button>
+                                    )}
+                                    <button onClick={handlePrint} className="p-2 hover:bg-gray-100 rounded-full transition text-primary-800" title="Imprimir"><Printer className="w-4 h-4" /></button>
+                                </div>
                             </div>
                         </div>
                     </header>
