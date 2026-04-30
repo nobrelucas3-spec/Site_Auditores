@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { MOCK_NEWS } from '../constants';
 import { OLD_NEWS } from '../old_news';
 import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, ZoomIn, MessageCircle } from 'lucide-react';
@@ -37,6 +38,11 @@ const Article: React.FC = () => {
       </div>
     );
   }
+
+  const fullUrl = `https://auditorestcepe.org.br/#/news/${news.id}`;
+  const ogImageUrl = news.imageUrl.startsWith('http') 
+    ? news.imageUrl 
+    : `https://auditorestcepe.org.br${news.imageUrl}`;
 
   const handleShare = (platform: string) => {
     const url = window.location.href;
@@ -79,6 +85,24 @@ const Article: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
+      <Helmet>
+        <title>{news.title} - Associação dos Auditores TCE-PE</title>
+        <meta name="description" content={news.summary} />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:title" content={news.title} />
+        <meta property="og:description" content={news.summary} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:url" content={fullUrl} />
+        <meta property="og:type" content="article" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={news.title} />
+        <meta name="twitter:description" content={news.summary} />
+        <meta name="twitter:image" content={ogImageUrl} />
+      </Helmet>
+
       <ImageViewer
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -44,64 +45,66 @@ const ScrollToTop = () => {
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
-      <ScrollToTop />
-      <div className="flex flex-col min-h-screen font-sans text-slate-900">
-        <Header />
-        <div className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
+    <HelmetProvider>
+      <HashRouter>
+        <ScrollToTop />
+        <div className="flex flex-col min-h-screen font-sans text-slate-900">
+          <Header />
+          <div className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
 
-            {/* Rotas Institucionais */}
-            <Route path="/institucional/quem-somos" element={<Institucional type="quem-somos" />} />
-            <Route path="/institucional/estatuto" element={<Institucional type="estatuto" />} />
-            <Route path="/institucional/diretoria" element={<Institucional type="diretoria" />} />
+              {/* Rotas Institucionais */}
+              <Route path="/institucional/quem-somos" element={<Institucional type="quem-somos" />} />
+              <Route path="/institucional/estatuto" element={<Institucional type="estatuto" />} />
+              <Route path="/institucional/diretoria" element={<Institucional type="diretoria" />} />
 
-            {/* Rotas de Comunicação */}
-            <Route path="/news" element={<News />} />
-            <Route path="/news/:id" element={<Article />} />
-            <Route path="/auditorias/:id" element={<Audit />} />
+              {/* Rotas de Comunicação */}
+              <Route path="/news" element={<News />} />
+              <Route path="/news/:id" element={<Article />} />
+              <Route path="/auditorias/:id" element={<Audit />} />
 
-            <Route path="/comunicacao/artigos" element={<ArticlesList />} />
-            <Route path="/comunicacao/artigos/calices-de-privilegio" element={<ArticleCalicesPrivilegio />} />
-            <Route path="/comunicacao/fotos" element={<Gallery type="fotos" />} />
-            <Route path="/comunicacao/videos" element={<Gallery type="videos" />} />
-            <Route path="/comunicacao/publicacoes" element={<Publications />} />
+              <Route path="/comunicacao/artigos" element={<ArticlesList />} />
+              <Route path="/comunicacao/artigos/calices-de-privilegio" element={<ArticleCalicesPrivilegio />} />
+              <Route path="/comunicacao/fotos" element={<Gallery type="fotos" />} />
+              <Route path="/comunicacao/videos" element={<Gallery type="videos" />} />
+              <Route path="/comunicacao/publicacoes" element={<Publications />} />
 
-            {/* Outras Páginas */}
-            <Route path="/associe-se" element={<JoinUs />} />
-            <Route path="/associe-se/sucesso" element={<MembershipSuccess />} />
-            <Route path="/filiados/ficha/:id" element={<MembershipFichaView />} />
-            <Route path="/conacon" element={<Conacon />} />
-            <Route path="/admin" element={<AdminPortal />} />
-            <Route path="/admin/solicitacoes" element={<AdminPortal />} />
-            <Route path="/admin/documentos" element={<AdminPortal />} />
-            <Route path="/transparencia" element={<Transparency />} />
-            <Route path="/convenios" element={<Agreements />} />
-            <Route path="/contato" element={<Contact />} />
+              {/* Outras Páginas */}
+              <Route path="/associe-se" element={<JoinUs />} />
+              <Route path="/associe-se/sucesso" element={<MembershipSuccess />} />
+              <Route path="/filiados/ficha/:id" element={<MembershipFichaView />} />
+              <Route path="/conacon" element={<Conacon />} />
+              <Route path="/admin" element={<AdminPortal />} />
+              <Route path="/admin/solicitacoes" element={<AdminPortal />} />
+              <Route path="/admin/documentos" element={<AdminPortal />} />
+              <Route path="/transparencia" element={<Transparency />} />
+              <Route path="/convenios" element={<Agreements />} />
+              <Route path="/contato" element={<Contact />} />
 
-            {/* Área do Filiado */}
-            <Route path="/area-do-filiado" element={<MemberLogin />} />
-            <Route path="/area-do-filiado/dashboard" element={<MemberDashboard />} />
-            <Route path="/area-do-filiado/documentos" element={<MemberDocuments />} />
-            <Route path="/area-do-filiado/financeiro" element={<FinancialDashboard />} />
-            <Route path="/area-do-filiado/financeiro/detalhes" element={<FinancialDetailed />} />
-            <Route path="/area-do-filiado/analise-tecnica" element={<TechnicalAnalysisList />} />
-            <Route path="/area-do-filiado/analise-tecnica/inversao-hierarquica" element={<JuridicalAnalysis />} /> {/* Specific Article */}
-            <Route path="/area-do-filiado/artigos" element={<ArticlesList />} />
-            <Route path="/primeiro-acesso" element={<FirstAccess />} />
-            <Route path="/esqueci-senha" element={<ForgotPassword />} />
-            <Route path="/redefinir-senha" element={<ResetPassword />} />
-            <Route path="/redefinir-senha" element={<ResetPassword />} />
+              {/* Área do Filiado */}
+              <Route path="/area-do-filiado" element={<MemberLogin />} />
+              <Route path="/area-do-filiado/dashboard" element={<MemberDashboard />} />
+              <Route path="/area-do-filiado/documentos" element={<MemberDocuments />} />
+              <Route path="/area-do-filiado/financeiro" element={<FinancialDashboard />} />
+              <Route path="/area-do-filiado/financeiro/detalhes" element={<FinancialDetailed />} />
+              <Route path="/area-do-filiado/analise-tecnica" element={<TechnicalAnalysisList />} />
+              <Route path="/area-do-filiado/analise-tecnica/inversao-hierarquica" element={<JuridicalAnalysis />} /> {/* Specific Article */}
+              <Route path="/area-do-filiado/artigos" element={<ArticlesList />} />
+              <Route path="/primeiro-acesso" element={<FirstAccess />} />
+              <Route path="/esqueci-senha" element={<ForgotPassword />} />
+              <Route path="/redefinir-senha" element={<ResetPassword />} />
+              <Route path="/redefinir-senha" element={<ResetPassword />} />
 
-            {/* Fallback */}
-            <Route path="/services" element={<Agreements />} /> {/* Redirect services to agreements or keep as placeholder */}
-            <Route path="/about" element={<Institucional type="quem-somos" />} />
-          </Routes>
+              {/* Fallback */}
+              <Route path="/services" element={<Agreements />} /> {/* Redirect services to agreements or keep as placeholder */}
+              <Route path="/about" element={<Institucional type="quem-somos" />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </HashRouter>
+      </HashRouter>
+    </HelmetProvider>
   );
 };
 
