@@ -155,6 +155,7 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-6xl mx-auto mb-8">
             {[
+              { id: 'DXwe0STsaCD', img: 'dia-do-auditor-2026.jpg', text: 'Celebração Dia do Auditor', url: 'https://www.instagram.com/reel/DXwe0STsaCD/' },
               { id: 'DXorX77jDUU', img: 'DXorX77jDUU.jpg', text: 'Vídeo Institucional', url: 'https://www.instagram.com/reel/DXorX77jDUU/' },
               { id: 'DXpBr8thAA6', img: 'DXpBr8thAA6.jpg', text: 'Auditoria em Foco', url: 'https://www.instagram.com/reel/DXpBr8thAA6/' },
               { id: 'DXpbo8ej6sO', img: 'DXpbo8ej6sO.jpg', text: 'Destaque', url: 'https://www.instagram.com/p/DXpbo8ej6sO/' },

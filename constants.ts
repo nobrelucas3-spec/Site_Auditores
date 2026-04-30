@@ -72,6 +72,80 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'tce-pe-pleno-dia-auditor',
+    title: 'Pleno do TCE-PE registra Dia do Auditor de Controle Externo e destaca importância da carreira',
+    summary: 'Presidente Carlos Neves e conselheiro Valdecir Pascoal exaltam o papel técnico da auditoria como "a alma do tribunal de contas".',
+    date: '2026-04-29',
+    imageUrl: '/news/pleno-tce-pe.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: false,
+    author: 'TCE-PE / GEJO',
+    content: `
+      <div class="mb-8">
+        <img src="/news/pleno-tce-pe.jpg" alt="Sessão do Pleno TCE-PE" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+        <p class="text-xs text-gray-500 mt-2 italic text-center">Sessão do Pleno do TCE-PE registra Dia do Auditor. Créditos: GEJO/TCE-PE</p>
+      </div>
+
+      <p class="mb-4 text-lg font-medium text-slate-700">Nesta quarta-feira (29), o presidente do TCE-PE, conselheiro Carlos Neves, registrou na sessão do pleno o Dia do Auditor de Controle Externo, comemorado no último 27 de abril.</p>
+      
+      <p class="mb-4">A data foi idealizada em 2012 pela Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas do Brasil (ANTC). Em Pernambuco, a data foi implementada por meio da Lei Estadual nº 16.241, de 2017.</p>
+      
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800">
+        “A carreira de auditor é importante para o controle externo, com atuação cada vez mais respeitada no âmbito dos Tribunais. Por coincidência, no último dia 27, o conselheiro Valdecir Pascoal também recebeu a comenda José Patriota, e ele começou a sua carreira como auditor nesta casa”, destacou Neves.
+      </div>
+
+      <p class="mb-4">O conselheiro Valdecir Pascoal agradeceu o reconhecimento e ressaltou a natureza essencial do trabalho técnico:</p>
+
+      <div class="my-6 p-6 bg-primary-50 rounded-xl border border-primary-100 text-primary-900 font-medium">
+        “Parabenizo todos que fazem a auditoria do Tribunal. É a alma do tribunal de contas, integrante do controle externo, quem vai na ponta, buscar os achados, instruir os processos. É uma formação muito especializada. Sou muito honrado de ter iniciado minha carreira nos tribunais de contas como auditor”.
+      </div>
+
+      <p class="mb-6">O registro em sessão plenária reforça o reconhecimento institucional do Tribunal à categoria que compõe o braço técnico da fiscalização de recursos públicos em todo o estado de Pernambuco.</p>
+      
+      <div class="mt-12 pt-6 border-t border-gray-100 flex flex-col gap-2">
+        <p class="text-xs text-gray-400">Imagem: Sessão do Pleno do TCE-PE - 29/04/2026</p>
+        <p class="text-xs text-gray-500 font-bold">Direitos da Imagem: Gerência de Jornalismo (GEJO) / TCE-PE</p>
+      </div>
+    `
+  },
+  {
+    id: 'imparcialidade-controle-externo',
+    title: 'Imparcialidade no controle externo é condição essencial para a confiança da sociedade',
+    summary: 'Debate sobre governança e independência funcional nos tribunais de contas ganha força diante de episódios recentes e reforça a importância do papel dos auditores.',
+    date: '2026-04-30',
+    imageUrl: '/news/imparcialidade-controle.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    author: 'Diretoria',
+    content: `
+      <div class="mb-8">
+        <img src="/news/imparcialidade-controle.jpg" alt="Imparcialidade no Controle Externo" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+      </div>
+
+      <p class="mb-4">Tem sido cada vez mais frequente a invocação da autonomia institucional como elemento central para o pleno exercício das funções estatais, especialmente no âmbito do controle externo. Esse argumento, muitas vezes, também é utilizado como base para a definição de prerrogativas e estruturas de carreira no setor público. No entanto, impõe-se uma reflexão necessária: a autonomia, por si só, tem sido suficiente para garantir a independência funcional no exercício dessas atribuições?</p>
+      
+      <p class="mb-4">Nas últimas semanas, episódios envolvendo o Tribunal de Contas do Estado do Paraná trouxeram esse debate novamente à tona. As situações relatadas evidenciam a necessidade de fortalecimento de mecanismos de governança capazes de assegurar o funcionamento regular e imparcial dos tribunais de contas em todo o país.</p>
+      
+      <p class="mb-4">O tema se torna ainda mais sensível ao ser debatido no contexto do Dia do Auditor de Controle Externo, celebrado em 27 de abril. Embora a data seja tradicionalmente voltada ao reconhecimento da importância desses profissionais, o momento atual impõe uma reflection mais profunda sobre os desafios enfrentados na preservação da integridade institucional.</p>
+      
+      <div class="my-8 p-6 bg-slate-50 border-l-4 border-primary-500 italic text-slate-700">
+        "De acordo com a Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas (ANTC), a nomeação de um servidor comissionado para coordenar um órgão de Auditoria e Instrução no Tribunal de Contas do Paraná contraria dispositivos legais vigentes, além de entendimento consolidado pelo Supremo Tribunal Federal."
+      </div>
+      
+      <p class="mb-4">A medida também se distancia de parâmetros estabelecidos pelo Marco de Medição de Desempenho dos Tribunais de Contas (MMD-TC), ferramenta nacional voltada à avaliação e ao aprimoramento dessas instituições. Situações dessa natureza não se limitam a casos isolados. Seus efeitos ultrapassam o episódio específico e impactam a percepção pública sobre a credibilidade dos tribunais de contas.</p>
+      
+      <p class="mb-4 font-bold text-slate-800 italic">Isso ocorre mesmo diante do fato de que a grande maioria dos profissionais que integram essas instituições atua com qualificação, compromisso e dedicação ao interesse público.</p>
+
+      <p class="mb-4">Diante desse cenário, evidencia-se uma dupla responsabilidade. De um lado, é fundamental reconhecer e valorizar o trabalho daqueles que, diariamente, sustentam a confiança da sociedade no controle externo. De outro, é indispensável garantir que essa confiança não seja comprometida por práticas que se afastem da legalidade e dos princípios que regem a administração pública.</p>
+      
+      <p class="mb-4">A proteção da confiança pública exige mais do que manifestações institucionais. Requer a adoção de medidas concretas que assegurem a correta interpretação e aplicação das normas que estruturam os tribunais de contas, bem como o fortalecimento de mecanismos efetivos de governança.</p>
+      
+      <p class="mb-4">Mais do que responder a críticas, é necessário incorporá-las como parte de um processo contínuo de aperfeiçoamento institucional. A solidez de uma instituição não se mede apenas por suas competências constitucionais, mas pela sua capacidade de exercê-las com independência, legitimidade e compromisso com o interesse público.</p>
+      
+      <p class="mb-6 font-bold">Em última instância, é a adequada estruturação e o funcionamento regular dos tribunais de contas que determinam o nível de confiança da sociedade no controle exercido pelo Estado. Preservar essa confiança é, portanto, um dever permanente e inegociável.</p>
+    `
+  },
+  {
     id: 'conacon-2026',
     title: 'Vem aí o 9º CONACON em Curitiba! Manifeste seu interesse em participar',
     summary: 'A Associação convoca os auditores a manifestarem interesse em participar do maior evento de Controle Externo do Brasil. Preencha o formulário para facilitar nossa articulação institucional.',
