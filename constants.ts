@@ -128,7 +128,7 @@ export const MOCK_NEWS: NewsItem[] = [
       
       <p class="mb-4">Nas últimas semanas, episódios envolvendo o Tribunal de Contas do Estado do Paraná trouxeram esse debate novamente à tona. As situações relatadas evidenciam a necessidade de fortalecimento de mecanismos de governança capazes de assegurar o funcionamento regular e imparcial dos tribunais de contas em todo o país.</p>
       
-      <p class="mb-4">O tema se torna ainda mais sensível ao ser debatido no contexto do Dia do Auditor de Controle Externo, celebrado em 27 de abril. Embora a data seja tradicionalmente voltada ao reconhecimento da importância desses profissionais, o momento atual impõe uma reflection mais profunda sobre os desafios enfrentados na preservação da integridade institucional.</p>
+      <p class="mb-4">O tema se torna ainda mais sensível ao ser debatido no contexto do Dia do Auditor de Controle Externo, celebrado em 27 de abril. Embora a data seja tradicionalmente voltada ao reconhecimento da importância desses profissionais, o momento atual impõe uma reflexão mais profunda sobre os desafios enfrentados na preservação da integridade institucional.</p>
       
       <div class="my-8 p-6 bg-slate-50 border-l-4 border-primary-500 italic text-slate-700">
         "De acordo com a Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas (ANTC), a nomeação de um servidor comissionado para coordenar um órgão de Auditoria e Instrução no Tribunal de Contas do Paraná contraria dispositivos legais vigentes, além de entendimento consolidado pelo Supremo Tribunal Federal."
