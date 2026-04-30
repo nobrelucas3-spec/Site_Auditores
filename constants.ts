@@ -130,9 +130,7 @@ export const MOCK_NEWS: NewsItem[] = [
       
       <p class="mb-4">O tema se torna ainda mais sensível ao ser debatido no contexto do Dia do Auditor de Controle Externo, celebrado em 27 de abril. Embora a data seja tradicionalmente voltada ao reconhecimento da importância desses profissionais, o momento atual impõe uma reflexão mais profunda sobre os desafios enfrentados na preservação da integridade institucional.</p>
       
-      <div class="my-8 p-6 bg-slate-50 border-l-4 border-primary-500 italic text-slate-700">
-        "De acordo com a Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas (ANTC), a nomeação de um servidor comissionado para coordenar um órgão de Auditoria e Instrução no Tribunal de Contas do Paraná contraria dispositivos legais vigentes, além de entendimento consolidado pelo Supremo Tribunal Federal."
-      </div>
+      <p class="mb-4">De acordo com a Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas (ANTC), a nomeação de um servidor comissionado para coordenar um órgão de Auditoria e Instrução no Tribunal de Contas do Paraná contraria dispositivos legais vigentes, além de entendimento consolidado pelo Supremo Tribunal Federal.</p>
       
       <p class="mb-4">A medida também se distancia de parâmetros estabelecidos pelo Marco de Medição de Desempenho dos Tribunais de Contas (MMD-TC), ferramenta nacional voltada à avaliação e ao aprimoramento dessas instituições. Situações dessa natureza não se limitam a casos isolados. Seus efeitos ultrapassam o episódio específico e impactam a percepção pública sobre a credibilidade dos tribunais de contas.</p>
       
