@@ -39,7 +39,7 @@ const Article: React.FC = () => {
     );
   }
 
-  const fullUrl = `https://auditorestcepe.org.br/#/news/${news.id}`;
+  const fullUrl = `https://auditorestcepe.org.br/news/${news.id}`;
   const ogImageUrl = news.imageUrl.startsWith('http') 
     ? news.imageUrl 
     : `https://auditorestcepe.org.br${news.imageUrl}`;
