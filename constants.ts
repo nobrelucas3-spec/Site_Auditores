@@ -92,9 +92,7 @@ export const MOCK_NEWS: NewsItem[] = [
 
       <p class="mb-4">A solenidade de promulgação foi conduzida pelo presidente do Senado, Davi Alcolumbre, e reuniu representantes da Associação dos Membros dos Tribunais de Contas do Brasil (Atricon), além de presidentes e integrantes dos 33 Tribunais de Contas brasileiros, marcando um momento histórico para o sistema de controle externo.</p>
 
-      <div class="my-8 p-6 bg-slate-50 border-l-4 border-primary-600 rounded-r-xl">
-        <p class="text-slate-700 italic">"A PEC da Essencialidade é resultado da tramitação conjunta da PEC 302/2017 e da PEC 39/2022, unificadas em 2025 para reforçar o papel constitucional das cortes de contas. O texto altera dispositivos da Constituição Federal, com destaque para o artigo 75, que organiza o sistema de controle externo no país."</p>
-      </div>
+      <p class="mb-4">A PEC da Essencialidade é resultado da tramitação conjunta da PEC 302/2017, de autoria do deputado Moses Rodrigues, e da PEC 39/2022, apresentada pelo senador Eunício de Oliveira, unificadas em 2025 para reforçar o papel constitucional das cortes de contas. O texto altera dispositivos da Constituição Federal, com destaque para o artigo 75, que organiza o sistema de controle externo no país.</p>
 
       <p class="mb-4">Para representantes do sistema de controle, a mudança representa um avanço institucional relevante. A medida reforça o entendimento de que os Tribunais de Contas são pilares fundamentais da fiscalização dos recursos públicos, contribuindo para a transparência, o controle e a boa governança do Estado brasileiro.</p>
 
