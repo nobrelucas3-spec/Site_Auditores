@@ -176,12 +176,12 @@ const Article: React.FC = () => {
         )}
 
         <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-xl md:text-2xl text-slate-700 font-medium mb-8 leading-relaxed border-l-4 border-secondary-500 pl-6 italic bg-gray-50 py-4 rounded-r-lg">
+          <p className="text-xl md:text-2xl text-slate-800 font-bold mb-10 leading-tight border-l-4 border-secondary-500 pl-6 italic">
             {news.summary}
           </p>
 
           <div
-            className="prose prose-lg prose-slate prose-headings:text-slate-900 prose-a:text-secondary-600 hover:prose-a:text-secondary-700 prose-img:rounded-xl prose-img:cursor-zoom-in prose-strong:text-slate-900 font-serif leading-loose"
+            className="prose prose-lg prose-slate prose-headings:text-slate-900 prose-a:text-secondary-600 hover:prose-a:text-secondary-700 prose-img:rounded-xl prose-img:cursor-zoom-in prose-strong:text-slate-900 leading-relaxed text-slate-700"
             dangerouslySetInnerHTML={{ __html: news.content }}
             onClick={handleContentClick}
           />
