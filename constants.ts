@@ -72,6 +72,44 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'pec-essencialidade-promulgada',
+    title: 'PEC da Essencialidade é promulgada e consolida Tribunais de Contas como órgãos permanentes de Estado',
+    summary: 'Medida aprovada no Senado reconhece papel essencial das cortes de contas no controle externo e reforça estabilidade institucional, transparência e responsabilidade na fiscalização dos recursos públicos no Brasil.',
+    date: '2026-05-05',
+    imageUrl: '/news/pec-essencialidade.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/pec-essencialidade.png" alt="Solenidade de promulgação da PEC da Essencialidade" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+      </div>
+
+      <p class="mb-6 text-lg font-medium text-slate-800">A Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco destaca a promulgação da chamada <span class="italic font-bold">PEC da Essencialidade</span>, oficializada nesta terça-feira (5), em sessão solene no Senado Federal, em Brasília.</p>
+
+      <p class="mb-4">A nova Emenda Constitucional reconhece de forma expressa os Tribunais de Contas como <span class="italic font-bold">órgãos permanentes e essenciais ao controle externo da administração pública</span>, consolidando seu papel no texto da Constituição Federal e reforçando sua condição de instituições de Estado, e não de governo. A medida também estabelece a impossibilidade de extinção dessas cortes, garantindo maior estabilidade institucional ao sistema de fiscalização do gasto público no país.</p>
+
+      <p class="mb-4">A solenidade de promulgação foi conduzida pelo presidente do Senado, Davi Alcolumbre, e reuniu representantes da Associação dos Membros dos Tribunais de Contas do Brasil (Atricon), além de presidentes e integrantes dos 33 Tribunais de Contas brasileiros, marcando um momento histórico para o sistema de controle externo.</p>
+
+      <div class="my-8 p-6 bg-slate-50 border-l-4 border-primary-600 rounded-r-xl">
+        <p class="text-slate-700 italic">"A PEC da Essencialidade é resultado da tramitação conjunta da PEC 302/2017 e da PEC 39/2022, unificadas em 2025 para reforçar o papel constitucional das cortes de contas. O texto altera dispositivos da Constituição Federal, com destaque para o artigo 75, que organiza o sistema de controle externo no país."</p>
+      </div>
+
+      <p class="mb-4">Para representantes do sistema de controle, a mudança representa um avanço institucional relevante. A medida reforça o entendimento de que os Tribunais de Contas são pilares fundamentais da fiscalização dos recursos públicos, contribuindo para a transparência, o controle e a boa governança do Estado brasileiro.</p>
+
+      <p class="mb-4">Segundo avaliações de lideranças do setor, o reconhecimento constitucional explícito fortalece a autonomia e a estabilidade das cortes de contas, além de reafirmar sua função essencial no equilíbrio institucional da República.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Marco institucional e novos compromissos</h3>
+      <p class="mb-4">Embora represente um avanço histórico, a PEC da Essencialidade também traz consigo uma responsabilidade ampliada para o sistema de controle externo. O reconhecimento constitucional exige, segundo especialistas, uma atuação cada vez mais alinhada ao modelo previsto na Carta Magna, com fortalecimento da governança interna, aprimoramento da organização institucional e preservação da atuação técnica qualificada.</p>
+
+      <p class="mb-6">A essência da mudança vai além do reconhecimento formal: trata-se de um chamado à evolução contínua, à eficiência e ao fortalecimento da confiança social nas instituições de controle.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Compromisso com o futuro do controle externo</h3>
+      <p class="mb-6">Para a Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco, a promulgação da PEC da Essencialidade representa um marco relevante para toda a sociedade brasileira, ao reforçar o papel dos Tribunais de Contas na proteção do interesse público e na fiscalização dos recursos do Estado.</p>
+    `
+  },
+  {
     id: 'tce-pe-pleno-dia-auditor',
     title: 'Pleno do TCE-PE registra Dia do Auditor de Controle Externo e destaca importância da carreira',
     summary: 'Presidente Carlos Neves e conselheiro Valdecir Pascoal exaltam o papel técnico da auditoria como "a alma do tribunal de contas".',
@@ -92,7 +130,7 @@ export const MOCK_NEWS: NewsItem[] = [
       <p class="mb-4">A data foi idealizada em 2012 pela Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas do Brasil (ANTC). Em Pernambuco, a data foi implementada por meio da Lei Estadual nº 16.241, de 2017.</p>
       
       <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800">
-        “A carreira de auditor é importante para o controle externo, com atuação cada vez mais respeitada no âmbito dos Tribunais. Por coincidência, no último dia 27, o conselheiro Valdecir Pascoal também recebeu a comenda José Patriota, e ele começou a sua carreira como auditor nesta casa”, destacou Neves.
+        “A carreira de auditor é importante para o controle externo, com atuação cada vez mais respeitada no âmbito dos Tribunais. Por consciência, no último dia 27, o conselheiro Valdecir Pascoal também recebeu a comenda José Patriota, e ele começou a sua carreira como auditor nesta casa”, destacou Neves.
       </div>
 
       <p class="mb-4">O conselheiro Valdecir Pascoal agradeceu o reconhecimento e ressaltou a natureza essencial do trabalho técnico:</p>
@@ -116,7 +154,7 @@ export const MOCK_NEWS: NewsItem[] = [
     date: '2026-04-30',
     imageUrl: '/news/imparcialidade-controle.jpg',
     category: NewsCategory.INSTITUCIONAL,
-    isHighlight: true,
+    isHighlight: false,
     hideCoverInArticle: true,
     author: 'Auditores TCE-PE',
     content: `
