@@ -86,7 +86,7 @@ export const MOCK_NEWS: NewsItem[] = [
         <img src="/news/pec-essencialidade.png" alt="Solenidade de promulgação da PEC da Essencialidade" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
       </div>
 
-      <p class="mb-6 text-lg font-medium text-slate-800">A Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco destaca a promulgação da chamada <span class="italic font-bold">PEC da Essencialidade</span>, oficializada nesta terça-feira (5), em sessão solene no Senado Federal, em Brasília.</p>
+      <p class="mb-4">A Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco destaca a promulgação da chamada <span class="italic font-bold">PEC da Essencialidade</span>, oficializada nesta terça-feira (5), em sessão solene no Senado Federal, em Brasília.</p>
 
       <p class="mb-4">A nova Emenda Constitucional reconhece de forma expressa os Tribunais de Contas como <span class="italic font-bold">órgãos permanentes e essenciais ao controle externo da administração pública</span>, consolidando seu papel no texto da Constituição Federal e reforçando sua condição de instituições de Estado, e não de governo. A medida também estabelece a impossibilidade de extinção dessas cortes, garantindo maior estabilidade institucional ao sistema de fiscalização do gasto público no país.</p>
 
@@ -101,10 +101,10 @@ export const MOCK_NEWS: NewsItem[] = [
       <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Marco institucional e novos compromissos</h3>
       <p class="mb-4">Embora represente um avanço histórico, a PEC da Essencialidade também traz consigo uma responsabilidade ampliada para o sistema de controle externo. O reconhecimento constitucional exige, segundo especialistas, uma atuação cada vez mais alinhada ao modelo previsto na Carta Magna, com fortalecimento da governança interna, aprimoramento da organização institucional e preservação da atuação técnica qualificada.</p>
 
-      <p class="mb-6">A essência da mudança vai além do reconhecimento formal: trata-se de um chamado à evolução contínua, à eficiência e ao fortalecimento da confiança social nas instituições de controle.</p>
+      <p class="mb-4">A essência da mudança vai além do reconhecimento formal: trata-se de um chamado à evolução contínua, à eficiência e ao fortalecimento da confiança social nas instituições de controle.</p>
 
       <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Compromisso com o futuro do controle externo</h3>
-      <p class="mb-6">Para a Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco, a promulgação da PEC da Essencialidade representa um marco relevante para toda a sociedade brasileira, ao reforçar o papel dos Tribunais de Contas na proteção do interesse público e na fiscalização dos recursos do Estado.</p>
+      <p class="mb-4">Para a Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco, a promulgação da PEC da Essencialidade representa um marco relevante para toda a sociedade brasileira, ao reforçar o papel dos Tribunais de Contas na proteção do interesse público e na fiscalização dos recursos do Estado.</p>
     `
   },
   {
