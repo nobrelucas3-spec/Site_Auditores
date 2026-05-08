@@ -108,6 +108,36 @@ export const MOCK_NEWS: NewsItem[] = [
     `
   },
   {
+    id: 'conacon-2026-artigos-cientificos',
+    title: '9ª CONACON abre submissão de artigos científicos para Auditores de Controle Externo',
+    summary: 'Auditores de Controle Externo poderão enviar pesquisas, auditorias e experiências profissionais para apresentação no Congresso, que será realizado em agosto, em Curitiba.',
+    date: '2026-05-08',
+    imageUrl: '/news/conacon-submissao.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: false,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/conacon-submissao.png" alt="9ª CONACON - Submissão de Artigos" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+      </div>
+
+      <p class="mb-4">Auditores de Controle Externo de todo o país já podem submeter artigos científicos para a 9ª edição do Congresso Nacional dos Auditores de Controle Externo dos Tribunais de Contas do Brasil (CONACON), promovido pela Associação Nacional dos Auditores de Controle Externo (ANTC).</p>
+
+      <p class="mb-4">Marcado para acontecer entre os dias 18 e 21 de agosto de 2026, em Curitiba (PR), o Congresso terá como tema central “Auditoria de Controle Externo que transforma: impacto social e simetria constitucional”, destacando o papel estratégico da auditoria pública na melhoria dos serviços prestados à população e no fortalecimento das instituições de fiscalização.</p>
+
+      <p class="mb-4">Poderão ser enviados artigos produzidos a partir de pesquisas, auditorias, estudos técnicos e experiências profissionais ligadas ao controle externo e à administração pública.</p>
+
+      <p class="mb-4">Os trabalhos deverão abordar temas como governança pública, inovação tecnológica, auditoria baseada em dados, transparência, sustentabilidade, combate à corrupção, impacto social das políticas públicas e fortalecimento institucional das Cortes de Contas.</p>
+
+      <p class="mb-4">Os artigos selecionados serão apresentados presencialmente durante a programação da CONACON e também publicados posteriormente em formato digital no site da ANTC.</p>
+
+      <p class="mb-4 font-bold text-primary-900">As submissões seguem abertas até o dia 19 de junho de 2026, às 23h59, exclusivamente pelo e-mail: publicacoes@antcbrasil.org.br</p>
+
+      <p class="mb-4">De acordo com o edital, os trabalhos devem seguir as normas da ABNT e não podem conter identificação de autoria no corpo do texto. Ao todo, até 15 artigos serão selecionados para apresentação durante o Congresso.</p>
+    `
+  },
+  {
     id: 'tce-pe-pleno-dia-auditor',
     title: 'Pleno do TCE-PE registra Dia do Auditor de Controle Externo e destaca importância da carreira',
     summary: 'Presidente Carlos Neves e conselheiro Valdecir Pascoal exaltam o papel técnico da auditoria como "a alma do tribunal de contas".',
