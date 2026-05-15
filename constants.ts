@@ -72,6 +72,34 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'seminario-sustentabilidade-tcepe',
+    title: 'TCE-PE promove Seminário Internacional sobre Sustentabilidade na Gestão de Resíduos Sólidos',
+    summary: 'Evento reunirá especialistas e representantes públicos para discutir soluções sustentáveis e transformação ambiental em Pernambuco.',
+    date: '2026-05-15',
+    imageUrl: '/news/seminario-sustentabilidade.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: false,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/seminario-sustentabilidade.jpg" alt="Seminário Sustentabilidade TCE-PE" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+      </div>
+
+      <p class="mb-4">O Tribunal de Contas do Estado de Pernambuco (TCE-PE) promoverá, nos dias 20 e 21 de maio, no Auditório da Esmape, no Recife, o Seminário Internacional “Sustentabilidade na Gestão de Resíduos Sólidos: da Destinação à Transformação”.</p>
+
+      <p class="mb-4">O evento contará com inscrições gratuitas e reunirá especialistas, gestores públicos, instituições e representantes da sociedade civil para debater soluções inovadoras voltadas à gestão sustentável dos resíduos sólidos.</p>
+
+      <p class="mb-4">A iniciativa busca ampliar o debate sobre políticas públicas ambientais, reciclagem, destinação correta do lixo urbano, sustentabilidade e os desafios enfrentados pelos municípios na implementação de práticas modernas de gestão ambiental.</p>
+
+      <p class="mb-4 font-bold text-slate-800 italic">O seminário reforça o compromisso do TCE-PE com a promoção de políticas públicas eficientes e sustentáveis, além de estimular a conscientização sobre a importância da preservação ambiental e do desenvolvimento responsável das cidades.</p>
+
+      <p class="mb-4">O encontro também deverá abordar experiências nacionais e internacionais relacionadas à economia circular, reaproveitamento de resíduos, educação ambiental e mecanismos de fiscalização e controle voltados à área ambiental.</p>
+
+      <p class="mb-4">O evento será realizado no Auditório da Esmape, no Recife, e as inscrições poderão ser feitas gratuitamente por meio da plataforma <span class="font-bold">Even3</span>.</p>
+    `
+  },
+  {
     id: 'pec-essencialidade-promulgada',
     title: 'PEC da Essencialidade é promulgada e consolida Tribunais de Contas como órgãos permanentes de Estado',
     summary: 'Medida aprovada no Senado reconhece papel essencial das cortes de contas no controle externo e reforça estabilidade institucional, transparência e responsabilidade na fiscalização dos recursos públicos no Brasil.',

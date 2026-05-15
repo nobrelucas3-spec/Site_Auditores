@@ -45,7 +45,8 @@ const ApplicationsTab: React.FC = () => {
 
             if (fetchError) throw fetchError;
             setApplications(data || []);
-        } catch (err: any) {
+        } catch (err) {
+            console.error('Erro ao buscar solicitações:', err);
             setError('Erro ao carregar solicitações.');
         } finally {
             setLoading(false);
@@ -114,8 +115,9 @@ const ApplicationsTab: React.FC = () => {
 
             setApplications(prev => prev.map(a => a.id === app.id ? { ...a, status: 'Aprovado' } : a));
             alert('Aprovado com sucesso! O associado receberá um e-mail com as instruções de acesso.');
-        } catch (err: any) {
-            setError(err.message || 'Erro ao aprovar.');
+        } catch (err) {
+            const message = err instanceof Error ? err.message : 'Erro ao aprovar.';
+            setError(message);
         } finally {
             setProcessingId(null);
         }
@@ -162,8 +164,9 @@ const ApplicationsTab: React.FC = () => {
 
             setApplications(prev => prev.map(a => a.id === app.id ? { ...a, status: 'Rejeitado' } : a));
             alert('Solicitação rejeitada com sucesso.');
-        } catch (err: any) {
-            setError(err.message || 'Erro ao rejeitar.');
+        } catch (err) {
+            const message = err instanceof Error ? err.message : 'Erro ao rejeitar.';
+            setError(message);
         } finally {
             setProcessingId(null);
         }

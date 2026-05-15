@@ -3,6 +3,7 @@ import { supabase } from '../services/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { FileText, TrendingUp, TrendingDown, DollarSign, PieChart, Lock, ArrowLeft, Loader2, Calendar } from 'lucide-react';
 import useInactivityTimer from '../hooks/useInactivityTimer';
+import { User } from '@supabase/supabase-js';
 
 interface FinancialRecord {
     id: string;
@@ -15,17 +16,26 @@ interface FinancialRecord {
     entity: string;
 }
 
+interface FinancialDocument {
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+    year: number;
+    file_url: string;
+    created_at: string;
+}
+
 const FinancialDashboard: React.FC = () => {
     const navigate = useNavigate();
     useInactivityTimer(15);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
-    const [isActiveMember, setIsActiveMember] = useState(true); // Can be refined with DB check
+    const [isActiveMember] = useState(true); // Can be refined with DB check
     const [records, setRecords] = useState<FinancialRecord[]>([]);
-    const [documents, setDocuments] = useState<any[]>([]);
-    const [expandedYear, setExpandedYear] = useState<number | null>(null); // State for accordion behavior
+    const [documents, setDocuments] = useState<FinancialDocument[]>([]);
+    const [expandedYear, setExpandedYear] = useState<number | null>(null);
 
     // Metrics
     const [totalRevenue, setTotalRevenue] = useState(0);
@@ -43,39 +53,36 @@ const FinancialDashboard: React.FC = () => {
             }
             setUser(session.user);
 
-            // 2. Calculate Accumulated Balance from Previous Years (2024 to CurrentYear - 1)
+            // 2. Calculate Accumulated Balance from Previous Years (2026 to CurrentYear - 1)
             const currentYear = new Date().getFullYear();
             const startYear = 2026;
             let previousYearsBalance = 0;
 
             for (let y = startYear; y < currentYear; y++) {
                 const { data: yearData } = await supabase
-                    .from(`finances_${y}` as any)
+                    .from(`finances_${y}`)
                     .select('amount, type, status');
 
                 if (yearData) {
                     const yearIncome = yearData
-                        .filter((r: any) => r.type === 'income' && r.status === 'paid')
-                        .reduce((acc: number, r: any) => acc + Number(r.amount), 0);
+                        .filter((r) => r.type === 'income' && r.status === 'paid')
+                        .reduce((acc: number, r) => acc + Number(r.amount), 0);
                     const yearExpense = yearData
-                        .filter((r: any) => r.type === 'expense' && r.status === 'paid')
-                        .reduce((acc: number, r: any) => acc + Number(r.amount), 0);
+                        .filter((r) => r.type === 'expense' && r.status === 'paid')
+                        .reduce((acc: number, r) => acc + Number(r.amount), 0);
                     previousYearsBalance += (yearIncome - yearExpense);
                 }
             }
 
             // 3. Fetch Current Year Records
             const tableName = `finances_${currentYear}`;
-            console.log(`Fetching current records from: ${tableName}`);
 
             const { data, error } = await supabase
-                .from(tableName as any)
+                .from(tableName)
                 .select('*')
                 .order('transaction_date', { ascending: false });
 
             if (error) {
-                console.error(`Error fetching records from ${tableName}:`, error);
-                // If current year table doesn't exist or error, we still show previous balance
                 setRecords([]);
                 calculateMetrics([], previousYearsBalance);
             } else if (data) {
@@ -87,16 +94,16 @@ const FinancialDashboard: React.FC = () => {
             const { data: docsData } = await supabase
                 .from('documents')
                 .select('*')
-                .eq('category', 'Financeiro') // Filter by Finance category
-                // .eq('year', currentYear) // REMOVED: Allow all years to be shown
-                .order('year', { ascending: false }) // Sort by Year Desc
+                .eq('category', 'Financeiro')
+                .order('year', { ascending: false })
                 .order('created_at', { ascending: false });
 
             if (docsData) {
-                setDocuments(docsData);
+                const typedDocs = docsData as FinancialDocument[];
+                setDocuments(typedDocs);
                 // Auto-expand the most recent year if documents exist
-                if (docsData.length > 0) {
-                    const uniqueYears = Array.from(new Set(docsData.map((d: any) => d.year))).sort((a: any, b: any) => Number(b) - Number(a));
+                if (typedDocs.length > 0) {
+                    const uniqueYears = Array.from(new Set(typedDocs.map((d) => d.year))).sort((a, b) => Number(b) - Number(a));
                     if (uniqueYears.length > 0) setExpandedYear(Number(uniqueYears[0]));
                 }
             }
@@ -120,16 +127,13 @@ const FinancialDashboard: React.FC = () => {
     const calculateMetrics = (data: FinancialRecord[], initialBalance: number = 0) => {
         let revenue = 0;
         let expenses = 0;
-        let otherIncome = 0; // Income that is not strictly 'Receita' (e.g., 'Saldo')
+        let otherIncome = 0;
 
         data.forEach(item => {
             if (item.status === 'paid') {
                 const val = Math.abs(Number(item.amount));
 
                 if (item.type === 'income') {
-                    // Strict filter: only 'Receita' category counts as Operating Revenue
-                    // New Rule: Anything that is NOT 'Balance' (Saldo) is Revenue
-                    // This fixes the issue where specific categories (like Mensalidade) were being ignored
                     if (!item.category.toLowerCase().includes('saldo')) {
                         revenue += val;
                     } else {
@@ -142,7 +146,6 @@ const FinancialDashboard: React.FC = () => {
 
         setTotalRevenue(revenue);
         setTotalExpenses(expenses);
-        // Balance includes EVERYTHING: Initial + Other(Saldo) + Revenue - Expenses
         setBalance(initialBalance + otherIncome + revenue - expenses);
     };
 
@@ -157,8 +160,7 @@ const FinancialDashboard: React.FC = () => {
         return `${d}/${m}/${y}`;
     };
 
-    // --- Chart Data Preparation (Simple aggregation) ---
-    // 1. Expense by Category
+    // --- Chart Data Preparation ---
     const expensesByCategory = records
         .filter(r => r.type === 'expense' && r.status === 'paid')
         .reduce((acc, curr) => {
@@ -170,29 +172,25 @@ const FinancialDashboard: React.FC = () => {
 
     const sortedCategories = Object.entries(expensesByCategory)
         .sort(([, a], [, b]) => (b as number) - (a as number))
-        .slice(0, 5); // Top 5 categories
+        .slice(0, 5);
 
-    // Calculate percentages
     const totalCalcExpenses = Object.values(expensesByCategory).reduce((a, b) => (a as number) + (b as number), 0);
 
-    // 2. Monthly Evolution (simplified for current year/last 6 months)
     interface MonthlyData {
         income: number;
         expense: number;
         sortDate: number;
     }
 
-    // Group by Month-Year
     const monthlyData = records.reduce((acc, curr) => {
         if (curr.status !== 'paid') return acc;
         const [y, m, d] = curr.transaction_date.split('-');
         const date = new Date(Number(y), Number(m) - 1, Number(d));
-        const key = `${date.toLocaleString('default', { month: 'short' })}/${y}`; // e.g., "Fev/2026"
+        const key = `${date.toLocaleString('default', { month: 'short' })}/${y}`;
 
         if (!acc[key]) acc[key] = { income: 0, expense: 0, sortDate: date.getTime() };
 
         if (curr.type === 'income') {
-            // New Rule: Anything that is NOT 'Balance' (Saldo) counts for the Monthly Chart
             if (!curr.category.toLowerCase().includes('saldo')) {
                 acc[key].income += Number(curr.amount);
             }
@@ -205,7 +203,7 @@ const FinancialDashboard: React.FC = () => {
 
     const sortedMonths = Object.entries(monthlyData)
         .sort(([, a], [, b]) => (a as MonthlyData).sortDate - (b as MonthlyData).sortDate)
-        .slice(-6); // Last 6 months
+        .slice(-6);
 
     if (loading) {
         return (
@@ -353,7 +351,6 @@ const FinancialDashboard: React.FC = () => {
                             <div className="h-64 flex items-end justify-between gap-2 px-2">
                                 {sortedMonths.map(([key, rawData]) => {
                                     const data = rawData as MonthlyData;
-                                    // Scale bars relative to max value
                                     const maxVal = Math.max(...sortedMonths.flatMap((entry) => {
                                         const d = entry[1] as MonthlyData;
                                         return [d.income, d.expense];
@@ -424,8 +421,8 @@ const FinancialDashboard: React.FC = () => {
                         {documents.length > 0 ? (
                             <div className="space-y-4">
                                 {Array.from(new Set(documents.map(d => d.year)))
-                                    .sort((a, b) => Number(b) - Number(a)) // Fix lint: ensure number comparison
-                                    .map((year: any) => (
+                                    .sort((a, b) => Number(b) - Number(a))
+                                    .map((year) => (
                                         <div key={year} className="border border-gray-200 rounded-xl overflow-hidden">
                                             <button
                                                 onClick={() => setExpandedYear(expandedYear === year ? null : year)}
@@ -447,21 +444,21 @@ const FinancialDashboard: React.FC = () => {
                                                     {documents.filter(d => d.year === year).map((doc) => (
                                                         <div key={doc.id} className="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:bg-slate-50 transition-all group">
                                                             <div className="flex items-center gap-4 overflow-hidden">
-                                                                <div className="p-2.5 bg-red-50 text-red-600 rounded-lg group-hover:bg-red-100 transition-colors shrink-0">
-                                                                    <FileText size={20} />
-                                                                </div>
-                                                                <div className="min-w-0">
-                                                                    <h4 className="font-bold text-slate-800 truncate text-sm" title={doc.title}>{doc.title}</h4>
-                                                                    <p className="text-xs text-gray-500 truncate">{doc.description || 'Documento oficial de prestação de contas.'}</p>
-                                                                    <div className="flex items-center gap-2 mt-1">
-                                                                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
-                                                                            {doc.category}
-                                                                        </span>
-                                                                        <span className="text-[10px] text-gray-400">
-                                                                            {new Date(doc.created_at).toLocaleDateString()}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
+                                                                 <div className="p-2.5 bg-red-50 text-red-600 rounded-lg group-hover:bg-red-100 transition-colors shrink-0">
+                                                                     <FileText size={20} />
+                                                                 </div>
+                                                                 <div className="min-w-0">
+                                                                     <h4 className="font-bold text-slate-800 truncate text-sm" title={doc.title}>{doc.title}</h4>
+                                                                     <p className="text-xs text-gray-500 truncate">{doc.description || 'Documento oficial de prestação de contas.'}</p>
+                                                                     <div className="flex items-center gap-2 mt-1">
+                                                                         <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
+                                                                             {doc.category}
+                                                                         </span>
+                                                                         <span className="text-[10px] text-gray-400">
+                                                                             {new Date(doc.created_at).toLocaleDateString()}
+                                                                         </span>
+                                                                     </div>
+                                                                 </div>
                                                             </div>
                                                             <a
                                                                 href={doc.file_url}
