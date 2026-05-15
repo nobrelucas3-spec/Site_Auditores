@@ -32,6 +32,8 @@ import MembershipSuccess from './pages/MembershipSuccess';
 import MembershipFichaView from './pages/MembershipFichaView';
 import AdminPortal from './pages/AdminPortal';
 import Conacon from './pages/Conacon';
+import MemberAnnouncements from './pages/MemberAnnouncements';
+import ArticleTetoRemuneratorio from './pages/ArticleTetoRemuneratorio';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -65,7 +67,7 @@ const App: React.FC = () => {
               <Route path="/auditorias/:id" element={<Audit />} />
 
               <Route path="/comunicacao/artigos" element={<ArticlesList />} />
-              <Route path="/comunicacao/artigos/calices-de-privilegio" element={<ArticleCalicesPrivilegio />} />
+              <Route path="/comunicacao/artigos/:id" element={<Article />} />
               <Route path="/comunicacao/fotos" element={<Gallery type="fotos" />} />
               <Route path="/comunicacao/videos" element={<Gallery type="videos" />} />
               <Route path="/comunicacao/publicacoes" element={<Publications />} />
@@ -88,9 +90,11 @@ const App: React.FC = () => {
               <Route path="/area-do-filiado/documentos" element={<MemberDocuments />} />
               <Route path="/area-do-filiado/financeiro" element={<FinancialDashboard />} />
               <Route path="/area-do-filiado/financeiro/detalhes" element={<FinancialDetailed />} />
+              <Route path="/area-do-filiado/informativos" element={<MemberAnnouncements />} />
               <Route path="/area-do-filiado/analise-tecnica" element={<TechnicalAnalysisList />} />
               <Route path="/area-do-filiado/analise-tecnica/inversao-hierarquica" element={<JuridicalAnalysis />} /> {/* Specific Article */}
               <Route path="/area-do-filiado/artigos" element={<ArticlesList />} />
+              <Route path="/comunicacao/artigos/teto-remuneratorio-pe" element={<ArticleTetoRemuneratorio />} />
               <Route path="/primeiro-acesso" element={<FirstAccess />} />
               <Route path="/esqueci-senha" element={<ForgotPassword />} />
               <Route path="/redefinir-senha" element={<ResetPassword />} />

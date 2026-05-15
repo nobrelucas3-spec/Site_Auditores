@@ -1,4 +1,5 @@
 import { NewsCategory, NewsItem, ServiceLink, PartnerLink } from './types';
+import { Announcement } from './types/announcement';
 
 export const BOARD_MEMBERS = [
   { name: 'Roubier Muniz de Souza', role: 'Presidente', image: '/diretoria/roubier_muniz.png' },
@@ -114,7 +115,7 @@ export const MOCK_NEWS: NewsItem[] = [
         <img src="/news/curso-saneamento-ibraop.png" alt="Curso de Saneamento Ibraop" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
       </div>
 
-      <p class="mb-4">O Instituto Brasileiro de Auditoria de Obras Públicas (Ibraop) realizou, nos dias 27, 28 e 29 de abril, o <span class="font-bold">Curso de Procedimentos de Auditoria para Serviços de Saneamento</span>, reunindo 270 inscritos de diferentes órgãos e instituições de todo o Brasil. Entre os participantes estavam auditores de controle externo dos Tribunais de Contas de todas as regiões do país, servidores de Ministérios Públicos e de Agências Reguladoras, servidores de controladorias municipais e estaduais, além de peritos de engenharia da Polícia Federal (DPF/MJSP), da Caixa Econômica Federal (CEF), da Fundação Nacional de Saúde (Funasa) e de Empresas de Saneamento.</p>
+      <p class="mb-4">O Instituto Brasileiro de Auditoria de Obras Públicas (Ibraop) realizou, nos dias 27, 28 e 29 de abril, o <span class="font-bold">Curso de Procedimentos de Auditoria para Serviços de Saneamento</span>, reunindo 270 inscritos de differentes órgãos e instituições de todo o Brasil. Entre os participantes estavam auditores de controle externo dos Tribunais de Contas de todas as regiões do país, servidores de Ministérios Públicos e de Agências Reguladoras, servidores de controladorias municipais e estaduais, além de peritos de engenharia da Polícia Federal (DPF/MJSP), da Caixa Econômica Federal (CEF), da Fundação Nacional de Saúde (Funasa) e de Empresas de Saneamento.</p>
 
       <p class="mb-6">As aulas foram realizadas integralmente on-line, via plataforma Zoom, em parceria com o <span class="font-bold">Comitê de Meio Ambiente e Sustentabilidade do Instituto Rui Barbosa (IRB)</span> e a <span class="font-bold">Rede Integrar</span>. O treinamento detalhou os procedimentos do Ibraop sobre auditoria de serviços de Saneamento Básico, com o objetivo de preparar as equipes de fiscalização que acompanham o desempenho dos serviços de abastecimento de água e esgotamento sanitário no país, além de debater os temas de drenagem e resíduos sólidos urbanos.</p>
 
@@ -128,18 +129,17 @@ export const MOCK_NEWS: NewsItem[] = [
       <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Programação e conteúdo das aulas</h3>
       <p class="mb-6">O curso seguiu um cronograma de três dias. No dia 27 de abril, foram apresentados os Procedimentos nº 100, 110 e 120/2024, pelos auditores Dener Alves de Souza (TCE-TO) e Lygia Wilken (TCE-ES). No dia 28, o auditor Omar da Silveira Neto (TCE-RS) e a consultora Valéria Cristina Gonzaga apresentaram o Procedimento nº 130/2024, sobre Contratação dos Serviços de Saneamento Básico.</p>
 
-      <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Auditores do TCE-PE fecham o curso com aula sobre Regulação</h3>
-      <p class="mb-4">O encerramento do curso ficou a cargo de uma equipe pernambucana de peso. Os auditores <span class="font-bold text-primary-700">Tiago Martins, Victor Pereira e Paulo Cavalcanti (TCE-PE)</span> apresentaram o PROC-IBR-SAN-140/2024, que trata da Regulação do Saneamento Básico — considerado um dos temas mais críticos e atuais para o setor, especialmente diante dos desafios impostos pelo Novo Marco Legal do Saneamento (Lei nº 14.026/2020).</p>
+      <h3 class="text-xl font-bold text-slate-800 mt-6 mb-3">Auditores do TCE-PE fecham o curso com aula sobre Regulação</h3>
 
-      <p class="mb-4">A presença do trio não é por acaso. Os três integram a Gerência de Fiscalização de Saneamento, Meio Ambiente e Energia do TCE-PE (GSAM), que monitora a situação do saneamento em Pernambuco desde 2020, por meio de levantamentos nos municípios e no Distrito de Fernando de Noronha, para verificar a implantação dos Planos Municipais e os principais indicadores de abastecimento de água, coleta e tratamento de esgotos.</p>
+      <p class="mb-4">O encerramento do curso ficou a cargo de uma equipe pernambucana de peso. O <strong>PROC-IBR-SAN-140/2024</strong>, que trata da Regulação do Saneamento Básico, contou com a colaboração direta dos auditores <strong>Victor Pereira, Tiago Martins e Paulo Cavalcanti (TCE-PE)</strong> em sua elaboração. O documento aborda um dos temas mais críticos e atuais para o setor, especialmente diante dos desafios impostos pelo Novo Marco Legal do Saneamento (Lei nº 14.026/2020).</p>
 
-      <p class="mb-4">Paulo Cavalcanti, gerente de Fiscalização de Saneamento, Meio Ambiente e Energia do TCE-PE, é uma das referências nacionais no tema. Uma auditoria do TCE-PE vem monitorando o cumprimento da meta de universalização do saneamento no Estado, instituída pelo Novo Marco do Saneamento Básico, que prevê levar água potável a 99% da população e oferecer serviços de coleta e tratamento de esgoto a 90% das pessoas até 2033.</p>
+      <p class="mb-4">No dia do evento, a apresentação da aula ficou sob a responsabilidade de <strong>Tiago Martins e Paulo Cavalcanti</strong>.</p>
 
-      <div class="my-8 p-6 bg-slate-50 border-l-4 border-primary-600 rounded-r-xl">
-        <p class="text-slate-700">O desafio em Pernambuco é concreto: o <span class="font-bold">Painel de Saneamento elaborado pelo TCE-PE</span> aponta que apenas 30,8% da população do Estado dispõem de serviços de coleta de esgoto, enquanto 83,56% têm acesso à água — índices abaixo das médias nacionais. Em relação às perdas na distribuição de água, os níveis em Pernambuco chegam a quase 50% de desperdício, número bem acima da média nacional de 38%.</p>
+      <p class="mb-4">Durante a apresentação, foram compartilhados casos práticos e os benefícios alcançados em auditorias da Gerência de Fiscalização de Saneamento, Meio Ambiente e Energia do TCE-PE (GSAM). A unidade monitora o cumprimento das metas de universalização do saneamento no Estado, instituídas pelo Novo Marco do Saneamento Básico, que prevê levar água potável a 99% da população e oferecer serviços de coleta e tratamento de esgoto a 90% das pessoas até 2033.</p>
+
+      <div class="my-6 p-6 bg-blue-50 border-l-4 border-primary-500 rounded-r-lg">
+        <p class="text-primary-900 font-medium leading-relaxed">O desafio em Pernambuco é concreto: o <strong>Painel de Saneamento elaborado pelo TCE-PE</strong> aponta que apenas 30,8% da população do Estado dispõem de serviços de coleta de esgoto, enquanto 83,56% têm acesso à água — índices abaixo das médias nacionais. Em relação às perdas na distribuição de água, os níveis em Pernambuco chegam a quase 50% de desperdício, número bem acima da média nacional de 38%.</p>
       </div>
-
-      <p class="mb-4">Tiago Martins e Victor Pereira também integram a equipe técnica que se reuniu com representantes da Companhia Pernambucana de Saneamento (Compesa), da Agência Reguladora de Pernambuco (ARPE) e da Associação Municipalista de Pernambuco (AMUPE) para discutir investimentos e soluções para os problemas ligados ao saneamento básico no Estado.</p>
 
       <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Compromisso com a universalização</h3>
       <p class="mb-4">A presidente do Ibraop, Adriana Portugal, agradeceu a dedicação dos membros do grupo de trabalho de Saneamento Básico e concluiu: <span class="italic">"Foi um excelente treinamento. O Ibraop está empenhado em contribuir para que as auditorias se multipliquem e para que, juntos, consigamos efetivamente conquistar a universalização dos serviços de saneamento básico no país."</span></p>
@@ -172,7 +172,7 @@ export const MOCK_NEWS: NewsItem[] = [
 
       <p class="mb-4">A solenidade de promulgação foi conduzida pelo presidente do Senado, Davi Alcolumbre, e reuniu representantes da Associação dos Membros dos Tribunais de Contas do Brasil (Atricon), além de presidentes e integrantes dos 33 Tribunais de Contas brasileiros, marcando um momento histórico para o sistema de controle externo.</p>
 
-      <p class="mb-4">A PEC da Essencialidade é resultado da tramitação conjunta da PEC 302/2017, de autoria do deputado Moses Rodrigues, e da PEC 39/2022, apresentada pelo senador Eunício de Oliveira, unificadas em 2025 para reforçar o papel constitucional das cortes de contas. O texto altera dispositivos da Constituição Federal, com destaque para o artigo 75, que organiza o sistema de controle externo no país.</p>
+      <p class="mb-4">A PEC da Essencialidade é resultado da tramitação conjunta da PEC 302/2017, de autoria do deputado Moses Rodrigues, e da PEC 39/2022, apresentada pelo senador Eunício de Oliveira, unificadas em 2025 para reforçar o papel constitucional das cortes de contas. O texto altera dispositivos da Constituição Federal, com destaque for o artigo 75, que organiza o sistema de controle externo no país.</p>
 
       <p class="mb-4">Para representantes do sistema de controle, a mudança representa um avanço institucional relevante. A medida reforça o entendimento de que os Tribunais de Contas são pilares fundamentais da fiscalização dos recursos públicos, contribuindo para a transparência, o controle e a boa governança do Estado brasileiro.</p>
 
@@ -293,7 +293,7 @@ export const MOCK_NEWS: NewsItem[] = [
   },
   {
     id: 'conacon-2026',
-    title: 'Vem aí o 9º CONACON em Curitiba! Manifeste seu interesse em participar',
+    title: 'Vem aí o 9º CONACON in Curitiba! Manifeste seu interesse em participar',
     summary: 'A Associação convoca os auditores a manifestarem interesse em participar do maior evento de Controle Externo do Brasil. Preencha o formulário para facilitar nossa articulação institucional.',
     content: '',
     date: '2026-04-28',
@@ -307,6 +307,11 @@ export const MOCK_NEWS: NewsItem[] = [
     id: 'dia-do-auditor-integracao-2026',
     title: 'Auditores do Tribunal de Contas de Pernambuco celebram data com evento de integração',
     summary: 'Encontro destacou o papel dos auditores como fiscais da sociedade e reforçou a importância da independência do controle externo.',
+    date: '2026-04-28',
+    imageUrl: '/news/dia-do-auditor-2026.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    author: 'Diretoria',
     content: `
       <p class="mb-4">A Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco realizou, nesta segunda-feira (27), um encontro especial em comemoração ao Dia do Auditor de Controle Externo.</p>
       
@@ -327,18 +332,17 @@ export const MOCK_NEWS: NewsItem[] = [
       
       <p>Roubier Muniz também destacou os desafios da profissão e a importância da responsabilidade no exercício da função. Por fim, reforçou o valor da categoria e o orgulho da instituição.<br/>“O Tribunal de Contas só é a instituição forte e respeitada que é hoje porque tem, em sua base, os Auditores de Controle Externo”, concluiu.</p>
     `,
-    date: '2026-04-28',
-    imageUrl: '/news/dia-do-auditor-2026.jpg',
-    imagePosition: 'top',
-    hideCoverInArticle: true,
-    category: NewsCategory.INSTITUCIONAL,
-    isHighlight: true,
-    author: 'Diretoria'
+    hideCoverInArticle: true
   },
   {
     id: 'valorizacao-carreira-negociacao-2026',
     title: 'Associação dos Auditores reforça atuação e acompanha negociações pela valorização da carreira no TCE-PE',
     summary: 'Entidade segue em diálogo com a gestão do Tribunal e atenta às etapas institucionais necessárias para o avanço das tratativas',
+    date: '2026-04-12',
+    imageUrl: '/news/valorizacao_carreira_reuniao.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    author: 'Diretoria',
     content: `
       <p class="mb-4">A Associação dos Auditores do Tribunal de Contas do Estado de Pernambuco (TCE-PE) segue atuando de forma permanente nas tratativas com a Alta Gestão do Tribunal, com foco na valorização da carreira de Auditor de Controle Externo.</p>
       
@@ -351,17 +355,18 @@ export const MOCK_NEWS: NewsItem[] = [
       <p class="mb-4">A entidade também segue atenta aos desafios enfrentados pela carreira, especialmente no que diz respeito à sua valorização e ao fortalecimento institucional, aspectos fundamentais para a manutenção da qualidade e da eficiência do controle externo.</p>
       
       <p>A Associação dos Auditores do TCE-PE reafirma seu compromisso com a defesa dos seus associados e continuará acompanhando de perto cada etapa das negociações.</p>
-    `,
-    date: '2026-04-12',
-    imageUrl: '/news/valorizacao_carreira_reuniao.png',
-    category: NewsCategory.INSTITUCIONAL,
-    isHighlight: true,
-    author: 'Diretoria'
+    `
   },
   {
     id: 'nota-repudio-tce-pr-2026',
     title: 'Auditores de Pernambuco apoiam posicionamento da ANTC em defesa da legalidade no TCE-PR',
     summary: 'Nomeação fora da carreira acende alerta sobre riscos à legalidade e à credibilidade do controle externo no país.',
+    date: '2026-04-08',
+    imageUrl: '/news/tce_pr_repudio.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
     content: `
       <p class="mb-4">Nomeação fora da carreira acende alerta sobre riscos à legalidade e à credibilidade do controle externo no país.</p>
       
@@ -376,17 +381,17 @@ export const MOCK_NEWS: NewsItem[] = [
       <p class="mb-4">Por fim, há confiança nas providências adotadas junto ao Ministério Público do Estado do Paraná para o restabelecimento da legalidade, reafirmando o compromisso com a defesa das prerrogativas dos Auditores de Controle Externo e com a integridade do controle externo brasileiro.</p>
       
       <p class="mb-4 mt-6">Veja a nota na íntegra: <a href="https://www.antcbrasil.org.br/images/2026/04/Nota_Publica_Parana_ANTC-CR_assinado_assinado_29_a_260408_070043_assinado_assinado_28129_assinado.pdf" target="_blank" class="text-primary-600 hover:text-primary-800 underline font-semibold">Descarregar PDF - Nota pública de repúdio à nomeação irregular no TCE-PR</a></p>
-    `,
-    date: '2026-04-08',
-    imageUrl: '/news/tce_pr_repudio.jpg',
-    category: NewsCategory.INSTITUCIONAL,
-    isHighlight: true,
-    author: 'Auditores TCE-PE'
+    `
   },
   {
     id: 'posse-tce-pe-2026',
     title: 'ANTC participa da posse da nova direção do TCE-PE e reforça agenda institucional em Recife',
     summary: 'Associação Nacional marcou presença na cerimônia de posse do conselheiro Carlos Neves como novo presidente do Tribunal de Contas de Pernambuco para o biênio 2026-2027.',
+    date: '2026-01-20',
+    imageUrl: '/news/posse 2026/WhatsApp_Image_2026-01-20_at_11.49.30.jpeg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: false,
+    author: 'Comunicação ANTC',
     content: `
       <p class="mb-4">A Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas do Brasil (ANTC) participou da solenidade de posse da nova mesa diretora do Tribunal de Contas do Estado de Pernambuco (TCE-PE), realizada no dia 20 de janeiro de 2026. O evento marcou o início da gestão do conselheiro Carlos Neves na presidência da Corte de Contas para o biênio 2026-2027.</p>
       
@@ -403,17 +408,17 @@ export const MOCK_NEWS: NewsItem[] = [
       </div>
 
       <p class="mb-4">Durante a passagem por Recife, a liderança da ANTC também cumpriu agenda institucional, dialogando com representantes locais sobre temas de interesse da categoria e do sistema de controle externo.</p>
-    `,
-    date: '2026-01-20',
-    imageUrl: '/news/posse 2026/WhatsApp_Image_2026-01-20_at_11.49.30.jpeg',
-    category: NewsCategory.INSTITUCIONAL,
-    isHighlight: false,
-    author: 'Comunicação ANTC'
+    `
   },
   {
     id: 'loaud-mg',
     title: 'ANTC apresenta LOAUD ao Conselheiro Presidente do TCE-MG',
     summary: 'ANTC apresenta minuta da Lei Orgânica Nacional da Auditoria de Controle Externo ao Conselheiro Presidente do TCE-MG, Durval Ângelo.',
+    date: '2026-02-03',
+    imageUrl: '/news/loaud/img1.jpeg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: false,
+    author: 'Comunicação ANTC',
     content: `
       <p class="mb-4">A Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas do Brasil (ANTC) apresentou a minuta da Lei Orgânica Nacional da Auditoria de Controle Externo (LOAUD) ao Conselheiro Presidente do Tribunal de Contas do Estado de Minas Gerais (TCE-MG), Durval Ângelo, e ao Vice-Presidente, Agostinho Patrus.</p>
       
@@ -427,17 +432,17 @@ export const MOCK_NEWS: NewsItem[] = [
       <p class="mb-4">Durante a reunião, foram apresentados os pilares centrais da LOAUD: estabelecimento de um padrão mínimo para a atividade de auditoria de controle externo, promoção da transparência e eficácia nas fiscalizações, e o reconhecimento da Auditoria de Controle Externo como função essencial à democracia.</p>
       
       <p>Além disso, houve uma reunião com o Diretor-Geral do TCE-MG, o Auditor de Controle Externo Gustavo Vidigal, para aprofundar os fundamentos do projeto e garantir coerência institucional ao sistema de controle.</p>
-    `,
-    date: '2026-02-03',
-    imageUrl: '/news/loaud/img1.jpeg',
-    category: NewsCategory.INSTITUCIONAL,
-    isHighlight: false,
-    author: 'Comunicação ANTC'
+    `
   },
   {
     id: 'novo-site-lancamento',
     title: 'Auditores do TCE-PE lançam novo portal com foco em transparência e serviços',
     summary: 'Nova plataforma digital oferece área exclusiva para filiados, prestação de contas em tempo real e acesso facilitado a notícias e atos normativos.',
+    date: '2026-04-27',
+    imageUrl: '/news/new_website_launch.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    author: 'Assessoria de Comunicação',
     content: `
       <p class="mb-4">A Associação dos Auditores do TCE-PE dá um passo importante na modernização de sua comunicação com o lançamento do seu novo portal institucional. A plataforma foi desenvolvida para aproximar ainda mais os associados da entidade e garantir total transparência nas ações da gestão.</p>
 
@@ -457,37 +462,89 @@ export const MOCK_NEWS: NewsItem[] = [
       </div>
 
       <p>Navegue pelo menu e conheça todas as funcionalidades. A Área do Filiado já está ativa e pode ser acessada com seu email cadastrado.</p>
-    `,
-    date: '2026-04-27',
-    imageUrl: '/news/new_website_launch.png',
-    category: NewsCategory.INSTITUCIONAL,
-    isHighlight: true,
-    author: 'Assessoria de Comunicação'
+    `
   },
   {
     id: 'stf-tcu-consenso',
     title: 'STF ouve argumentos sobre alcance do controle externo em procedimentos consensuais',
     summary: 'Supremo Tribunal Federal realiza oitivas na ADPF 1183 para debater a constitucionalidade da resolução de conflitos pelo TCU.',
+    date: '2026-02-13',
+    imageUrl: '/news/stf_consensus.jpg',
+    category: NewsCategory.NA_MIDIA,
     content: `
       <p class="mb-4">O Supremo Tribunal Federal (STF) realizou sessões para ouvir especialistas e partes interessadas sobre o alcance do controle externo em procedimentos consensuais. O debate ocorre no âmbito da Arguição de Descumprimento de Preceito Fundamental (ADPF) 1183, ajuizada pelo Partido Novo.</p>
 
       <p class="mb-4">A ação questiona a constitucionalidade da Instrução Normativa (IN) 91/2022 do Tribunal de Contas da União (TCU), que instituiu a Secretaria de Controle Externo de Solução Consensual e Prevenção de Conflitos (SecexConsenso). O partido argumenta que a norma expande indevidamente as atribuições da corte de contas, permitindo que o órgão participe da formulação de políticas públicas, uma competência do Executivo e Legislativo.</p>
 
       <p class="mb-4">Em contrapartida, o TCU e entidades como a Ordem dos Advogados do Brasil (OAB) defendem a iniciativa. Sustentam que a busca por soluções consensuais moderniza o controle externo, promove a eficiência administrativa e reduz a judicialização de grandes projetos de infraestrutura, mantendo-se dentro dos limites constitucionais.</p>
-
-      <div class="my-6 p-4 bg-gray-50 border-l-4 border-secondary-500">
-        <p class="italic text-gray-700">Em sustentação oral, a OAB e a AGU defenderam que o modelo consensual traz "maior racionalidade, eficiência e segurança jurídica", permitindo uma atuação preventiva do tribunal sem substituir o gestor público.</p>
-      </div>
-
       <p class="mb-4">O relator da ação, ministro Edson Fachin, conduziu as oitivas que servirão de base para a futura decisão do plenário sobre o tema, que tem repercussão direta na atuação de todos os Tribunais de Contas do país.</p>
 
       <p class="text-sm text-gray-500 mt-4">Fonte: Notícias STF</p>
-    `,
-    date: '2026-02-13', // Today
-    imageUrl: '/news/stf_consensus.jpg',
-    category: NewsCategory.NA_MIDIA,
-    isHighlight: false,
-    author: 'Redação'
+    `
+  }
+];
+
+export const MOCK_ANNOUNCEMENTS: Announcement[] = [
+  {
+    id: 'abono-permanencia-tese',
+    title: 'Ação Judicial: Abono de Permanência no 13º e Férias',
+    date: '2026-05-15',
+    severity: 'important',
+    summary: 'Associação ingressa com ação para inclusão do Abono de Permanência na base de cálculo da Gratificação Natalina e Adicional de Férias.',
+    content: `
+      <div class="space-y-6">
+        <div class="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500 mb-6">
+          <p class="text-indigo-800 text-sm font-medium leading-relaxed">
+            Informamos que, a pedido da Associação, o escritório <strong>Franceschini e Moraes Advogados</strong> está atuando em ação judicial que discute tese de grande relevância e impacto financeiro direto para os servidores que percebem o <strong>Abono de Permanência</strong>.
+          </p>
+        </div>
+
+        <section>
+          <h3 class="text-lg font-bold text-slate-900 mb-3">Do que se trata a tese?</h3>
+          <p class="text-slate-700 leading-relaxed">
+            A ação busca o reconhecimento do direito à inclusão do Abono de Permanência na base de cálculo de dois importantes benefícios:
+          </p>
+          <ul class="list-disc pl-5 mt-3 space-y-2 text-slate-700">
+            <li><strong>Gratificação Natalina:</strong> Referente ao 13º salário.</li>
+            <li><strong>Adicional Constitucional de Férias:</strong> Correspondente ao 1/3 de férias.</li>
+          </ul>
+        </section>
+
+        <section class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Impacto Financeiro</h3>
+          <p class="text-slate-700 text-sm">
+            A procedência da tese garante não apenas a correção dos pagamentos futuros, mas também o recebimento das <strong>diferenças retroativas dos últimos cinco anos</strong> para cada servidor beneficiado.
+          </p>
+        </section>
+
+        <section>
+          <h3 class="text-lg font-bold text-slate-900 mb-3">Fundamentos Jurídicos</h3>
+          <p class="text-slate-700 text-sm leading-relaxed">
+            A tese se apoia no <strong>art. 40, § 19 da Constituição Federal</strong>, que confere natureza remuneratória ao Abono de Permanência, entendimento já consolidado pelo STJ e pelo TJPE. Os artigos 7º (incisos VIII e XVII) e 39 (§ 3º) da CF asseguram que tais benefícios sejam calculados sobre a remuneração integral.
+          </p>
+        </section>
+
+        <section class="border-t border-slate-200 pt-6">
+          <h3 class="text-lg font-bold text-slate-900 mb-4">Como Aderir ou Participar</h3>
+          <p class="text-slate-700 mb-4">Os associados interessados deverão encaminhar ao escritório a documentação necessária:</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-600">• CNH Digital em PDF</div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-600">• Comprovante de Residência Atualizado</div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-600 md:col-span-2">• Últimos 12 Contracheques</div>
+          </div>
+        </section>
+
+        <div class="bg-amber-50 p-5 rounded-xl border border-amber-200 mt-6">
+          <h4 class="font-bold text-amber-900 text-sm mb-2">Contatos Jurídicos</h4>
+          <p class="text-amber-800 text-sm">Escritório <strong>Franceschini e Moraes Advogados</strong></p>
+          <p class="text-amber-800 text-sm font-bold mt-2">WhatsApp: (83) 99666-9046</p>
+          <p class="text-amber-800 text-xs mt-1">E-mail: felipe@franceschini.adv.br</p>
+          <p class="text-amber-700 text-[10px] mt-4 italic font-medium leading-tight">
+            * Toda a documentação deve ser encaminhada diretamente ao escritório pelos canais acima indicados.
+          </p>
+        </div>
+      </div>
+    `
   }
 ];
 
@@ -552,6 +609,71 @@ export const MOCK_AUDITS = [
 ];
 
 export const MOCK_ARTICLES = [
+  {
+    id: 'teto-remuneratorio-pe',
+    title: 'A Unificação do Teto Remuneratório em Pernambuco',
+    author: 'Lucas Nobre - Auditor de Controle Externo',
+    date: '2026-05-15',
+    summary: 'Análise jurídica sobre a Emenda Constitucional 68/2025 e os debates sobre o teto único do funcionalismo público em Pernambuco.',
+    link: '/comunicacao/artigos/teto-remuneratorio-pe',
+    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800',
+    category: 'Direito Constitucional',
+    isPublic: true,
+    content: `
+      <p class="mb-4">O cenário jurídico e administrativo de Pernambuco vive um momento de profunda transformação com a recente promulgação da Emenda Constitucional nº 68, de 18 de dezembro de 2025. A medida, que busca unificar o teto remuneratório do funcionalismo público estadual tomando como referência o subsídio dos Desembargadores do Tribunal de Justiça (atualmente fixado em 90,25% do subsídio dos Ministros do Supremo Tribunal Federal), reacendeu debates sobre autonomia federativa, limites constitucionais e o impacto na valorização das carreiras de Estado.</p>
+
+      <p class="mb-4">A unificação do teto, embora prevista no art. 37, XI, da Constituição Federal como uma faculdade dos Estados, enfrenta resistências políticas e jurídicas. Em Pernambuco, a controvérsia escalou até o Supremo Tribunal Federal, onde a governadora do Estado questionou a validade da emenda sob o argumento de vício de iniciativa legislativa e impacto orçamentário não planejado.</p>
+
+      <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">Iniciativa Legislativa e Autonomia</h3>
+      <p class="mb-4">Um dos pontos centrais da discussão gira em torno de quem teria a competência para iniciar o processo de alteração do teto remuneratório. O governo estadual sustenta que a matéria é de iniciativa exclusiva do Chefe do Executivo, por envolver regime jurídico de servidores e gerar aumento de despesa pública.</p>
+
+      <p class="mb-4">Entretanto, este argumento enfrenta uma barreira interpretativa sólida. O STF, em diversos precedentes, tem diferenciado a iniciativa legislativa para leis ordinárias da iniciativa para o exercício do poder constituinte derivado reformador. Como a própria Constituição Federal impõe a "emenda à constituição estadual" como o veículo para a fixação do teto único, condicionar esse poder à iniciativa exclusiva do governador anularia a autonomia do Poder Legislativo em sua função constituinte decorrente. A ANTC, em sua intervenção como <em>amicus curiae</em>, reforça que o teto remuneratório não é uma norma concessiva de aumento, mas sim uma norma de contenção, o que afasta a incidência da reserva de iniciativa voltada para a criação de despesas.</p>
+
+      <div class="my-8 p-6 bg-slate-50 border-l-4 border-secondary-500 rounded-r-lg">
+        <p class="text-slate-800 font-medium">O governo estadual alega que o impacto financeiro, estimado em aproximadamente <strong>R$ 7,9 milhões mensais</strong> (totalizando cerca de <strong>R$ 105,2 milhões anuais</strong>, segundo dados da Secretaria de Administração), comprometeria o equilíbrio das contas públicas e a Lei de Responsabilidade Fiscal.</p>
+      </div>
+
+      <p class="mb-4">Contudo, associações como o SindiFisco-PE argumentam que esse valor é ínfimo diante da arrecadação estadual e que a valorização das carreiras típicas de Estado, especialmente a Administração Tributária, é o caminho mais curto para o incremento da receita, tornando o investimento em pessoal autossustentável.</p>
+
+      <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">A Simetria Institucional e o Papel do STF</h3>
+      <p class="mb-4">A busca pelo teto único não é apenas uma questão de remuneração, mas de simetria institucional. Ao adotar o subsídio dos Desembargadores como limite, o Estado de Pernambuco alinharia sua estrutura de controle e fiscalização ao padrão já adotado em outros entes da federação que buscaram reduzir as disparidades entre as cúpulas dos Poderes e as carreiras essenciais à justiça e ao controle.</p>
+
+      <div class="overflow-x-auto my-8">
+        <table class="min-w-full bg-white border border-slate-200">
+          <thead>
+            <tr class="bg-slate-50">
+              <th class="px-4 py-2 border text-left text-xs font-bold text-slate-500 uppercase">Estado</th>
+              <th class="px-4 py-2 border text-left text-xs font-bold text-slate-500 uppercase">Modelo de Teto</th>
+              <th class="px-4 py-2 border text-left text-xs font-bold text-slate-500 uppercase">Situação Jurídica</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <tr><td class="px-4 py-2 border">Mato Grosso</td><td class="px-4 py-2 border">Subsídio Desembargadores</td><td class="px-4 py-2 border text-green-600 font-medium">Vigente / Constitucional</td></tr>
+            <tr><td class="px-4 py-2 border">Goiás</td><td class="px-4 py-2 border">Subsídio Desembargadores</td><td class="px-4 py-2 border text-amber-600 font-medium">Suspenso pelo STF</td></tr>
+            <tr><td class="px-4 py-2 border">Santa Catarina</td><td class="px-4 py-2 border">Subsídio Desembargadores</td><td class="px-4 py-2 border text-green-600 font-medium">Vigente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mb-4">A decisão final do STF sobre o caso de Pernambuco será o divisor de águas. Se a corte mantiver a jurisprudência que prestigia a autonomia das Assembleias Legislativas para emendar a constituição estadual, consolidará um modelo de gestão pública que prioriza a valorização do servidor técnico e a independência das carreiras de controle.</p>
+
+      <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">Conclusão</h3>
+      <p class="mb-6">O debate sobre a Emenda Constitucional 68/2025 transcende os limites orçamentários. Trata-se de uma escolha sobre que tipo de Estado Pernambuco deseja ser: um ente que respeita a simetria entre as carreiras de Estado e as cúpulas dos poderes, ou um que mantém distorções históricas sob o manto da "iniciativa exclusiva". A valorização da Auditoria de Controle Externo e da Fiscalização Tributária é, antes de tudo, uma garantia para a própria sociedade de que o erário será gerido e fiscalizado por profissionais motivados e protegidos por garantias institucionais sólidas.</p>
+
+      <div class="mt-12 bg-slate-50 p-6 rounded-xl border border-slate-200">
+        <h4 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Referências Bibliográficas</h4>
+        <ul class="text-xs text-slate-600 space-y-3 list-decimal pl-4">
+          <li><a href="https://legis.alepe.pe.gov.br/?ec682025" target="_blank" class="text-secondary-600 hover:underline">Emenda Constitucional nº 68/2025. Alepe Legis.</a></li>
+          <li><a href="https://sindifiscope.org.br/sindifisco-esclarece-filiados-e-cobra-aplicacao-imediata-do-novo-teto-com-base-em-parecer-do-relator-da-alepe/" target="_blank" class="text-secondary-600 hover:underline">Sindifisco esclarece filiados e cobra aplicação imediata do novo teto.</a></li>
+          <li><a href="https://noticias.stf.jus.br/postsnoticias/governadora-de-pernambuco-questiona-no-stf-emenda-sobre-teto-salarial-dos-servidores-estaduais/" target="_blank" class="text-secondary-600 hover:underline">Governadora de Pernambuco questiona no STF emenda sobre teto salarial.</a></li>
+          <li><a href="https://www.jota.info/stf/do-supremo/adi-no-stf-contesta-emenda-da-alepe-sobre-teto-do-funcionalismo-publico-em-pernambuco" target="_blank" class="text-secondary-600 hover:underline">ADI no STF contesta emenda da ALEPE - JOTA.</a></li>
+          <li><a href="https://sindifiscope.org.br/sindifisco-reforca-mobilizacao-pela-paridade-e-mantem-assembleia-permanente-apos-plenaria-com-mais-de-350-filiados/" target="_blank" class="text-secondary-600 hover:underline">Sindifisco reforça mobilização pela paridade.</a></li>
+          <li><a href="https://www.cbnrecife.com/2026/02/19/governo-de-pernambuco-aciona-stf-para-barrar-emenda-que-aumenta-teto-salarial-de-servidores/" target="_blank" class="text-secondary-600 hover:underline">Governo de Pernambuco aciona STF (CBN).</a></li>
+        </ul>
+      </div>
+    `
+  },
   {
     id: 'inversao-hierarquica',
     title: 'A Inversão Hierárquica no Controle Externo',

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { MOCK_NEWS } from '../constants';
+import { MOCK_NEWS, MOCK_ARTICLES } from '../constants';
 import { OLD_NEWS } from '../old_news';
-import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, ZoomIn, MessageCircle } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, ZoomIn, MessageCircle, FileText } from 'lucide-react';
 import ImageViewer from '../components/ImageViewer';
 
-const ALL_NEWS = [...MOCK_NEWS, ...OLD_NEWS];
+const ALL_NEWS = [...MOCK_NEWS, ...MOCK_ARTICLES, ...OLD_NEWS];
 
 const Article: React.FC = () => {
   const { id } = useParams<{ id: string }>();
