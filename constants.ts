@@ -100,6 +100,58 @@ export const MOCK_NEWS: NewsItem[] = [
     `
   },
   {
+    id: 'curso-saneamento-ibraop-tcepe',
+    title: 'Auditores do TCE-PE encerram Curso Nacional de Auditoria para Serviços de Saneamento promovido pelo Ibraop',
+    summary: 'Auditores Tiago Martins, Victor Pereira e Paulo Cavalcanti foram os responsáveis pelo encerramento do treinamento que reuniu 270 especialistas de todo o Brasil.',
+    date: '2026-05-14',
+    imageUrl: '/news/curso-saneamento-ibraop.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: false,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/curso-saneamento-ibraop.png" alt="Curso de Saneamento Ibraop" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+      </div>
+
+      <p class="mb-4">O Instituto Brasileiro de Auditoria de Obras Públicas (Ibraop) realizou, nos dias 27, 28 e 29 de abril, o <span class="font-bold">Curso de Procedimentos de Auditoria para Serviços de Saneamento</span>, reunindo 270 inscritos de diferentes órgãos e instituições de todo o Brasil. Entre os participantes estavam auditores de controle externo dos Tribunais de Contas de todas as regiões do país, servidores de Ministérios Públicos e de Agências Reguladoras, servidores de controladorias municipais e estaduais, além de peritos de engenharia da Polícia Federal (DPF/MJSP), da Caixa Econômica Federal (CEF), da Fundação Nacional de Saúde (Funasa) e de Empresas de Saneamento.</p>
+
+      <p class="mb-6">As aulas foram realizadas integralmente on-line, via plataforma Zoom, em parceria com o <span class="font-bold">Comitê de Meio Ambiente e Sustentabilidade do Instituto Rui Barbosa (IRB)</span> e a <span class="font-bold">Rede Integrar</span>. O treinamento detalhou os procedimentos do Ibraop sobre auditoria de serviços de Saneamento Básico, com o objetivo de preparar as equipes de fiscalização que acompanham o desempenho dos serviços de abastecimento de água e esgotamento sanitário no país, além de debater os temas de drenagem e resíduos sólidos urbanos.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Abertura: saneamento como direito fundamental</h3>
+      <p class="mb-4">O coordenador do Comitê de Meio Ambiente e Sustentabilidade do IRB, o procurador de Contas Ruy Marcelo Alencar de Mendonça (MPC-AM), abriu o curso destacando seu caráter ao mesmo tempo técnico e social: <span class="italic text-slate-700">"Saneamento Básico é saúde pública, meio ambiente, dignidade humana e um direito fundamental das presentes e futuras gerações."</span> Ele também ressaltou o papel estratégico dos Tribunais de Contas e elogiou a iniciativa do Ibraop: <span class="italic text-slate-700">"Os procedimentos do Ibraop são de grande avanço institucional, pois oferecem padronização técnica, metodologia estruturada e abordagem que integra engenharia, regulação, governança e sustentabilidade, permitindo que a auditoria ultrapasse o contrato e alcance a oferta de serviços públicos de qualidade para a população."</span></p>
+
+      <p class="mb-4">O coordenador da Rede Integrar, o auditor federal Manoel Moreira (TCU), enfatizou que os padrões de controle são universais e servem também para gestores públicos, e destacou o papel da rede em promover fiscalizações conjuntas: <span class="italic text-slate-700">"Conseguir recursos suficientes para universalizar o Saneamento Básico no Brasil até 2033 já é um grande desafio, mas o principal é fazer com que esses arranjos institucionais se tornem políticas públicas de qualidade para atender a população."</span></p>
+
+      <p class="mb-6">A presidente do Ibraop, a auditora Adriana Portugal (TCDF), encerrou a abertura reforçando que os procedimentos de Saneamento Básico exigem análise meticulosa de planejamento, viabilidade e governança antes mesmo da fase de obras: <span class="italic font-bold text-slate-800">"Sabemos da nossa capacidade de fomentar a infraestrutura no Brasil e seguimos perseguindo o objetivo de fazer uma grande diferença nas vidas das pessoas."</span></p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Programação e conteúdo das aulas</h3>
+      <p class="mb-6">O curso seguiu um cronograma de três dias. No dia 27 de abril, foram apresentados os Procedimentos nº 100, 110 e 120/2024, pelos auditores Dener Alves de Souza (TCE-TO) e Lygia Wilken (TCE-ES). No dia 28, o auditor Omar da Silveira Neto (TCE-RS) e a consultora Valéria Cristina Gonzaga apresentaram o Procedimento nº 130/2024, sobre Contratação dos Serviços de Saneamento Básico.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Auditores do TCE-PE fecham o curso com aula sobre Regulação</h3>
+      <p class="mb-4">O encerramento do curso ficou a cargo de uma equipe pernambucana de peso. Os auditores <span class="font-bold text-primary-700">Tiago Martins, Victor Pereira e Paulo Cavalcanti (TCE-PE)</span> apresentaram o PROC-IBR-SAN-140/2024, que trata da Regulação do Saneamento Básico — considerado um dos temas mais críticos e atuais para o setor, especialmente diante dos desafios impostos pelo Novo Marco Legal do Saneamento (Lei nº 14.026/2020).</p>
+
+      <p class="mb-4">A presença do trio não é por acaso. Os três integram a Gerência de Fiscalização de Saneamento, Meio Ambiente e Energia do TCE-PE (GSAM), que monitora a situação do saneamento em Pernambuco desde 2020, por meio de levantamentos nos municípios e no Distrito de Fernando de Noronha, para verificar a implantação dos Planos Municipais e os principais indicadores de abastecimento de água, coleta e tratamento de esgotos.</p>
+
+      <p class="mb-4">Paulo Cavalcanti, gerente de Fiscalização de Saneamento, Meio Ambiente e Energia do TCE-PE, é uma das referências nacionais no tema. Uma auditoria do TCE-PE vem monitorando o cumprimento da meta de universalização do saneamento no Estado, instituída pelo Novo Marco do Saneamento Básico, que prevê levar água potável a 99% da população e oferecer serviços de coleta e tratamento de esgoto a 90% das pessoas até 2033.</p>
+
+      <div class="my-8 p-6 bg-slate-50 border-l-4 border-primary-600 rounded-r-xl">
+        <p class="text-slate-700">O desafio em Pernambuco é concreto: o <span class="font-bold">Painel de Saneamento elaborado pelo TCE-PE</span> aponta que apenas 30,8% da população do Estado dispõem de serviços de coleta de esgoto, enquanto 83,56% têm acesso à água — índices abaixo das médias nacionais. Em relação às perdas na distribuição de água, os níveis em Pernambuco chegam a quase 50% de desperdício, número bem acima da média nacional de 38%.</p>
+      </div>
+
+      <p class="mb-4">Tiago Martins e Victor Pereira também integram a equipe técnica que se reuniu com representantes da Companhia Pernambucana de Saneamento (Compesa), da Agência Reguladora de Pernambuco (ARPE) e da Associação Municipalista de Pernambuco (AMUPE) para discutir investimentos e soluções para os problemas ligados ao saneamento básico no Estado.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-10 mb-4">Compromisso com a universalização</h3>
+      <p class="mb-4">A presidente do Ibraop, Adriana Portugal, agradeceu a dedicação dos membros do grupo de trabalho de Saneamento Básico e concluiu: <span class="italic">"Foi um excelente treinamento. O Ibraop está empenhado em contribuir para que as auditorias se multipliquem e para que, juntos, consigamos efetivamente conquistar a universalização dos serviços de saneamento básico no país."</span></p>
+
+      <p class="mb-6 text-sm text-gray-500">Todos os 270 profissionais inscritos com presença confirmada nos três dias já podem emitir seus certificados on-line, acessando a área restrita em eventos.ibraop.org.br.</p>
+
+      <div class="mt-12 pt-6 border-t border-gray-100">
+        <p class="text-sm text-gray-500 font-bold">📲 Acesse as apresentações do curso: <a href="https://www.ibraop.org.br/cursos/" target="_blank" class="text-primary-600 hover:underline">ibraop.org.br/cursos</a></p>
+      </div>
+    `
+  },
+  {
     id: 'pec-essencialidade-promulgada',
     title: 'PEC da Essencialidade é promulgada e consolida Tribunais de Contas como órgãos permanentes de Estado',
     summary: 'Medida aprovada no Senado reconhece papel essencial das cortes de contas no controle externo e reforça estabilidade institucional, transparência e responsabilidade na fiscalização dos recursos públicos no Brasil.',
