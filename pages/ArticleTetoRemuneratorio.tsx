@@ -13,19 +13,7 @@ const ArticleTetoRemuneratorio: React.FC = () => {
     const navigate = useNavigate();
     const [activeSection, setActiveSection] = useState<string>('intro');
     const [isMobileTocOpen, setIsMobileTocOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
-                navigate('/area-do-filiado');
-            } else {
-                setLoading(false);
-            }
-        };
-        checkSession();
-    }, [navigate]);
+    const [loading, setLoading] = useState(false);
 
     const sections: Section[] = [
         { id: 'intro', title: 'Introdução' },
@@ -416,7 +404,7 @@ const ArticleTetoRemuneratorio: React.FC = () => {
                             <h4 className="font-bold text-xs text-gray-400 uppercase mb-3">Recursos Oficiais</h4>
                             <ul className="space-y-2">
                                 <li><a href="https://legis.alepe.pe.gov.br/?ec682025" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between text-sm text-gray-600 hover:text-primary-900 p-2 bg-gray-50 rounded hover:bg-sky-50 transition"><span>EC 68/2025 (Alepe)</span> <ChevronRight className="w-4 h-4" /></a></li>
-                                <li><a href="https://portal.stf.jus.br/processos/detalhe.asp?incidente=7049832" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between text-sm text-gray-600 hover:text-primary-900 p-2 bg-gray-50 rounded hover:bg-sky-50 transition"><span>Acompanhamento ADI 7937</span> <ChevronRight className="w-4 h-4" /></a></li>
+                                <li><a href="https://portal.stf.jus.br/processos/detalhe.asp?incidente=7502817" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between text-sm text-gray-600 hover:text-primary-900 p-2 bg-gray-50 rounded hover:bg-sky-50 transition"><span>Acompanhamento ADI 7937</span> <ChevronRight className="w-4 h-4" /></a></li>
                             </ul>
                         </div>
                     </div>
