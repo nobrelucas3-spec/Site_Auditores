@@ -153,7 +153,7 @@ const ArticleTetoRemuneratorio: React.FC = () => {
                             O foco deste debate é a promulgação da <strong>Emenda Constitucional Estadual nº 68, de 18 de dezembro de 2025</strong>, que promoveu uma reestruturação fundamental no sistema de limites remuneratórios para os servidores públicos civis do estado. A referida emenda, originada de uma Proposta de Emenda à Constituição (PEC) na Assembleia Legislativa de Pernambuco (Alepe), busca unificar o teto salarial do funcionalismo, adotando como paradigma o subsídio dos desembargadores do Tribunal de Justiça do Estado de Pernambuco (TJPE), o que, diante das recentes mutações constitucionais e decisões do Supremo Tribunal Federal (STF), equivale ao valor integral do subsídio dos ministros da Suprema Corte Federal.
                         </Paragraph>
                         <Paragraph>
-                            Apesar da vigência plena da norma constitucional estadual, o Poder Executivo, sob a liderança da governadora Raquel Lyra, judicializou a questão por meio da Ação Direta de Inconstitucionalidade (ADI) 7937, protocolada junto ao STF. Este movimento gerou um hiato de implementação: enquanto órgãos dotados de autonomia financeira, como o Tribunal de Contas do Estado de Pernambuco (TCE-PE), já procedem ao pagamento de seus auditores de controle externo com base no novo teto, as categorias vinculadas ao Poder Executivo enfrentam uma barreira administrativa que impede a atualização de seus vencimentos. Este texto busca apresentar os fundamentos da Emenda Constitucional 68/2025 e observar a questão de seu cumprimento imediato à luz da presunção de constitucionalidade das normas.
+                            Apesar da vigência plena da norma constitucional estadual, o Poder Executivo judicializou a questão por meio da Ação Direta de Inconstitucionalidade (ADI) 7937, protocolada junto ao STF. Este movimento gerou um hiato de implementação: enquanto órgãos dotados de autonomia financeira, como o Tribunal de Contas do Estado de Pernambuco (TCE-PE), já procedem ao pagamento de seus auditores de controle externo com base no novo teto, as categorias vinculadas ao Poder Executivo enfrentam uma barreira administrativa que impede a atualização de seus vencimentos.
                         </Paragraph>
                     </section>
 
@@ -192,11 +192,11 @@ const ArticleTetoRemuneratorio: React.FC = () => {
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="mt-3 text-xs text-slate-500 italic text-center">Fonte: Elaboração baseada na Constituição do Estado de Pernambuco e petições da ANTC.¹</p>
+                            <p className="mt-3 text-xs text-slate-500 italic text-center">Fonte: Elaboração baseada na Constituição do Estado de Pernambuco e petições da ANTC.</p>
                         </div>
 
                         <Paragraph>
-                            A reestruturação proposta pela Alepe fundamenta-se na faculdade outorgada aos estados pelo § 12 do art. 37 da Constituição Federal, incluído pela Emenda Constitucional nº 47/2005. Este dispositivo permite que os estados instituam, mediante emenda às suas constituições, um limite remuneratório único. A lógica da "unicidade" é um pilar da eficiência administrativa, visando evitar que carreiras de igual importância para a estrutura do Estado sejam submetidas a "subtetos" desiguais, o que gera desestímulo e evasão de talentos para outras esferas da federação ou para o setor privado.
+                            A reestruturação proposta pela Alepe fundamenta-se na faculdade outorgada aos estados pelo § 12 do art. 37 da Constituição Federal, incluído pela Emenda Constitucional nº 47/2005. Este dispositivo permite que os estados instituam, mediante emenda às suas constituições, um limite remuneratório único. A lógica da "unicidade" é um pilar da eficiência administrativa, visando evitar que carreiras de igual importância para a estrutura do Estado sejam submetidas a "subtetos" desiguais, o que gera desestímulo e evasão de talentos para outras esferas da federação ou carreiras.
                         </Paragraph>
                     </section>
 
@@ -204,7 +204,7 @@ const ArticleTetoRemuneratorio: React.FC = () => {
                     <section id="adi">
                         <SectionHeader title="3. A ADI 7937 e os Argumentos do Executivo" id="adi" />
                         <Paragraph>
-                            A governadora Raquel Lyra baseia sua resistência na ADI 7937 em dois eixos principais: o vício de iniciativa (constitucionalidade formal) e o impacto fiscal (constitucionalidade material). A tese do vício de iniciativa sustenta que matérias que tratam de remuneração de servidores e regime jurídico são de competência privativa do Chefe do Poder Executivo, nos termos do art. 61, § 1º, inciso II, alíneas 'a' e 'c' da Constituição Federal. Segundo o governo estadual, a Alepe teria usurpado essa competência ao promulgar a emenda sem a provocação do Executivo.
+                            O Governo do Estado de Pernambuco baseia sua resistência na ADI 7937 em dois eixos principais: o vício de iniciativa (constitucionalidade formal) e o impacto fiscal (constitucionalidade material). A tese do vício de iniciativa sustenta que matérias que tratam de remuneração de servidores e regime jurídico são de competência privativa do Chefe do Poder Executivo, nos termos do art. 61, § 1º, inciso II, alíneas 'a' e 'c' da Constituição Federal. Segundo o governo estadual, a Alepe teria usurpado essa competência ao promulgar a emenda sem a provocação do Executivo.
                         </Paragraph>
                         <Paragraph>
                             Entretanto, este argumento enfrenta uma barreira interpretativa sólida. O STF, em diversos precedentes, tem diferenciado a iniciativa legislativa para leis ordinárias da iniciativa para o exercício do poder constituinte derivado reformador. Como a própria Constituição Federal impõe a "emenda à constituição estadual" como o veículo para a fixação do teto único, condicionar esse poder à iniciativa exclusiva do governador anularia a autonomia do Poder Legislativo em sua função constituinte decorrente. A ANTC, em sua intervenção como <em>amicus curiae</em>, reforça que o teto remuneratório não é uma norma concessiva de aumento, mas sim uma norma de contenção, o que afasta a incidência da reserva de iniciativa voltada para a criação de despesas.
@@ -250,7 +250,7 @@ const ArticleTetoRemuneratorio: React.FC = () => {
                             A aplicação da EC 68/2025 pelo Tribunal de Contas do Estado de Pernambuco (TCE-PE) não figura como o argumento jurídico decisório para o desfecho da ADI 7937, mas sim como uma contundente demonstração de boa-fé e de estrito cumprimento constitucional pelo órgão. Ao reconhecer a eficácia imediata da norma e parametrizar sua folha de pagamento para contemplar o novo teto para os auditores de controle externo, o TCE-PE reafirma a sua submissão ao comando do Poder Constituinte Derivado Estadual.
                         </Paragraph>
                         <Paragraph>
-                            A atual disparidade — onde auditores do TCE-PE já se encontram sob a égide do novo teto enquanto demais categorias permanecem atreladas ao limite anterior — evidencia as disfunções de uma resistência administrativa, ressaltando o princípio da isonomia. A nova redação constitucional determina um teto único, tornando o fiel cumprimento da norma a medida esperada para todas as esferas estaduais.
+                            A atual disparidade — onde auditores do TCE-PE já se encontram sob a égide do novo teto enquanto demais categorias permanecem atreladas ao limite anterior — evidencia as disfunções de uma resistência administrativa. A nova redação constitucional determina um teto único, tornando o fiel cumprimento da norma a medida esperada para todas as esferas estaduais.
                         </Paragraph>
                         <Paragraph>
                             Desta forma, o TCE-PE exerce seu papel de observância da legalidade. Ao não aguardar um eventual desfecho dilatório da ADI 7937 para aplicar a emenda promulgada pela Alepe, a Corte de Contas corrobora a presunção de validade inerente e a exigibilidade normativa do novo texto.
@@ -261,7 +261,7 @@ const ArticleTetoRemuneratorio: React.FC = () => {
                     <section id="luta">
                         <div className="bg-indigo-50 border-l-4 border-indigo-600 p-6 sm:p-8 my-10 rounded-r-xl">
                             <h2 className="text-2xl font-serif font-bold text-indigo-900 mb-4 tracking-tight" id="luta">5. A Importância da Manutenção da PEC e a Luta Associativa</h2>
-                            <p className="text-indigo-800 mb-4">A atuação de entidades de classe, como a contribuição ativa do SindiFisco-PE e de outras associações vinculadas, reveste-se de grande relevância na defesa das prerrogativas funcionais. Entretanto, o foco principal que une a Associação dos Auditores do Tribunal de Contas e demais representações é a consolidação da vitória alcançada com a Emenda Constitucional 68/2025.</p>
+                            <p className="text-indigo-800 mb-4">A atuação de entidades de classe, como a contribuição ativa do SindiFisco-PE e da ANTC, reveste-se de grande relevância na defesa das prerrogativas funcionais. Entretanto, o foco principal que une a Associação dos Auditores do Tribunal de Contas e demais representações é a consolidação da vitória alcançada com a Emenda Constitucional 68/2025.</p>
                             <p className="text-indigo-800 mb-4">A manutenção da PEC é um marco imperativo para o fortalecimento das carreiras típicas de Estado. Diante da postura governamental, a articulação técnica e a adoção de posturas firmes provaram ser estratégias não só para resguardar as finanças, mas para proteger a paridade e assegurar o espaço fundamental do serviço público.</p>
                             <p className="text-indigo-800 mb-0">
                                 <strong>Destaca-se o papel essencial da Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas do Brasil (ANTC)</strong>. A sua forte atuação e o ingresso jurídico na Suprema Corte na condição de <em>amicus curiae</em> enriquecem o debate constitucional, suprindo o STF com os necessários subsídios técnicos, ressaltando o não cabimento do vício de iniciativa invocado e demonstrando a dimensão nacional e a correção material do modelo adotado por Pernambuco.
@@ -282,7 +282,7 @@ const ArticleTetoRemuneratorio: React.FC = () => {
                             Quando a EC 68/2025 retira a menção aos 90,25%, ela apenas acompanha essa evolução interpretativa. Se o subsídio do desembargador do TJPE não sofre mais o redutor percentual na fonte, o teto que toma esse subsídio como parâmetro também deve refletir o valor integral.
                         </Paragraph>
                         <Paragraph>
-                            Estabelecer um "subteto do subteto" para servidores do Executivo, mantendo-os em 90,25% enquanto outras categorias sob o mesmo teto único (como magistrados e membros do MP) recebem 100%, criaria uma aberração jurídica já condenada pelo STF na ADI 4900.
+                            Estabelecer um "subteto do subteto" para servidores do Executivo, mantendo-os em 90,25% enquanto outras categorias sob o mesmo teto único (como procuradores, membros do MP e magistrados) recebem 100%, criaria uma injustiça jurídica.
                         </Paragraph>
 
                         <div className="my-10">
@@ -325,7 +325,7 @@ const ArticleTetoRemuneratorio: React.FC = () => {
                             Um princípio basilar do Direito Público é que as leis nascem com presunção de validade. No caso de uma Emenda Constitucional Estadual, essa presunção é ainda mais forte, pois emana do poder constituinte derivado. Enquanto o STF não conceder uma medida cautelar suspendendo os efeitos da EC 68/2025 na ADI 7937, a norma está em pleno vigor e deve ser fielmente executada pela Administração Pública.
                         </Paragraph>
                         <Paragraph>
-                            A resistência da governadora Raquel Lyra em autorizar os pagamentos constitui uma inversão da lógica jurídica: o Executivo está agindo como se a simples interposição da ação judicial tivesse efeito suspensivo automático, o que não existe no ordenamento brasileiro. O risco de dano reverso é evidente: ao não pagar agora, o Estado acumula uma dívida corrigida e com juros que será cobrada via precatórios ou ações de cobrança vitoriosas no futuro.
+                            A resistência do Governo em autorizar os pagamentos constitui uma inversão da lógica jurídica: o Executivo está agindo como se a simples interposição da ação judicial tivesse efeito suspensivo automático, o que não existe no ordenamento brasileiro. O risco de dano reverso é evidente: ao não pagar agora, o Estado acumula uma dívida corrigida e com juros que será cobrada via precatórios ou ações de cobrança vitoriosas no futuro.
                         </Paragraph>
                     </section>
 
@@ -348,7 +348,7 @@ const ArticleTetoRemuneratorio: React.FC = () => {
                             </div>
                             <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-0 mb-6 tracking-tight relative z-10" id="conclusao">9. Considerações Finais sobre o Tema</h2>
                             <div className="space-y-4 text-slate-300 relative z-10 text-lg">
-                                <p>A situação em Pernambuco exige uma solução que respeite a soberania da Assembleia Legislativa e a dignidade das carreiras de Estado. A Emenda Constitucional 68/2025 é um instrumento legítimo de política remuneratória, amparado pela Constituição Federal e pela necessidade de modernização administrativa.</p>
+                                <p>A situação em Pernambuco exige uma solução que respeite a competência de iniciativa da Assembleia Legislativa e a dignidade das carreiras de Estado. A Emenda Constitucional 68/2025 é um instrumento legítimo de política remuneratória, amparado pela Constituição Federal e pela necessidade de modernização administrativa.</p>
                                 <p>A resistência do Poder Executivo em cumprir a norma enquanto aguarda o STF é um precedente perigoso que fragiliza a segurança jurídica e desrespeita a presunção de constitucionalidade das leis. A atuação do TCE-PE no imediato cumprimento do novo teto serve como testemunho da boa-fé e estrita obediência constitucional.</p>
                                 <p>Para a Associação dos Auditores do Tribunal de Contas e o conjunto das entidades, o momento demanda coesão na manutenção e defesa desta PEC. Validar o teto único não se resume a uma alteração de ganhos, mas implica em ratificar o modelo de controle e arrecadação de um Estado que valoriza o mérito, a competência e a justiça em sua Administração Pública.</p>
                             </div>
