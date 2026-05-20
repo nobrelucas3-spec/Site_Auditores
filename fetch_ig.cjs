@@ -11,8 +11,15 @@ const urls = [
 ];
 
 async function fetchImage(post) {
+    const options = {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+        }
+    };
+
     return new Promise((resolve, reject) => {
-        https.get(post.url, (res) => {
+        https.get(post.url, options, (res) => {
             let data = '';
             res.on('data', chunk => data += chunk);
             res.on('end', () => {
@@ -21,7 +28,7 @@ async function fetchImage(post) {
                 if (match && match[1]) {
                     const imgUrl = match[1].replace(/&amp;/g, '&');
 
-                    https.get(imgUrl, (imgRes) => {
+                    https.get(imgUrl, options, (imgRes) => {
                         const filePath = path.join(__dirname, 'public', 'social', `${post.id}.png`);
                         const fileStream = fs.createWriteStream(filePath);
                         imgRes.pipe(fileStream);
@@ -36,7 +43,7 @@ async function fetchImage(post) {
                     const fallbackMatch = data.match(fallbackRegex);
                     if (fallbackMatch && fallbackMatch[1]) {
                         const imgUrl = fallbackMatch[1].replace(/\\u0026/g, '&');
-                        https.get(imgUrl, (imgRes) => {
+                        https.get(imgUrl, options, (imgRes) => {
                             const filePath = path.join(__dirname, 'public', 'social', `${post.id}.png`);
                             const fileStream = fs.createWriteStream(filePath);
                             imgRes.pipe(fileStream);
