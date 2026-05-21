@@ -73,6 +73,43 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'seminario-residuos-solidos-recife',
+    title: 'Seminário Internacional sobre Resíduos Sólidos reúne especialistas e gestores no Recife',
+    summary: 'Evento debate soluções sustentáveis, economia circular e fortalecimento das políticas públicas ambientais em Pernambuco.',
+    date: '2026-05-20',
+    imageUrl: '/news/seminario-sustentabilidade-realizacao.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/seminario-sustentabilidade-realizacao.jpg" alt="Seminário Internacional sobre Resíduos Sólidos" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+        <p class="text-xs text-gray-500 mt-2 italic text-center">Conrado Lobo, diretor do DINFRA; Pedro Teixeira, auditor e palestrante; Paulo Henrique, auditor e organizador do evento e Roubier Muniz, presidente da Associação dos Auditores de PE.</p>
+      </div>
+
+      <p class="mb-4">Com organização do Tribunal de Contas de Pernambuco (TCE-PE), teve início, nesta terça-feira (20), o Seminário Internacional “Sustentabilidade na Gestão de Resíduos Sólidos: da Destinação à Transformação”, realizado no Auditório da Esmape, no Recife.</p>
+
+      <p class="mb-4">O evento reúne especialistas, gestores públicos, representantes de instituições e membros da sociedade civil in dois dias de imersão voltados ao debate de soluções inovadoras para a sustentabilidade, a destinação correta dos resíduos sólidos e o fortalecimento das políticas públicas ambientais nos municípios pernambucanos.</p>
+
+      <p class="mb-4">Ao longo da programação, estão sendo discutidos temas fundamentais como economia circular, reaproveitamento de resíduos, educação ambiental, fiscalização, controle e os desafios enfrentados pelas cidades na implementação de práticas modernas de gestão ambiental.</p>
+
+      <p class="mb-4">Para o Auditor de Controle Externo do TCE-PE e gerente da GESF, Alfredo Montezuma, o seminário representa uma oportunidade de compartilhar experiências e soluções que já vêm sendo aplicadas com êxito.</p>
+
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+        “O evento é muito importante para compartilhar o que de melhor tem sido feito no nosso estado, no Brasil e em Portugal em relação à gestão dos resíduos sólidos, tanto para garantir sustentabilidade financeira do seu manejo quanto para ampliação da vida útil dos aterros sanitários, com investimentos em coleta seletiva, aproveitamento dos resíduos, entre outros. Ou seja, para se promover a mais eficiente possível gestão dos resíduos sólidos”, destacou.
+      </div>
+
+      <p class="mb-4">O presidente da Associação, Roubier Muniz, também ressaltou a relevância da iniciativa para o fortalecimento institucional e profissional dos auditores.</p>
+
+      <div class="my-6 p-6 bg-primary-50 rounded-xl border border-primary-100 text-primary-900 font-medium italic">
+        “Um evento desta envergadura organizado pelos Auditores de Controle Externo do TCE-PE só demonstra a excelência profissional dos que constituem a base do Tribunal de Contas do Estado de Pernambuco”, afirmou.
+      </div>
+
+      <p class="mb-4">O seminário segue nesta quarta-feira (21), promovendo a troca de experiências nacionais e internacionais e fortalecendo o debate sobre o desenvolvimento responsável das cidades e a preservação ambiental.</p>
+    `
+  },
+  {
     id: 'seminario-sustentabilidade-tcepe',
     title: 'TCE-PE promove Seminário Internacional sobre Sustentabilidade na Gestão de Resíduos Sólidos',
     summary: 'Evento reunirá especialistas e representantes públicos para discutir soluções sustentáveis e transformação ambiental em Pernambuco.',
