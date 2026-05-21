@@ -90,7 +90,7 @@ export const MOCK_NEWS: NewsItem[] = [
 
       <p class="mb-4">Com organização do Tribunal de Contas de Pernambuco (TCE-PE), teve início, nesta terça-feira (20), o Seminário Internacional “Sustentabilidade na Gestão de Resíduos Sólidos: da Destinação à Transformação”, realizado no Auditório da Esmape, no Recife.</p>
 
-      <p class="mb-4">O evento reúne especialistas, gestores públicos, representantes de instituições e membros da sociedade civil in dois dias de imersão voltados ao debate de soluções inovadoras para a sustentabilidade, a destinação correta dos resíduos sólidos e o fortalecimento das políticas públicas ambientais nos municípios pernambucanos.</p>
+      <p class="mb-4">O evento reúne especialistas, gestores públicos, representantes de instituições e membros da sociedade civil em dois dias de imersão voltados ao debate de soluções inovadoras para a sustentabilidade, a destinação correta dos resíduos sólidos e o fortalecimento das políticas públicas ambientais nos municípios pernambucanos.</p>
 
       <p class="mb-4">Ao longo da programação, estão sendo discutidos temas fundamentais como economia circular, reaproveitamento de resíduos, educação ambiental, fiscalização, controle e os desafios enfrentados pelas cidades na implementação de práticas modernas de gestão ambiental.</p>
 
