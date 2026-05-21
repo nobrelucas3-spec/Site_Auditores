@@ -102,7 +102,7 @@ export const MOCK_NEWS: NewsItem[] = [
 
       <p class="mb-4">O presidente da Associação, Roubier Muniz, também ressaltou a relevância da iniciativa para o fortalecimento institucional e profissional dos auditores.</p>
 
-      <div class="my-6 p-6 bg-primary-50 rounded-xl border border-primary-100 text-primary-900 font-medium italic">
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
         “Um evento desta envergadura organizado pelos Auditores de Controle Externo do TCE-PE só demonstra a excelência profissional dos que constituem a base do Tribunal de Contas do Estado de Pernambuco”, afirmou.
       </div>
 
