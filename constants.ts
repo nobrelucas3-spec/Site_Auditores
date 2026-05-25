@@ -101,9 +101,7 @@ export const MOCK_NEWS: NewsItem[] = [
 
       <p class="mb-4">Ao longo dos anos, o trabalho dos auditores tem sido determinante para evitar desperdícios, melhorar a aplicação dos recursos públicos e promover uma gestão mais eficiente e transparente.</p>
 
-      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
-        “Valorizar o Auditor de Controle Externo é, portanto, valorizar o controle, a responsabilidade e o compromisso com o interesse público. É reconhecer que a fiscalização é um instrumento indispensável para garantir que o dinheiro da sociedade seja utilizado da melhor forma possível.”
-      </div>
+      <p class="mb-4 font-bold text-slate-800">Valorizar o Auditor de Controle Externo é, portanto, valorizar o controle, a responsabilidade e o compromisso com o interesse público. É reconhecer que a fiscalização é um instrumento indispensável para garantir que o dinheiro da sociedade seja utilizado da melhor forma possível.</p>
     `
   },
   {
