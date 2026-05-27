@@ -38,3 +38,6 @@ create policy "Allow authenticated delete"
 on public.documents for delete
 to authenticated
 using (true);
+
+-- 4. Grant access to API roles (required by Supabase starting May/Oct 2026)
+grant all on table public.documents to anon, authenticated, service_role;

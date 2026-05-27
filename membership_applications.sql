@@ -47,3 +47,6 @@ create policy "Allow authenticated view all"
 on public.membership_applications for select
 to authenticated
 using (true);
+
+-- 4. Grant access to API roles (required by Supabase starting May/Oct 2026)
+grant all on table public.membership_applications to anon, authenticated, service_role;

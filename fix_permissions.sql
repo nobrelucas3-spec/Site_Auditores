@@ -28,3 +28,6 @@ FOR DELETE TO authenticated USING (true);
 -- Permite ATUALIZAR para qualquer usuário logado
 CREATE POLICY "Atualizar Membros" ON public.documents
 FOR UPDATE TO authenticated USING (true);
+
+-- 4. Grant access to API roles (required by Supabase starting May/Oct 2026)
+GRANT ALL ON TABLE public.documents TO anon, authenticated, service_role;
