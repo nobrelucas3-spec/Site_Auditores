@@ -73,6 +73,38 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'impacto-fiscalizacao-qualidade-servicos-publicos',
+    title: 'O impacto da fiscalização na qualidade dos serviços públicos',
+    summary: 'Como o controle externo contribui para evitar desperdícios e melhorar a vida da população',
+    date: '2026-06-03',
+    imageUrl: '/news/impacto-fiscalizacao-servicos.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/impacto-fiscalizacao-servicos.png" alt="O impacto da fiscalização na qualidade dos serviços públicos" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+      </div>
+
+      <p class="mb-4">A forma como o dinheiro público é utilizado impacta diretamente a vida da população. Serviços de saúde, educação, infraestrutura e segurança dependem de uma gestão eficiente e responsável dos recursos arrecadados por meio dos impostos.</p>
+
+      <p class="mb-4">Nesse contexto, o Auditor de Controle Externo exerce um papel essencial: acompanhar, analisar e fiscalizar a aplicação desses recursos, garantindo que sejam utilizados de forma correta, transparente e em benefício da sociedade.</p>
+
+      <p class="mb-4">A atuação do auditor vai muito além da simples análise de números. Trata-se de um trabalho técnico, que envolve a avaliação de contratos, acompanhamento de obras públicas, verificação da execução de políticas públicas e análise de dados e documentos. Tudo isso com o objetivo de identificar possíveis falhas, prevenir irregularidades e contribuir para o aprimoramento da gestão pública.</p>
+
+      <p class="mb-4">Quando são encontradas inconsistências, o auditor atua de forma propositiva, apontando os problemas e recomendando soluções. Esse processo contribui diretamente para a correção de falhas e para a melhoria contínua dos serviços prestados à população.</p>
+
+      <p class="mb-4">Outro aspecto fundamental é a independência na atuação. O Auditor de Controle Externo desempenha suas funções com base em critérios técnicos e legais, sem interferências externas, o que garante maior imparcialidade e confiabilidade no processo de fiscalização.</p>
+
+      <p class="mb-4">Além disso, o ingresso na carreira ocorre por meio de concurso público, o que assegura igualdade de acesso, qualificação técnica e fortalecimento das instituições de controle.</p>
+
+      <p class="mb-4">Ao longo dos anos, o trabalho dos auditores tem sido determinante para evitar desperdícios, melhorar a aplicação dos recursos públicos e promover uma gestão mais eficiente e transparente.</p>
+
+      <p class="mb-4 font-bold text-slate-800">Valorizar o Auditor de Controle Externo é, portanto, valorizar o controle, a responsabilidade e o compromisso com o interesse público. É reconhecer que a fiscalização é um instrumento indispensável para garantir que o dinheiro da sociedade seja utilizado da melhor forma possível.</p>
+    `
+  },
+  {
     id: 'papel-auditor-protecao-dinheiro-publico',
     title: 'O papel do Auditor de Controle Externo na proteção do dinheiro público',
     summary: 'Entenda como a atuação técnica e independente garante a correta aplicação dos recursos e contribui para uma gestão pública mais eficiente',
