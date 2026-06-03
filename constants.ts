@@ -73,6 +73,30 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'auditoria-energia-tce-pe-economia',
+    title: 'Auditoria do TCE-PE gera economia de R$ 27,8 milhões e destaca atuação dos Auditores de Controle Externo',
+    summary: 'Fiscalização identificou falhas na gestão do consumo de energia elétrica e promoveu maior eficiência na aplicação dos recursos públicos.',
+    date: '2026-06-03',
+    imageUrl: '/news/energia-economia-auditoria.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/energia-economia-auditoria.png" alt="Auditoria de Energia Elétrica TCE-PE" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+      </div>
+
+      <p class="mb-4">Uma auditoria realizada pelo Tribunal de Contas de Pernambuco (TCE-PE) resultou em uma economia total de R$ 27,8 milhões nas despesas com energia elétrica de órgãos públicos estaduais e municipais. O resultado evidencia a importância do trabalho dos Auditores de Controle Externo na fiscalização dos gastos públicos e no aprimoramento da gestão.</p>
+
+      <p class="mb-4">A ação, denominada “Energia sob Controle”, avaliou 601 prédios vinculados a 35 órgãos e entidades públicas. A auditoria identificou problemas como a contratação de demanda de energia acima do consumo real das unidades, além de outras falhas relacionadas à gestão do consumo energético.</p>
+
+      <p class="mb-4">Do total economizado, R$ 26,05 milhões foram obtidos apenas com a correção da demanda contratada de energia, principal irregularidade encontrada pela fiscalização. Os demais R$ 1,75 milhão decorrem de outras medidas corretivas implementadas pelos órgãos após as recomendações técnicas do TCE-PE.</p>
+
+      <p class="mb-4 font-bold text-slate-800">Além de apontar oportunidades de economia, a auditoria também contribuiu para orientar gestores e fortalecer práticas mais eficientes na administração pública. O resultado nos mostra como a atuação técnica dos Auditores de Controle Externo gera benefícios concretos para a sociedade, assegurando o uso mais racional dos recursos públicos.</p>
+    `
+  },
+  {
     id: 'impacto-fiscalizacao-qualidade-servicos-publicos',
     title: 'O impacto da fiscalização na qualidade dos serviços públicos',
     summary: 'Como o controle externo contribui para evitar desperdícios e melhorar a vida da população',
