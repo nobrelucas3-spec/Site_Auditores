@@ -73,6 +73,56 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'fiscalizacao-preventiva-controle-externo-desperdicios',
+    title: 'Fiscalização preventiva: como o controle externo contribui para evitar desperdícios e fortalecer a gestão pública',
+    summary: 'Entenda como a evolução do controle externo para um modelo focado em prevenção e inteligência de dados ajuda a evitar prejuízos e aprimorar a administração pública.',
+    date: '2026-06-29',
+    imageUrl: '/news/fiscalizacao-preventiva-gestao.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/fiscalizacao-preventiva-gestao.png" alt="Fiscalização Preventiva" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+      </div>
+
+      <p class="mb-4">Durante muito tempo, a fiscalização pública foi associada apenas à identificação de irregularidades após a ocorrência de problemas administrativos. No entanto, o controle externo moderno evoluiu e passou a exercer também um importante papel preventivo na administração pública.</p>
+
+      <p class="mb-4">Atualmente, a atuação dos Auditores de Controle Externo vai além da análise técnica de processos e contratos. O acompanhamento preventivo permite identificar riscos, inconsistências e fragilidades antes que elas resultem em prejuízos para a sociedade.</p>
+
+      <p class="mb-6 font-bold text-slate-800">Essa mudança fortalece a eficiência da gestão pública e contribui diretamente para a melhor aplicação dos recursos públicos.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Áreas de Atuação</h3>
+      <p class="mb-3">A fiscalização preventiva atua em diferentes áreas da administração, como:</p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        <li>Obras públicas;</li>
+        <li>Contratos administrativos;</li>
+        <li>Saúde pública;</li>
+        <li>Educação;</li>
+        <li>Infraestrutura;</li>
+        <li>Gestão fiscal;</li>
+        <li>Políticas públicas.</li>
+      </ul>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Principais Contribuições</h3>
+      <p class="mb-3">Ao acompanhar de forma técnica e estratégica a execução dessas atividades, o controle externo contribui para:</p>
+      <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+        <li>Prevenir desperdícios;</li>
+        <li>Evitar falhas administrativas;</li>
+        <li>Reduzir riscos de irregularidades;</li>
+        <li>Fortalecer a transparência;</li>
+        <li>Melhorar a eficiência da gestão pública.</li>
+      </ul>
+
+      <p class="mb-4">Além disso, o avanço da tecnologia e da inteligência de dados vem ampliando a capacidade de atuação preventiva dos órgãos de controle. Ferramentas digitais, monitoramento eletrônico e cruzamento de informações permitem identificar situações de risco com mais rapidez e precisão.</p>
+
+      <p class="mb-4">Mais do que apontar problemas, o controle externo moderno busca colaborar para o aperfeiçoamento da administração pública e para o fortalecimento das instituições.</p>
+
+      <p class="mb-4">A atuação preventiva também gera benefícios diretos para a sociedade. Quando os recursos públicos são melhor aplicados, aumenta-se a capacidade do poder público de oferecer serviços mais eficientes nas áreas de saúde, educação, infraestrutura e assistência social.</p>
+    `
+  },
+  {
     id: 'auditoria-energia-tce-pe-economia',
     title: 'Auditoria do TCE-PE gera economia de R$ 27,8 milhões e destaca atuação dos Auditores de Controle Externo',
     summary: 'Fiscalização identificou falhas na gestão do consumo de energia elétrica e promoveu maior eficiência na aplicação dos recursos públicos.',
