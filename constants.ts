@@ -73,6 +73,53 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'auditoria-vacinacao-infantil-tce-pe',
+    title: 'Auditoria de Controle Externo do TCE-PE impulsiona melhoria na vacinação infantil em Pernambuco',
+    summary: 'Levantamento técnico avaliou os 184 municípios do estado, identificando que o número de cidades com desempenho satisfatório mais que dobrou nos últimos dois anos.',
+    date: '2026-07-27',
+    imageUrl: '/news/vacinacao-infantil-auditoria.png',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/vacinacao-infantil-auditoria.png" alt="Auditoria do TCE-PE impulsiona melhoria na vacinação infantil" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+      </div>
+
+      <p class="mb-4">A atuação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco (TCE-PE) segue sendo um motor de transformação nas políticas públicas do estado. Nesta quinta-feira (23), o Tribunal divulgou um novo diagnóstico sobre a gestão do Programa Nacional de Imunização (PNI) em Pernambuco, com foco na qualidade da vacinação infantil e na estrutura oferecida à população.</p>
+
+      <p class="mb-4">O levantamento, realizado com dados consolidados do último ano, analisou a capacidade dos 184 municípios em operacionalizar a saúde básica. Segundo a auditora Eliana Maria de Paula, a fiscalização foca na ponta final do processo, onde o serviço chega efetivamente ao cidadão:</p>
+
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+        “Fazer as vacinas chegarem ao braço da população é competência dos municípios. Para isso, eles devem estar capacitados e devem executar com qualidade o programa.”
+      </div>
+
+      <p class="mb-4">O trabalho utilizou o IFPNI (Índice de Fiscalização do PNI), ferramenta desenvolvida pelo TCE-PE em parceria com a UFPE, que estratifica as cidades em cinco níveis: Desejável, Satisfatório, Moderado, Grave e Crítico. Os números revelam que o monitoramento constante tem surtido efeito direto: o nível Satisfatório saltou de 23 para 49 municípios, e as situações Graves caíram de 71 para 57 cidades.</p>
+
+      <p class="mb-6 font-bold text-slate-800">Para detalhar o papel da auditoria nesse processo, conversamos com Eliana Maria de Paula, Auditora de Controle Externo da Gerência de Fiscalização da Saúde (GSAU 2).</p>
+
+      <hr class="my-8 border-slate-200" />
+
+      <div class="space-y-6">
+        <div class="bg-primary-50/50 p-6 rounded-xl border border-primary-100">
+          <h3 class="text-lg font-bold text-primary-900 mb-3">Como o acompanhamento sistemático do TCE-PE contribuiu para que o número de municípios com desempenho satisfatório dobrasse?</h3>
+          <p class="text-slate-700 leading-relaxed"><strong class="text-slate-900">Eliana Maria de Paula:</strong> O acompanhamento sistemático foi um fator que estimulou a melhoria. Em 2023, o TCE-PE realizou um diagnóstico abrangente e entregou a cada município um relatório individualizado com os achados da auditoria. Nos casos mais críticos, foram emitidos alertas. O retorno do Tribunal em 2024 e 2025 aos municípios com maiores problemas permitiu incentivar a implementação das melhorias recomendadas e verificar a evolução dos indicadores. Mais do que apontar problemas, proporcionamos aos gestores um diagnóstico objetivo para fortalecer a política pública.</p>
+        </div>
+
+        <div class="bg-primary-50/50 p-6 rounded-xl border border-primary-100">
+          <h3 class="text-lg font-bold text-primary-900 mb-3">Além da análise de dados, como a presença física dos auditores foi determinante para identificar retrocessos nas equipes de saúde?</h3>
+          <p class="text-slate-700 leading-relaxed"><strong class="text-slate-900">Eliana:</strong> A análise de dados avalia indicadores como cobertura vacinal, mas não explica as causas dos resultados. A fiscalização presencial teve papel decisivo. Nas unidades, verificamos diretamente as condições das salas, a conservação dos imunobiológicos e a capacitação das equipes. Identificamos problemas que dificilmente apareceriam apenas nos sistemas, como deficiência na estrutura física, alta rotatividade profissional e vínculos precários de trabalho. Essa combinação permitiu diagnósticos mais precisos para orientar as ações corretivas.</p>
+        </div>
+
+        <div class="bg-primary-50/50 p-6 rounded-xl border border-primary-100">
+          <h3 class="text-lg font-bold text-primary-900 mb-3">Como este trabalho exemplifica a atuação do TCE-PE na garantia do alcance social, indo além da verificação formal de contas?</h3>
+          <p class="text-slate-700 leading-relaxed"><strong class="text-slate-900">Eliana:</strong> Esse trabalho demonstra que o papel do Tribunal vai muito além da fiscalização da regularidade dos gastos. Buscamos avaliar se uma política essencial estava protegendo a população contra doenças imunopreveníveis. O IFPNI é um instrumento capaz de medir a qualidade da gestão e identificar desigualdades. A atuação do controle externo induz boas práticas e amplia as condições para que o cidadão tenha acesso a uma vacinação segura e de qualidade.</p>
+        </div>
+      </div>
+    `
+  },
+  {
     id: 'fiscalizacao-preventiva-controle-externo-desperdicios',
     title: 'Fiscalização preventiva: como o controle externo contribui para evitar desperdícios e fortalecer a gestão pública',
     summary: 'Entenda como a evolução do controle externo para um modelo focado em prevenção e inteligência de dados ajuda a evitar prejuízos e aprimorar a administração pública.',
