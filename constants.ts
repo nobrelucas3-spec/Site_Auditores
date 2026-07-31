@@ -73,6 +73,45 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'certificacao-internacional-auditoria-financeira-tce-pe',
+    title: 'Auditor de Controle Externo do TCE-PE alcança certificação internacional inédita em Auditoria Financeira',
+    summary: 'Marcelo Victor Xavier é o primeiro servidor do Tribunal de Contas de Pernambuco a concluir o prestigiado programa PESA, promovido pela IDI/INTOSAI para alinhar a fiscalização aos padrões globais.',
+    date: '2026-07-31',
+    imageUrl: '/news/marcelo-victor-certificacao.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/marcelo-victor-certificacao.jpg" alt="Marcelo Victor Barbosa Xavier - Certificação Internacional em Auditoria Financeira" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+        <p class="text-xs text-gray-500 mt-2 italic text-center">Marcelo Victor Barbosa Xavier, auditor de controle externo do TCE-PE. Créditos: GEJO/TCE-PE</p>
+      </div>
+
+      <p class="mb-4">Em uma conquista inédita para o controle externo pernambucano, o Auditor de Controle Externo <strong class="text-slate-900">Marcelo Victor Barbosa Xavier</strong>, da Gerência de Fiscalização dos Poderes Estaduais (GFPE), obteve a certificação internacional em Auditoria Financeira. Com essa aprovação, ele torna-se o primeiro servidor do Tribunal de Contas de Pernambuco (TCE-PE) a concluir o rigoroso programa de qualificação global.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Aperfeiçoamento nos padrões globais da INTOSAI</h3>
+      <p class="mb-4">O resultado é fruto da participação do auditor no <strong class="text-slate-900">Programa Continuado de Educação Profissional para Auditores de Entidades Fiscalizadoras Superiores</strong> (<em>PESA - Professional Education for SAI Auditors</em>). Desenvolvido pela Iniciativa de Desenvolvimento da INTOSAI (IDI), o PESA é uma plataforma educacional global destinada a capacitar e avaliar auditores do setor público com base nas Normas Internacionais das Entidades Fiscalizadoras Superiores (ISSAIs/IFPP), promovendo excelência, independência e transparência na gestão dos recursos públicos.</p>
+
+      <p class="mb-4">A jornada de estudos e avaliação ocorreu em paralelo à rotina de fiscalização e auditorias financeiras conduzidas pelo servidor na GFPE, exigindo dedicação intensiva a metodologias avançadas de exame de demonstrações contábeis e conformidade financeira.</p>
+
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+        “Além da barreira linguística, havia a responsabilidade de compreender quais mudanças institucionais seriam necessárias para que a certificação representasse não apenas um crescimento individual, mas também uma contribuição efetiva para o Tribunal”, enfatizou Marcelo.
+      </div>
+
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+        “Sou muito grato pela confiança depositada em mim quando fui indicado e espero retribuí-la ao disseminar todo o aprendizado que tive. Faço questão de reconhecer também o apoio dos colegas da GFPE durante toda essa trajetória, assim como o suporte do gerente Gilson Castelo Branco, que foi meu mentor ao longo do processo”, destacou o auditor.
+      </div>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Legado e fortalecimento do Controle Externo</h3>
+      <p class="mb-4">Mais do que uma conquista pessoal, a certificação internacional fortalece a capacidade analítica da fiscalização estadual. A experiência acumulada servirá de vetor para a disseminação de boas práticas de auditoria financeira no âmbito do TCE-PE, elevando os padrões de governança, auditabilidade e credibilidade na prestação de contas dos órgãos públicos em Pernambuco.</p>
+
+      <div class="mt-8 pt-4 border-t border-gray-100 flex flex-col gap-1">
+        <p class="text-xs text-gray-500 font-medium">Fonte: Comunicação da Associação, com informações do TCE-PE (GEJO), IRB Contas e IDI/INTOSAI.</p>
+      </div>
+    `
+  },
+  {
     id: 'auditoria-vacinacao-infantil-tce-pe',
     title: 'Auditoria de Controle Externo do TCE-PE impulsiona melhoria na vacinação infantil em Pernambuco',
     summary: 'Levantamento técnico avaliou os 184 municípios do estado, identificando que o número de cidades com desempenho satisfatório mais que dobrou nos últimos dois anos.',
