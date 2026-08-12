@@ -73,6 +73,45 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'antc-14-anos-defesa-auditor-controle-externo',
+    title: 'ANTC completa 14 anos na defesa intransigente do Auditor de Controle Externo',
+    summary: 'Com foco permanente na valorização da carreira de Estado, garantia da independência técnica e padronização de prerrogativas, entidade nacional celebra mais um ano de lutas e conquistas.',
+    date: '2026-08-12',
+    imageUrl: '/news/antc-14-anos.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/antc-14-anos.jpg" alt="14 Anos da ANTC - Defesa do Auditor de Controle Externo" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+        <p class="text-xs text-gray-500 mt-2 italic text-center">14 anos de fundação da ANTC na defesa da carreira e do controle externo brasileiro.</p>
+      </div>
+
+      <p class="mb-4">Neste ano, a Associação Nacional dos Auditores de Controle Externo dos Tribunais de Contas do Brasil (ANTC) completa 14 anos de fundação. Muito além de uma data comemorativa, a efeméride marca uma trajetória de atuação firme e centralizada na figura do Auditor de Controle Externo — o agente estatal encarregado de instruir os processos e assegurar a correta aplicação dos recursos públicos em todo o país.</p>
+
+      <p class="mb-4">Fundada com a missão de unificar os profissionais de todos os Tribunais de Contas do Brasil, a ANTC consolidou-se como a voz nacional na defesa da carreira. Sua atuação tem sido decisiva para garantir que o trabalho do auditor seja pautado exclusivamente por critérios técnicos, livre de ingerências políticas e respaldado pelas prerrogativas constitucionais inerentes ao cargo.</p>
+
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+        “Para nós, da Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco, a existência de uma representação nacional forte é indispensável para resguardar as atribuições exclusivas do auditor frente aos constantes desafios institucionais.”
+      </div>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Pilares de atuação focados no Auditor de Controle Externo</h3>
+      <p class="mb-4">Ao longo desses 14 anos, as ações da ANTC se traduziram em avanços diretos para o cotidiano da categoria:</p>
+
+      <ul class="list-disc list-inside space-y-3 mb-6 text-gray-700">
+        <li><strong>Inviolabilidade do Trabalho Técnico:</strong> Defesa constante para que o relatório elaborado pelo auditor seja a peça instrutória soberana e técnica do processo de controle.</li>
+        <li><strong>Padronização Nacional da Carreira:</strong> Combate ao desvio de finalidade e às tentativas de usurpação das funções exclusivas do Auditor de Controle Externo por cargos comissionados ou sem concurso específico.</li>
+        <li><strong>Atuação no STF e Congresso Nacional:</strong> Representação jurídica e institucional ativa em ações diretas de inconstitucionalidade e projetos de lei que impactam diretamente o regime funcional, os direitos e o exercício profissional da classe.</li>
+        <li><strong>Identidade da Categoria:</strong> Luta pelo reconhecimento e pela consolidação da denominação única de Auditor de Controle Externo no plano nacional, valorizando a especificidade do concurso público de provas e títulos.</li>
+      </ul>
+
+      <p class="mb-4">Celebrar os 14 anos da ANTC é valorizar a trajetória de cada Auditor e Auditora de Controle Externo que atua na linha de frente da fiscalização. A nossa associação reafirma seu apoio integral à ANTC na construção de uma carreira forte, respeitada e essencial para a integridade das instituições públicas.</p>
+
+      <p class="mb-4 font-bold text-slate-800">Parabéns à ANTC e a todos os Auditores de Controle Externo do Brasil por mais este marco!</p>
+    `
+  },
+  {
     id: 'certificacao-internacional-auditoria-financeira-tce-pe',
     title: 'Auditor de Controle Externo do TCE-PE alcança certificação internacional inédita em Auditoria Financeira',
     summary: 'Marcelo Victor Xavier é o primeiro servidor do Tribunal de Contas de Pernambuco a concluir o prestigiado programa PESA, promovido pela IDI/INTOSAI para alinhar a fiscalização aos padrões globais.',
