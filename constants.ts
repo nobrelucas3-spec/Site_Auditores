@@ -74,7 +74,7 @@ export const PARTNERS: PartnerLink[] = [
 export const MOCK_NEWS: NewsItem[] = [
   {
     id: 'tce-pe-no-9-conacon-curitiba-2026',
-    title: 'Auditores de Controle Externo do TCE-PE marcam presença no 9º CONACON em Curitiba',
+    title: 'Auditores do TCE-PE marcam presença no 9° CONACON com apresentações científicas',
     summary: 'Delegação pernambucana participou ativamente do maior encontro de Controle Externo do país, apresentando trabalhos científicos sobre governança de IA, TI Verde e políticas fiscais, além de debater o fortalecimento institucional da carreira.',
     date: '2026-08-20',
     imageUrl: '/news/tcepe-conacon2026.jpg',

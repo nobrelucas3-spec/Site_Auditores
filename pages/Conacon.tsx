@@ -49,7 +49,7 @@ const Conacon: React.FC = () => {
                         </div>
 
                         <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 leading-tight">
-                            Auditores do TCE-PE Marcam Presença com Apresentações Científicas e Atuação Formulada no 9º CONACON
+                            Auditores do TCE-PE marcam presença no 9° CONACON com apresentações científicas
                         </h2>
                         
                         <div className="flex flex-col sm:flex-row gap-6 mb-8 p-6 bg-slate-50 rounded-xl border border-slate-100">
