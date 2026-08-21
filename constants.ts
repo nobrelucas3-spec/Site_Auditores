@@ -73,6 +73,43 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'tce-pe-no-9-conacon-curitiba-2026',
+    title: 'Auditores de Controle Externo do TCE-PE marcam presença no 9º CONACON em Curitiba',
+    summary: 'Delegação pernambucana participou ativamente do maior encontro de Controle Externo do país, apresentando trabalhos científicos sobre governança de IA, TI Verde e políticas fiscais, além de debater o fortalecimento institucional da carreira.',
+    date: '2026-08-20',
+    imageUrl: '/news/tcepe-conacon2026.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/tcepe-conacon2026.jpg" alt="Delegação do TCE-PE no 9º CONACON em Curitiba" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+        <p class="text-xs text-gray-500 mt-2 italic text-center">Delegação dos Auditores de Controle Externo do TCE-PE durante a programação do 9º CONACON em Curitiba (PR).</p>
+      </div>
+
+      <p class="mb-4">Realizado entre os dias 18 e 21 de agosto de 2026, na Universidade Positivo e na Ópera de Arame em Curitiba (PR), o <strong class="text-slate-900">9º Congresso Nacional dos Auditores de Controle Externo dos Tribunais de Contas do Brasil (CONACON)</strong> reuniu especialistas, gestores públicos e auditores de todo o país sob o tema <em>“Auditoria de Controle Externo que transforma: impacto social e simetria constitutional”</em>.</p>
+
+      <p class="mb-4">A delegação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco (TCE-PE) marcou presença com papel de destaque em todas as fases do evento. A participação reforçou o compromisso da categoria com a qualificação técnica, a troca de experiências interinstitucionais e o aperfeiçoamento das práticas de fiscalização pública.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Apresentação de Artigos Científicos</h3>
+      <p class="mb-4">Entre os 15 artigos selecionados nacionalmente para apresentação presencial no congresso, três estudos foram produzidos por auditores do TCE-PE, abordando temas de vanguarda no controle externo:</p>
+
+      <ul class="list-disc list-inside space-y-3 mb-6 text-gray-700">
+        <li><strong>TI Verde no Controle Externo:</strong> <em>“Grau de maturidade da TI Verde nos Tribunais de Contas do Brasil: uma análise multidimensional das práticas sustentáveis em TI”</em> — Autores: Ana Carolina Chaves Machado de Morais, Francisco José Almeida de Oliveira, Ricardo Jorge Veras Beltrão, Joas Tomaz de Aquino e Fagner José Coutinho de Melo.</li>
+        <li><strong>Governança de Inteligência Artificial:</strong> <em>“Governança de IA e de TI Verde no setor público pernambucano: um diagnóstico a partir do iGovTI-TCE-PE 2025”</em> — Autores: Obed Leite Vieira, Vanessa Hirakawa Martins e Halmos Fernando do Nascimento.</li>
+        <li><strong>Avaliação de Benefícios Fiscais:</strong> <em>“Políticas públicas de benefícios fiscais: uma avaliação da eficácia do Prodepe na geração de empregos”</em> — Autores: Violeta Morato Figueirêdo Régis de Carvalho, Lidyanne Costa de Araújo, Raquel Vasconcelos de Figueirôa Gonçalves, Diogo Jonathan Mattheus de Melo Santos e Ivan Orquiza.</li>
+      </ul>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Fortalecimento Institucional</h3>
+      <p class="mb-4">Além das exposições acadêmicas e técnicas, os auditores de Pernambuco participaram ativamente dos debates sobre a defesa das atribuições exclusivas da carreira, a simetria constitucional com o Tribunal de Contas da União (TCU) e a valorização das peças instrutórias formuladas pelo corpo técnico.</p>
+
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+        “A presença marcante dos nossos Auditores de Controle Externo no 9º CONACON demonstra a solidez técnica da nossa base em Pernambuco e a contribuição direta do nosso estado para a construção de um controle externo cada vez mais transformador, técnico e cidadão”, destacou a diretoria da Associação.
+      </div>
+    `
+  },
+  {
     id: 'antc-14-anos-defesa-auditor-controle-externo',
     title: 'ANTC completa 14 anos na defesa intransigente do Auditor de Controle Externo',
     summary: 'Com foco permanente na valorização da carreira de Estado, garantia da independência técnica e padronização de prerrogativas, entidade nacional celebra mais um ano de lutas e conquistas.',
