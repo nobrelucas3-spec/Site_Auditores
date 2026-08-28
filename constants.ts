@@ -73,6 +73,50 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'auditores-tce-pe-apoiam-carta-de-curitiba-9-conacon',
+    title: 'Auditores do TCE-PE apoiam a Carta de Curitiba e defendem 10 pilares para o fortalecimento do controle externo no 9º CONACON',
+    summary: 'Comitiva pernambucana esteve engajada na aprovação do manifesto nacional que propõe diretrizes para aumentar a transparência, a independência técnica e a eficácia na fiscalização dos recursos públicos.',
+    date: '2026-08-28',
+    imageUrl: '/news/carta-de-curitiba-conacon.jpg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/carta-de-curitiba-conacon.jpg" alt="Auditores do TCE-PE no 9º CONACON - Carta de Curitiba" class="w-full h-auto rounded-xl shadow-lg border border-gray-100" />
+        <p class="text-xs text-gray-500 mt-2 italic text-center">Comitiva dos Auditores de Controle Externo do TCE-PE durante o 9º CONACON em Curitiba (PR).</p>
+      </div>
+
+      <p class="mb-4">A comitiva de Auditores de Controle Externo do Tribunal de Contas do Estado de Pernambuco (TCE-PE) esteve presente no <strong class="text-slate-900">9º Congresso Nacional dos Auditores de Controle Externo dos Tribunais de Contas do Brasil (CONACON)</strong>. O evento reuniu especialistas, gestores e auditores de todo o país entre os dias 18 e 21 de agosto, em Curitiba (PR), sob o tema <em>“Auditoria de Controle Externo que transforma: impacto social e simetria constitucional”</em>.</p>
+
+      <p class="mb-4">O momento central do encontro foi o lançamento da <strong class="text-slate-900">Carta de Curitiba</strong>, manifesto oficial da categoria que estabelece diretrizes estratégicas para modernizar o controle público e conferir maior segurança jurídica às fiscalizações no Brasil.</p>
+
+      <p class="mb-4">Para o presidente da Associação dos Auditores do TCE-PE, Roubier Muniz, o engajamento do corpo técnico pernambucano reafirma o compromisso do estado com o aprimoramento da gestão pública:</p>
+
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+        “A presença dos nossos Auditores de Controle Externo no 9º CONACON demonstra a qualidade do corpo de auditores de Pernambuco e a contribuição direta do nosso estado na construção de um controle externo cada vez mais transformador para a sociedade pernambucana.”
+        <p class="text-xs text-gray-500 font-bold not-italic mt-2">— Roubier Muniz, Presidente da Associação dos Auditores do TCE-PE</p>
+      </div>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Os 10 Pilares da Carta de Curitiba</h3>
+      <p class="mb-4">A Carta de Curitiba defende a aprovação da Lei Orgânica Nacional da Auditoria de Controle Externo (LOAUD) e do Código Nacional do Processo de Controle Externo pelo Congresso Nacional, fundamentando-se em dez pilares:</p>
+
+      <ul class="list-disc list-inside space-y-3 mb-6 text-gray-700">
+        <li><strong>Essencialidade da função:</strong> Reafirma a auditoria como pilar técnico indispensável dos Tribunais de Contas, alinhado a padrões internacionais (NBASP 50).</li>
+        <li><strong>Simetria constitucional:</strong> Estabelece um padrão nacional mínimo de organização para a auditoria pública em todo o país.</li>
+        <li><strong>Transparência e impacto social:</strong> Orienta a fiscalização para entregar resultados concretos e melhorias diretas ao cidadão.</li>
+        <li><strong>Independência funcional:</strong> Assegura garantias para que o trabalho técnico ocorra de forma imparcial e sem interferências externas.</li>
+        <li><strong>Segregação de funções:</strong> Consolida a separação entre quem realiza a auditoria e quem julga as contas públicas.</li>
+        <li><strong>Direção técnica:</strong> Determina que as chefias das unidades de auditoria sejam ocupadas exclusivamente por auditores de carreira.</li>
+        <li><strong>Quadro próprio e permanente:</strong> Exige que a fiscalização seja exercida unicamente por servidores efetivos concursados.</li>
+        <li><strong>Inteligência e combate à corrupção:</strong> Aplica tecnologia e análise de risco para identificar desvios de recursos e fraudes complexas.</li>
+        <li><strong>Consensualismo institucional:</strong> Promove o diálogo técnico para resolver impasses em políticas públicas sem paralisar investimentos.</li>
+        <li><strong>Aprovação da LOAUD:</strong> Mobiliza o Congresso pela criação de um marco legal nacional para o controle externo.</li>
+      </ul>
+    `
+  },
+  {
     id: 'tce-pe-no-9-conacon-curitiba-2026',
     title: 'Auditores do TCE-PE marcam presença no 9° CONACON com apresentações científicas',
     summary: 'Delegação pernambucana participou ativamente do maior encontro de Controle Externo do país, apresentando trabalhos científicos sobre governança de IA, TI Verde e políticas fiscais, além de debater o fortalecimento institucional da carreira.',
