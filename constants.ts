@@ -106,7 +106,7 @@ export const MOCK_NEWS: NewsItem[] = [
         <li><strong>Essencialidade da função:</strong> Reafirma a auditoria como pilar técnico indispensável dos Tribunais de Contas, alinhado a padrões internacionais (NBASP 50).</li>
         <li><strong>Simetria constitucional:</strong> Estabelece um padrão nacional mínimo de organização para a auditoria pública em todo o país.</li>
         <li><strong>Transparência e impacto social:</strong> Orienta a fiscalização para entregar resultados concretos e melhorias diretas ao cidadão.</li>
-        <li><strong>Independência funcional:</strong> Assegura garantias para que o trabalho técnico ocorra de forma imparcial e sem interferências externas.</li>
+        <li><strong>Independência funcional:</strong> Assegura garantias para que o trabalho do auditor ocorra de forma imparcial e sem interferências externas.</li>
         <li><strong>Segregação de funções:</strong> Consolida a separação entre quem realiza a auditoria e quem julga as contas públicas.</li>
         <li><strong>Direção técnica:</strong> Determina que as chefias das unidades de auditoria sejam ocupadas exclusivamente por auditores de carreira.</li>
         <li><strong>Quadro próprio e permanente:</strong> Exige que a fiscalização seja exercida unicamente por servidores efetivos concursados.</li>
