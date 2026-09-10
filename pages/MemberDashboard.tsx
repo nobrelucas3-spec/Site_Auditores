@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, FileText, CreditCard, ShieldCheck, Loader, Download, BookOpen, ShieldAlert, Mail, Calendar, Hash, Info, Bell, ChevronRight } from 'lucide-react';
+import { LogOut, User, FileText, CreditCard, Award, Loader, Download, BookOpen, LayoutDashboard, Mail, Calendar, Hash, Info, Bell, ChevronRight, ListFilter } from 'lucide-react';
 import { MOCK_ANNOUNCEMENTS } from '../constants';
 
 import useInactivityTimer from '../hooks/useInactivityTimer';
@@ -108,10 +108,8 @@ const MemberDashboard: React.FC = () => {
             {/* Header */}
             <header className="bg-white shadow-sm sticky top-0 z-20">
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="bg-primary-600 text-white p-1.5 rounded-lg">
-                            <ShieldCheck size={20} />
-                        </div>
+                    <div className="flex items-center gap-3">
+                        <img src="/logo.png" alt="Auditores TCE-PE" className="h-9 w-9 object-contain" />
                         <span className="font-bold text-slate-800 text-lg">Área do Filiado</span>
                     </div>
 
@@ -141,7 +139,7 @@ const MemberDashboard: React.FC = () => {
                                     <h3 className="font-bold text-lg">Carteira Digital</h3>
                                     <p className="text-xs text-primary-200">Auditores TCE-PE</p>
                                 </div>
-                                <ShieldCheck className="text-secondary-400" size={24} />
+                                <Award className="text-secondary-400" size={24} />
                             </div>
                             <div className="z-10">
                                 <p className="text-sm opacity-80 mb-1">Nome do Associado</p>
@@ -169,6 +167,31 @@ const MemberDashboard: React.FC = () => {
                                 <ChevronRight size={20} className="text-amber-400" />
                             </div>
                         )}
+
+                        {/* Card Destaque: Pautas & Agenda da Diretoria */}
+                        <div
+                            onClick={() => navigate('/area-do-filiado/pautas')}
+                            className="mb-4 bg-gradient-to-r from-primary-900 via-primary-800 to-primary-700 p-5 rounded-2xl text-white shadow-md flex items-center justify-between gap-4 cursor-pointer hover:shadow-lg hover:scale-[1.01] transition-all group border border-primary-600/30"
+                        >
+                            <div className="flex items-center gap-4">
+                                <div className="bg-white/10 p-3 rounded-xl backdrop-blur-xs text-secondary-400 group-hover:scale-110 transition-transform">
+                                    <ListFilter size={26} />
+                                </div>
+                                <div>
+                                    <div className="flex items-center gap-2">
+                                        <h3 className="font-bold text-base sm:text-lg">Pautas & Agenda da Diretoria</h3>
+                                        <span className="bg-secondary-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">Novo</span>
+                                    </div>
+                                    <p className="text-xs text-primary-200 mt-0.5">
+                                        Proponha demandas, apoie pautas da categoria e acompanhe as deliberações da Diretoria Executiva.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="hidden sm:flex items-center gap-1 text-xs font-bold text-secondary-300 group-hover:text-white shrink-0">
+                                <span>Acessar</span>
+                                <ChevronRight size={18} />
+                            </div>
+                        </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {/* Card de Informativo - DIFERENCIADO */}
@@ -237,7 +260,7 @@ const MemberDashboard: React.FC = () => {
                     {isAdmin && (
                         <div className="p-4 bg-primary-50 text-center border-t border-primary-100">
                             <button onClick={() => navigate('/admin/documentos')} className="text-xs font-bold text-primary-700 hover:text-primary-800 flex items-center justify-center gap-2 mx-auto uppercase tracking-widest">
-                                <ShieldAlert size={16} /> Painel Administrador
+                                <LayoutDashboard size={16} /> Painel Administrador
                             </button>
                         </div>
                     )}

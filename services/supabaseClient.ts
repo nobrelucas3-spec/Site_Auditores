@@ -9,8 +9,29 @@ if (!supabaseUrl || !supabaseAnonKey) {
     console.error('Supabase vars missing!');
 }
 
+// Limpeza preventiva de tokens residuais no localStorage para garantir que sessões antigas não persistam
+if (typeof window !== 'undefined') {
+  try {
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith('sb-') && key.endsWith('-auth-token')) {
+        localStorage.removeItem(key);
+      }
+    });
+  } catch (e) {
+    // ignore
+  }
+}
+
 // Fallback prevents the entire React app from crashing (White Screen) if GitHub Action secrets are missing
 export const supabase = createClient(
   supabaseUrl || 'https://placeholder.supabase.co', 
-  supabaseAnonKey || 'placeholder'
+  supabaseAnonKey || 'placeholder',
+  {
+    auth: {
+      storage: typeof window !== 'undefined' ? window.sessionStorage : undefined,
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true
+    }
+  }
 );

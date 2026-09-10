@@ -6,7 +6,7 @@ import {
     XCircle, 
     Clock, 
     ExternalLink, 
-    ShieldCheck, 
+    UserCheck, 
     Loader2, 
     AlertCircle,
     Search,
@@ -123,7 +123,7 @@ const MembershipAdmin: React.FC = () => {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
                         <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
-                            <ShieldCheck className="text-primary-600" size={32} />
+                            <UserCheck className="text-primary-600" size={32} />
                             Gestão de Filiações
                         </h1>
                         <p className="text-gray-500 mt-1">Revise e aprove novos associados para o site.</p>

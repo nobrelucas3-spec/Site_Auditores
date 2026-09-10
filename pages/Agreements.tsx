@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { PARTNERS } from '../constants';
-import { Tag, ExternalLink, X, Send, Lock, ShieldCheck } from 'lucide-react';
+import { Tag, ExternalLink, X, Send, Lock, CheckCircle2 } from 'lucide-react';
 import { PartnerLink } from '../types';
 
 const Agreements: React.FC = () => {
@@ -181,7 +181,7 @@ const Agreements: React.FC = () => {
               </div>
 
               <div className="bg-green-50 rounded-xl p-4 mb-8 border border-green-100 flex items-start gap-3 text-left">
-                <ShieldCheck size={20} className="text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle2 size={20} className="text-green-600 shrink-0 mt-0.5" />
                 <p className="text-xs text-green-700 leading-relaxed">
                   Sua identidade foi verificada via <strong>Área do Filiado</strong>. O contato será enviado com sua matrícula oficial.
                 </p>

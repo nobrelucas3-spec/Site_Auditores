@@ -10,7 +10,7 @@ import {
   CheckCircle2, 
   X,
   ChevronRight,
-  ShieldCheck,
+  Tag,
   Megaphone
 } from 'lucide-react';
 import { MOCK_ANNOUNCEMENTS } from '../constants';
@@ -204,7 +204,7 @@ const MemberAnnouncements: React.FC = () => {
                 {new Date(selectedAnn.date).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
               </div>
               <div className="flex items-center gap-1">
-                <ShieldCheck size={14} className="text-primary-600" />
+                <Tag size={14} className="text-primary-600" />
                 {selectedAnn.category}
               </div>
             </div>

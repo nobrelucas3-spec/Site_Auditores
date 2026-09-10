@@ -1,7 +1,7 @@
 import React from 'react';
 import { supabase } from '../services/supabaseClient';
 import { BOARD_MEMBERS, FISCAL_COUNCIL_ASSOCIATION, FISCAL_COUNCIL_SYNDICATE } from '../constants';
-import { FileText, Award, Users, Target, Eye, Heart, Shield, CheckCircle } from 'lucide-react';
+import { FileText, Award, Users, Target, Eye, Heart, Scale, CheckCircle } from 'lucide-react';
 
 interface InstitucionalProps {
   type: 'quem-somos' | 'estatuto' | 'diretoria';
@@ -60,7 +60,7 @@ const Institucional: React.FC<InstitucionalProps> = ({ type }) => {
               <div className="lg:col-span-4 space-y-6">
                 <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
                   <div className="w-12 h-12 bg-blue-100 text-primary-600 rounded-lg flex items-center justify-center mb-4">
-                    <Shield size={24} />
+                    <Scale size={24} />
                   </div>
                   <h3 className="font-bold text-slate-900 mb-2">Autonomia</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">Atuamos de forma autônoma na defesa das prerrogativas técnicas da fiscalização e do controle externo do Estado.</p>

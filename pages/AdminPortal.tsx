@@ -5,12 +5,12 @@ import {
     Users, 
     FileText, 
     UserCheck, 
-    ShieldAlert, 
     ChevronLeft, 
     LogOut,
     LayoutDashboard,
     Loader2,
-    DollarSign
+    DollarSign,
+    ListFilter
 } from 'lucide-react';
 
 // Tab Components
@@ -18,10 +18,11 @@ import ApplicationsTab from '../components/admin/ApplicationsTab';
 import MembersTab from '../components/admin/MembersTab';
 import DocumentsTab from '../components/admin/DocumentsTab';
 import FinancesTab from '../components/admin/FinancesTab';
+import PautasAdminTab from '../components/admin/PautasAdminTab';
 
 const AdminPortal: React.FC = () => {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<'applications' | 'members' | 'documents' | 'finances'>('applications');
+    const [activeTab, setActiveTab] = useState<'applications' | 'members' | 'documents' | 'finances' | 'pautas'>('applications');
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const [adminUser, setAdminUser] = useState<any>(null);
@@ -98,7 +99,7 @@ const AdminPortal: React.FC = () => {
                 <div className="p-6 border-b border-white/10">
                     <div className="flex items-center gap-3">
                         <div className="bg-primary-500 p-2 rounded-lg">
-                            <ShieldAlert size={20} className="text-white" />
+                            <LayoutDashboard size={20} className="text-white" />
                         </div>
                         <span className="font-bold text-lg tracking-tight">Portal Admin</span>
                     </div>
@@ -133,6 +134,13 @@ const AdminPortal: React.FC = () => {
                         <DollarSign size={20} />
                         <span className="font-bold">Financeiro</span>
                     </button>
+                    <button 
+                        onClick={() => setActiveTab('pautas')}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${activeTab === 'pautas' ? 'bg-primary-600 text-white shadow-lg' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+                    >
+                        <ListFilter size={20} />
+                        <span className="font-bold">Pautas & Agenda DE</span>
+                    </button>
                 </nav>
 
                 <div className="p-4 border-t border-white/10 space-y-4">
@@ -160,7 +168,7 @@ const AdminPortal: React.FC = () => {
                 {/* Mobile Header */}
                 <header className="lg:hidden bg-white border-b p-4 flex justify-between items-center sticky top-0 z-30">
                     <div className="flex items-center gap-2">
-                        <ShieldAlert className="text-primary-600" size={24} />
+                        <LayoutDashboard className="text-primary-600" size={24} />
                         <span className="font-bold">Admin Portal</span>
                     </div>
                     <div className="flex gap-2">
@@ -168,6 +176,7 @@ const AdminPortal: React.FC = () => {
                          <button onClick={() => setActiveTab('members')} className={`p-2 rounded ${activeTab === 'members' ? 'bg-primary-100 text-primary-700' : 'text-gray-400'}`}><Users size={20}/></button>
                          <button onClick={() => setActiveTab('documents')} className={`p-2 rounded ${activeTab === 'documents' ? 'bg-primary-100 text-primary-700' : 'text-gray-400'}`}><FileText size={20}/></button>
                          <button onClick={() => setActiveTab('finances')} className={`p-2 rounded ${activeTab === 'finances' ? 'bg-primary-100 text-primary-700' : 'text-gray-400'}`}><DollarSign size={20}/></button>
+                         <button onClick={() => setActiveTab('pautas')} className={`p-2 rounded ${activeTab === 'pautas' ? 'bg-primary-100 text-primary-700' : 'text-gray-400'}`}><ListFilter size={20}/></button>
                     </div>
                 </header>
 
@@ -182,12 +191,14 @@ const AdminPortal: React.FC = () => {
                             {activeTab === 'members' && 'Gestão de Membros Efetivos'}
                             {activeTab === 'documents' && 'Centro de Documentação'}
                             {activeTab === 'finances' && 'Gestão de Patrimônio e Investimentos'}
+                            {activeTab === 'pautas' && 'Pautas da Categoria & Agenda da Diretoria Executiva'}
                         </h2>
                         <p className="text-gray-500 mt-2">
                             {activeTab === 'applications' && 'Analise novos dados e migre auditores para a base oficial de membros.'}
                             {activeTab === 'members' && 'Controle o status e mantenha os dados da categoria atualizados.'}
                             {activeTab === 'documents' && 'Envie arquivos restritos ou públicos para o site.'}
                             {activeTab === 'finances' && 'Atualize saldos de CDBs, LCs e gerencie o portfólio de investimentos fixos.'}
+                            {activeTab === 'pautas' && 'Defina prioridades estratégicas da DE, emita considerações oficiais, unifique pautas similares e gerencie reuniões da diretoria com deliberações vinculadas.'}
                         </p>
                     </div>
 
@@ -197,6 +208,7 @@ const AdminPortal: React.FC = () => {
                         {activeTab === 'members' && <MembersTab />}
                         {activeTab === 'documents' && <DocumentsTab />}
                         {activeTab === 'finances' && <FinancesTab />}
+                        {activeTab === 'pautas' && <PautasAdminTab />}
                     </div>
                 </div>
             </main>

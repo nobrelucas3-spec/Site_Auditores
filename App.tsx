@@ -34,6 +34,7 @@ import AdminPortal from './pages/AdminPortal';
 import Conacon from './pages/Conacon';
 import MemberAnnouncements from './pages/MemberAnnouncements';
 import ArticleTetoRemuneratorio from './pages/ArticleTetoRemuneratorio';
+import MemberPautas from './pages/MemberPautas';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -87,6 +88,7 @@ const App: React.FC = () => {
               {/* Área do Filiado */}
               <Route path="/area-do-filiado" element={<MemberLogin />} />
               <Route path="/area-do-filiado/dashboard" element={<MemberDashboard />} />
+              <Route path="/area-do-filiado/pautas" element={<MemberPautas />} />
               <Route path="/area-do-filiado/documentos" element={<MemberDocuments />} />
               <Route path="/area-do-filiado/financeiro" element={<FinancialDashboard />} />
               <Route path="/area-do-filiado/financeiro/detalhes" element={<FinancialDetailed />} />
@@ -97,7 +99,6 @@ const App: React.FC = () => {
               <Route path="/comunicacao/artigos/teto-remuneratorio-pe" element={<ArticleTetoRemuneratorio />} />
               <Route path="/primeiro-acesso" element={<FirstAccess />} />
               <Route path="/esqueci-senha" element={<ForgotPassword />} />
-              <Route path="/redefinir-senha" element={<ResetPassword />} />
               <Route path="/redefinir-senha" element={<ResetPassword />} />
 
               {/* Fallback */}

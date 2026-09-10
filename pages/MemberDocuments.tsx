@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../services/supabaseClient';
-import { FileText, Search, Download, Filter, ArrowLeft, Loader2, ShieldCheck } from 'lucide-react';
+import { FileText, Search, Download, Filter, ArrowLeft, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const MemberDocuments: React.FC = () => {
@@ -50,9 +50,9 @@ const MemberDocuments: React.FC = () => {
                     >
                         <ArrowLeft size={20} /> <span className="hidden sm:inline">Voltar ao Painel</span>
                     </button>
-                    <div className="flex items-center gap-2">
-                        <div className="bg-primary-600 text-white p-1 rounded">
-                            <ShieldCheck size={18} />
+                    <div className="flex items-center gap-2.5">
+                        <div className="bg-primary-600 text-white p-1.5 rounded-lg">
+                            <FileText size={18} />
                         </div>
                         <span className="font-bold text-slate-800">Repositório de Documentos</span>
                     </div>
