@@ -15,7 +15,9 @@ import {
     X, 
     AlertCircle, 
     Sparkles,
-    ExternalLink 
+    ExternalLink,
+    Trash2,
+    Ban
 } from 'lucide-react';
 import { getGoogleCalendarUrl } from '../../services/calendarHelper';
 
@@ -400,6 +402,53 @@ const PautasAdminTab: React.FC = () => {
         }
     };
 
+    const handleDeleteMeeting = async (meetingId: string, meetingTitle: string) => {
+        if (!window.confirm(`Deseja realmente excluir permanentemente a reunião "${meetingTitle}"? As vinculações com pautas serão removidas.`)) {
+            return;
+        }
+        setActionLoading(true);
+        try {
+            const { error } = await supabase
+                .from('de_meetings')
+                .delete()
+                .eq('id', meetingId);
+
+            if (error) throw error;
+            await loadData();
+        } catch (err: any) {
+            alert('Erro ao excluir reunião: ' + err.message);
+        } finally {
+            setActionLoading(false);
+        }
+    };
+
+    const handleToggleCancelMeeting = async (meetingId: string, currentStatus: string) => {
+        const newStatus = currentStatus === 'cancelada' ? 'agendada' : 'cancelada';
+        const confirmMsg = newStatus === 'cancelada' 
+            ? 'Deseja marcar esta reunião como Cancelada? Ela deixará de constar como ativa na agenda dos filiados.'
+            : 'Deseja reativar esta reunião como Agendada?';
+
+        if (!window.confirm(confirmMsg)) return;
+
+        setActionLoading(true);
+        try {
+            const { error } = await supabase
+                .from('de_meetings')
+                .update({ 
+                    status: newStatus,
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', meetingId);
+
+            if (error) throw error;
+            await loadData();
+        } catch (err: any) {
+            alert('Erro ao atualizar status da reunião: ' + err.message);
+        } finally {
+            setActionLoading(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="py-16 text-center text-slate-400">
@@ -565,7 +614,9 @@ const PautasAdminTab: React.FC = () => {
                                             {m.meeting_type}
                                         </span>
                                         <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                                            m.status === 'realizada' ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-blue-800'
+                                            m.status === 'realizada' ? 'bg-emerald-100 text-emerald-800' :
+                                            m.status === 'cancelada' ? 'bg-rose-100 text-rose-800' :
+                                            'bg-blue-100 text-blue-800'
                                         }`}>
                                             {m.status}
                                         </span>
@@ -594,6 +645,34 @@ const PautasAdminTab: React.FC = () => {
                                         className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs"
                                     >
                                         <FileText size={14} /> Registrar Deliberações & Ata
+                                    </button>
+
+                                    {m.status === 'agendada' && (
+                                        <button
+                                            onClick={() => handleToggleCancelMeeting(m.id, m.status)}
+                                            className="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+                                            title="Cancelar reunião"
+                                        >
+                                            <Ban size={13} /> Cancelar
+                                        </button>
+                                    )}
+
+                                    {m.status === 'cancelada' && (
+                                        <button
+                                            onClick={() => handleToggleCancelMeeting(m.id, m.status)}
+                                            className="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+                                            title="Reativar reunião agendada"
+                                        >
+                                            <Clock size={13} /> Reativar
+                                        </button>
+                                    )}
+
+                                    <button
+                                        onClick={() => handleDeleteMeeting(m.id, m.title)}
+                                        className="p-2 text-rose-500 hover:text-rose-700 hover:bg-rose-50 border border-slate-200 hover:border-rose-200 rounded-xl transition-colors shadow-xs"
+                                        title="Excluir reunião permanentemente"
+                                    >
+                                        <Trash2 size={14} />
                                     </button>
                                 </div>
                             </div>
