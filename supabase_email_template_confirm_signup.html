@@ -1,0 +1,102 @@
+<!--
+================================================================================
+MODELO DE E-MAIL INSTITUCIONAL: CONFIRMAÇÃO POR CÓDIGO DE 6 DÍGITOS (SEM LINKS)
+Associação dos Auditores de Controle Externo do TCE-PE (auditorestcepe.org.br)
+================================================================================
+INSTRUÇÕES PARA CONFIGURAR NO SUPABASE:
+1. Acesse o Dashboard do Supabase: https://supabase.com/dashboard/project/_/auth/templates
+2. No menu lateral "Authentication" -> "Email Templates".
+3. Selecione a aba "Confirm signup" (ou "Confirmation").
+4. No campo "Subject" (Assunto), cole:
+   Código de Confirmação: {{ .Token }} - Auditores TCE-PE
+5. No campo "Message Body" (HTML), substitua todo o conteúdo pelo código abaixo.
+6. Clique em "Save changes".
+================================================================================
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Código de Ativação de Acesso</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #1e293b;">
+  
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; padding: 30px 15px;">
+    <tr>
+      <td align="center">
+        
+        <!-- Conteúdo Principal -->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 540px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); border: 1px solid #e2e8f0;">
+          
+          <!-- Topo Institucional -->
+          <tr>
+            <td style="background-color: #0f172a; padding: 32px 30px; text-align: center;">
+              <h1 style="margin: 0; font-size: 18px; font-weight: 800; color: #ffffff; letter-spacing: 0.05em; text-transform: uppercase;">
+                AUDITORES TCE-PE
+              </h1>
+              <p style="margin: 6px 0 0 0; font-size: 12px; color: #94a3b8; font-weight: 500;">
+                Associação dos Auditores de Controle Externo do TCE-PE
+              </p>
+            </td>
+          </tr>
+
+          <!-- Corpo da Mensagem -->
+          <tr>
+            <td style="padding: 36px 32px;">
+              <h2 style="margin: 0 0 12px 0; font-size: 20px; font-weight: 700; color: #0f172a; text-align: center;">
+                Código de Confirmação de Acesso
+              </h2>
+              
+              <p style="margin: 0 0 24px 0; font-size: 14px; line-height: 1.6; color: #475569; text-align: center;">
+                Utilize o código de segurança numérico abaixo para ativar sua conta na <strong>Área do Filiado</strong>:
+              </p>
+
+              <!-- Caixa Destaque do Código OTP (Sem Links) -->
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 24px;">
+                <tr>
+                  <td align="center">
+                    <div style="display: inline-block; background-color: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 18px 36px; text-align: center;">
+                      <span style="font-family: 'Courier New', Courier, monospace, monospace; font-size: 36px; font-weight: 800; letter-spacing: 0.35em; color: #0f172a; display: block;">
+                        {{ .Token }}
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 0 0 16px 0; font-size: 13px; line-height: 1.5; color: #64748b; text-align: center;">
+                Basta retornar à tela do site da Associação e <strong>digitar este código numérico</strong> no campo indicado.
+              </p>
+
+              <!-- Aviso de Segurança -->
+              <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 6px; margin-top: 24px;">
+                <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #92400e;">
+                  <strong>Aviso de Segurança:</strong> Este código é pessoal e de uso único. Caso você não tenha solicitado a criação de acesso ou ativação de conta na Associação, por favor ignore esta mensagem.
+                </p>
+              </div>
+
+            </td>
+          </tr>
+
+          <!-- Rodapé Formal -->
+          <tr>
+            <td style="background-color: #f8fafc; padding: 20px 30px; text-align: center; border-top: 1px solid #e2e8f0;">
+              <p style="margin: 0 0 4px 0; font-size: 11px; color: #64748b; font-weight: 600;">
+                Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco
+              </p>
+              <p style="margin: 0; font-size: 11px; color: #94a3b8;">
+                Portal Oficial: auditorestcepe.org.br &bull; Mensagem automática do sistema
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

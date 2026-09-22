@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../services/supabaseClient';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { 
     UserPlus, 
     ArrowLeft, 
@@ -9,34 +9,58 @@ import {
     Loader2, 
     Mail, 
     Clock, 
-    CheckCircle2 
+    CheckCircle2,
+    ShieldCheck,
+    ArrowRight,
+    KeyRound
 } from 'lucide-react';
 import { useEmailCooldown } from '../hooks/useEmailCooldown';
 
 const FirstAccess: React.FC = () => {
-    const [email, setEmail] = useState('');
+    const location = useLocation();
+    const [email, setEmail] = useState((location.state?.email as string) || '');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [matricula, setMatricula] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
-    const [alreadyRegisteredEmail, setAlreadyRegisteredEmail] = useState<string | null>(null);
+    const [alreadyActiveAccountEmail, setAlreadyActiveAccountEmail] = useState<string | null>(null);
     const [resendLoading, setResendLoading] = useState(false);
     const [resendSuccess, setResendSuccess] = useState<string | null>(null);
+    const [otpCode, setOtpCode] = useState('');
+    const [verifyLoading, setVerifyLoading] = useState(false);
+    const [verifySuccess, setVerifySuccess] = useState(false);
+    const [verifyError, setVerifyError] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    const activeTargetEmail = email.trim() || alreadyRegisteredEmail || 'first_access';
+    const activeTargetEmail = email.trim() || 'first_access';
     const { isCoolingDown, formattedTime, startCooldown } = useEmailCooldown(activeTargetEmail, 120);
 
     const handleResend = async () => {
-        const target = (alreadyRegisteredEmail || email).trim();
+        const target = email.trim();
         if (!target) return;
         setResendLoading(true);
         setResendSuccess(null);
         setError(null);
+        setVerifyError(null);
 
         try {
+            // Verificar se o e-mail pertence a um associado ativo
+            const { data: member, error: memberErr } = await supabase
+                .from('members')
+                .select('id, status, is_associado, is_filiado')
+                .or(`email.ilike.${target},email_institutional.ilike.${target},email_personal.ilike.${target}`)
+                .maybeSingle();
+
+            if (memberErr || !member) {
+                throw new Error('E-mail não encontrado no cadastro de associados.');
+            }
+
+            if (member.status !== 'active' || (!member.is_associado && !member.is_filiado)) {
+                throw new Error('Cadastro não autorizado ou inativo.');
+            }
+
             const { error: resendErr } = await supabase.auth.resend({
                 type: 'signup',
                 email: target,
@@ -54,11 +78,61 @@ const FirstAccess: React.FC = () => {
             }
 
             startCooldown(120);
-            setResendSuccess(`Novo e-mail de ativação enviado para ${target}! Verifique sua caixa de entrada e spam.`);
+            setResendSuccess(`Novo código enviado para ${target}! Verifique sua caixa de entrada.`);
         } catch (err: any) {
-            setError(err.message || 'Erro ao reenviar e-mail de ativação.');
+            setError(err.message || 'Erro ao reenviar código de ativação.');
         } finally {
             setResendLoading(false);
+        }
+    };
+
+    const handleVerifyOtp = async (targetEmailOverride?: string) => {
+        const targetEmail = (targetEmailOverride || email).trim();
+        const cleanToken = otpCode.replace(/\D/g, '').trim();
+
+        if (cleanToken.length < 6 || cleanToken.length > 8) {
+            setVerifyError('Por favor, digite o código completo recebido no e-mail.');
+            return;
+        }
+
+        setVerifyLoading(true);
+        setVerifyError(null);
+
+        try {
+            let { data: verifyData, error: verifyErr } = await supabase.auth.verifyOtp({
+                email: targetEmail,
+                token: cleanToken,
+                type: 'signup'
+            });
+
+            if (verifyErr) {
+                const msgLower = (verifyErr.message || '').toLowerCase();
+                if (msgLower.includes('type') || msgLower.includes('invalid token')) {
+                    // Fallback para type email caso configurado assim no Supabase
+                    const fallback = await supabase.auth.verifyOtp({
+                        email: targetEmail,
+                        token: cleanToken,
+                        type: 'email'
+                    });
+                    if (!fallback.error) {
+                        verifyData = fallback.data;
+                        verifyErr = null;
+                    }
+                }
+            }
+
+            if (verifyErr) {
+                throw new Error('Código de confirmação inválido ou expirado. Verifique o número digitado ou solicite um novo envio.');
+            }
+
+            setVerifySuccess(true);
+            setTimeout(() => {
+                navigate('/area-do-filiado/dashboard');
+            }, 1800);
+        } catch (err: any) {
+            setVerifyError(err.message || 'Erro ao validar código. Tente novamente.');
+        } finally {
+            setVerifyLoading(false);
         }
     };
 
@@ -66,7 +140,7 @@ const FirstAccess: React.FC = () => {
         e.preventDefault();
         setLoading(true);
         setError(null);
-        setAlreadyRegisteredEmail(null);
+        setAlreadyActiveAccountEmail(null);
         setResendSuccess(null);
 
         const cleanEmail = email.trim();
@@ -121,7 +195,7 @@ const FirstAccess: React.FC = () => {
                 return;
             }
 
-            // 2. Criar cadastro no Supabase Auth
+            // 2. Tentar criar cadastro no Supabase Auth
             const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
                 email: cleanEmail,
                 password,
@@ -136,23 +210,56 @@ const FirstAccess: React.FC = () => {
                 }
             });
 
-            if (signUpError) {
-                const errLower = (signUpError.message || '').toLowerCase();
-                if (errLower.includes('already registered') || errLower.includes('already exists')) {
-                    setAlreadyRegisteredEmail(cleanEmail);
+            const isExistingUser = 
+                (signUpError && (
+                    (signUpError.message || '').toLowerCase().includes('already registered') ||
+                    (signUpError.message || '').toLowerCase().includes('already exists')
+                )) ||
+                (signUpData?.user && signUpData.user.identities && signUpData.user.identities.length === 0);
+
+            if (isExistingUser) {
+                // Testar se a conta existente já está ativada ou pendente de ativação
+                const { data: testSignData, error: testSignErr } = await supabase.auth.signInWithPassword({
+                    email: cleanEmail,
+                    password: password,
+                });
+
+                // Se o Supabase retornou "Email not confirmed", a conta AINDA NÃO está ativada
+                const isUnconfirmed = testSignErr && (testSignErr.message || '').toLowerCase().includes('email not confirmed');
+
+                if (isUnconfirmed) {
+                    // CONTA NÃO ATIVADA:
+                    // Dispara o envio do código de confirmação e avança diretamente para a tela de ativação
+                    await supabase.auth.resend({
+                        type: 'signup',
+                        email: cleanEmail,
+                        options: {
+                            emailRedirectTo: `${window.location.origin}/#/area-do-filiado`
+                        }
+                    });
+
+                    startCooldown(120);
+                    setSuccess(true);
                     setLoading(false);
                     return;
                 }
-                throw signUpError;
-            }
 
-            // Tratamento de obfuscation do Supabase: se já registrado, identities vem vazio
-            if (signUpData?.user && signUpData.user.identities && signUpData.user.identities.length === 0) {
-                setAlreadyRegisteredEmail(cleanEmail);
+                // Se a conta não é unconfirmed, ela JÁ ESTÁ ATIVADA!
+                if (testSignData?.session) {
+                    await supabase.auth.signOut();
+                }
+
+                // Exibe aviso claro de conta já ativada com link para redefinir senha
+                setAlreadyActiveAccountEmail(cleanEmail);
                 setLoading(false);
                 return;
             }
 
+            if (signUpError) {
+                throw signUpError;
+            }
+
+            // Conta nova: código OTP enviado automaticamente pelo Supabase
             setSuccess(true);
             startCooldown(120);
         } catch (err: any) {
@@ -164,65 +271,147 @@ const FirstAccess: React.FC = () => {
 
     if (success) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full bg-white p-8 sm:p-10 rounded-2xl shadow-xl border border-gray-100 text-center space-y-5">
-                    <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-green-600">
-                        <CheckCircle size={32} />
-                    </div>
-                    <div className="space-y-2">
-                        <h2 className="text-2xl font-bold text-slate-800">Cadastro Realizado com Sucesso!</h2>
-                        <p className="text-sm text-gray-600 leading-relaxed">
-                            Enviamos um link de ativação para o seu e-mail:
-                            <br />
-                            <strong className="text-slate-900">{email}</strong>
-                        </p>
-                        <p className="text-xs text-gray-500">
-                            Por favor, verifique sua <strong>caixa de entrada</strong> e também a pasta de <strong>Spam / Lixo Eletrônico</strong>. Clique no link para ativar sua conta.
-                        </p>
-                    </div>
+            <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+                {/* Background Blobs */}
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+                    <div className="absolute -top-20 -left-20 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+                    <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-secondary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+                </div>
 
-                    {resendSuccess && (
-                        <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl text-xs flex items-center justify-center gap-2">
-                            <CheckCircle2 size={16} className="text-emerald-700 shrink-0" />
-                            <span>{resendSuccess}</span>
+                <div className="max-w-md w-full bg-white p-8 sm:p-10 rounded-2xl shadow-xl border border-gray-100 text-center space-y-6 relative z-10">
+                    {verifySuccess ? (
+                        <div className="space-y-4 py-4 animate-in fade-in zoom-in duration-200">
+                            <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-emerald-600">
+                                <CheckCircle size={36} />
+                            </div>
+                            <h2 className="text-2xl font-black text-slate-900">Conta Ativada com Sucesso!</h2>
+                            <p className="text-sm text-slate-600 leading-relaxed">
+                                Seu código de acesso foi validado. Redirecionando para o portal do associado...
+                            </p>
+                            <Loader2 className="animate-spin mx-auto text-primary-600 mt-2" size={24} />
                         </div>
-                    )}
+                    ) : (
+                        <>
+                            <div className="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-primary-600">
+                                <ShieldCheck size={36} />
+                            </div>
 
-                    <div className="pt-2 space-y-3">
-                        <Link 
-                            to="/area-do-filiado" 
-                            className="w-full inline-block bg-primary-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-primary-700 transition-colors shadow-xs text-sm"
-                        >
-                            Ir para a Página de Login
-                        </Link>
+                            <div className="space-y-2">
+                                <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-primary-100 text-primary-800">
+                                    Ativação de Acesso
+                                </span>
+                                <h2 className="text-2xl font-black text-slate-900">Digite o Código de Confirmação</h2>
+                                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                    Enviamos um código de segurança numérico para o seu e-mail:
+                                    <br />
+                                    <strong className="text-slate-900 font-mono text-sm">{email}</strong>
+                                </p>
+                                <p className="text-[11px] text-slate-500">
+                                    Localize o e-mail da Associação (verifique também a pasta de <strong>Spam</strong>) e digite o código numérico abaixo:
+                                </p>
+                            </div>
 
-                        <div className="pt-3 border-t border-slate-100">
-                            <button
-                                type="button"
-                                disabled={isCoolingDown || resendLoading}
-                                onClick={handleResend}
-                                className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                                    isCoolingDown
-                                        ? 'bg-slate-100 text-slate-500 border border-slate-200 cursor-not-allowed'
-                                        : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200'
-                                }`}
+                            <form 
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    handleVerifyOtp();
+                                }} 
+                                className="space-y-4"
                             >
-                                {resendLoading ? (
-                                    <Loader2 size={14} className="animate-spin" />
-                                ) : isCoolingDown ? (
-                                    <>
-                                        <Clock size={14} />
-                                        Reenviar e-mail de ativação (aguarde {formattedTime})
-                                    </>
-                                ) : (
-                                    <>
-                                        <Mail size={14} />
-                                        Não recebeu o e-mail? Reenviar link agora
-                                    </>
+                                <div>
+                                    <input
+                                        type="text"
+                                        inputMode="numeric"
+                                        pattern="[0-9]*"
+                                        maxLength={8}
+                                        autoFocus
+                                        value={otpCode}
+                                        onChange={(e) => {
+                                            const val = e.target.value.replace(/\D/g, '').slice(0, 8);
+                                            setOtpCode(val);
+                                            if (verifyError) setVerifyError(null);
+                                        }}
+                                        placeholder="Código numérico"
+                                        className="w-full tracking-[0.2em] sm:tracking-[0.3em] text-center text-2xl sm:text-3xl font-mono font-black py-3 px-4 border-2 border-slate-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 rounded-xl outline-hidden text-slate-900 placeholder:text-slate-300 transition-all"
+                                    />
+                                    <p className="text-[11px] text-slate-400 mt-1">
+                                        Insira os dígitos numéricos recebidos por e-mail
+                                    </p>
+                                </div>
+
+                                {verifyError && (
+                                    <div className="p-3 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl text-xs flex items-start gap-2 text-left animate-in fade-in">
+                                        <AlertCircle size={16} className="text-rose-600 shrink-0 mt-0.5" />
+                                        <span>{verifyError}</span>
+                                    </div>
                                 )}
-                            </button>
-                        </div>
-                    </div>
+
+                                {resendSuccess && (
+                                    <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl text-xs flex items-center justify-center gap-2 animate-in fade-in">
+                                        <CheckCircle2 size={16} className="text-emerald-700 shrink-0" />
+                                        <span>{resendSuccess}</span>
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={verifyLoading || otpCode.length < 6}
+                                    className={`w-full py-3.5 px-6 rounded-xl font-bold text-sm text-white transition-all flex items-center justify-center gap-2 shadow-sm ${
+                                        otpCode.length >= 6 && !verifyLoading
+                                            ? 'bg-primary-600 hover:bg-primary-700 cursor-pointer shadow-md'
+                                            : 'bg-slate-300 cursor-not-allowed text-slate-500'
+                                    }`}
+                                >
+                                    {verifyLoading ? (
+                                        <Loader2 size={18} className="animate-spin" />
+                                    ) : (
+                                        <>
+                                            Ativar Conta e Entrar <ArrowRight size={16} />
+                                        </>
+                                    )}
+                                </button>
+                            </form>
+
+                            <div className="pt-3 border-t border-slate-100 space-y-2">
+                                <button
+                                    type="button"
+                                    disabled={isCoolingDown || resendLoading}
+                                    onClick={handleResend}
+                                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                                        isCoolingDown
+                                            ? 'bg-slate-100 text-slate-500 border border-slate-200 cursor-not-allowed'
+                                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200'
+                                    }`}
+                                >
+                                    {resendLoading ? (
+                                        <Loader2 size={14} className="animate-spin" />
+                                    ) : isCoolingDown ? (
+                                        <>
+                                            <Clock size={14} />
+                                            Reenviar código (aguarde {formattedTime})
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Mail size={14} />
+                                            Não recebeu o código? Reenviar agora
+                                        </>
+                                    )}
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setSuccess(false);
+                                        setOtpCode('');
+                                        setVerifyError(null);
+                                    }}
+                                    className="w-full py-2 text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors"
+                                >
+                                    &larr; Corrigir e-mail ou dados informados
+                                </button>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         );
@@ -244,63 +433,40 @@ const FirstAccess: React.FC = () => {
                     </p>
                 </div>
 
-                {/* Alerta se o usuário já estiver cadastrado */}
-                {alreadyRegisteredEmail && (
+                {/* Alerta se o usuário já possuir conta ativa */}
+                {alreadyActiveAccountEmail && (
                     <div className="rounded-2xl bg-amber-50 p-5 border border-amber-200 text-amber-950 space-y-3.5 animate-in fade-in duration-200">
                         <div className="flex items-start gap-3">
                             <div className="p-2 bg-amber-100 text-amber-700 rounded-xl shrink-0 mt-0.5">
-                                <Mail size={20} />
+                                <ShieldCheck size={20} />
                             </div>
                             <div className="space-y-1">
                                 <h4 className="font-bold text-sm text-amber-950">
-                                    Você já realizou o cadastro inicial!
+                                    Você já possui cadastro ativo!
                                 </h4>
                                 <p className="text-xs text-amber-900 leading-relaxed">
-                                    Identificamos que já existe uma conta criada para <strong>{alreadyRegisteredEmail}</strong>.
+                                    Identificamos que seu acesso para o e-mail <strong>{alreadyActiveAccountEmail}</strong> já foi criado e ativado anteriormente. Não é necessário realizar o primeiro acesso novamente.
                                 </p>
                                 <p className="text-xs text-amber-800">
-                                    Se você já ativou sua conta pelo link recebido por e-mail, basta acessar com sua senha na página de login. Se ainda não confirmou ou o link expirou, solicite um novo envio abaixo:
+                                    Caso você tenha esquecido sua senha, utilize a redefinição de senha abaixo:
                                 </p>
                             </div>
                         </div>
 
-                        {resendSuccess && (
-                            <div className="p-3 bg-emerald-100 border border-emerald-300 text-emerald-950 rounded-xl text-xs font-semibold flex items-center gap-2">
-                                <CheckCircle2 size={16} className="text-emerald-700 shrink-0" />
-                                <span>{resendSuccess}</span>
-                            </div>
-                        )}
-
-                        <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                        <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-amber-200/60">
                             <button
                                 type="button"
-                                disabled={resendLoading || isCoolingDown}
-                                onClick={handleResend}
-                                className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-xs ${
-                                    isCoolingDown
-                                        ? 'bg-amber-100 text-amber-700 border border-amber-300 cursor-not-allowed'
-                                        : 'bg-amber-600 hover:bg-amber-700 text-white cursor-pointer'
-                                }`}
+                                onClick={() => navigate('/esqueci-senha', { state: { email: alreadyActiveAccountEmail } })}
+                                className="flex-1 py-2.5 px-4 rounded-xl text-xs font-bold bg-primary-600 hover:bg-primary-700 text-white transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
                             >
-                                {resendLoading ? (
-                                    <Loader2 size={16} className="animate-spin" />
-                                ) : isCoolingDown ? (
-                                    <>
-                                        <Clock size={15} />
-                                        Reenviar e-mail (aguarde {formattedTime})
-                                    </>
-                                ) : (
-                                    <>
-                                        <Mail size={15} />
-                                        Reenviar E-mail de Ativação
-                                    </>
-                                )}
+                                <KeyRound size={15} />
+                                Esqueceu a senha? Redefinir
                             </button>
                             <Link
                                 to="/area-do-filiado"
                                 className="flex-1 py-2.5 px-4 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 text-center flex items-center justify-center transition-colors shadow-2xs"
                             >
-                                Ir para a Página de Login &rarr;
+                                Ir para o Login &rarr;
                             </Link>
                         </div>
                     </div>
