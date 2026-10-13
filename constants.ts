@@ -63,6 +63,18 @@ export const PARTNERS: PartnerLink[] = [
     description: '<p>Acesso completo à infraestrutura de lazer, esportes e eventos da AABB Recife para o filiado e sua família com valor subsidiado.</p>'
   },
   {
+    name: 'Fisco Saúde',
+    discount: 'Condições exclusivas e taxa de adesão super reduzida',
+    category: 'Saúde',
+    image: '/news/convenio-fisco-saude.jpeg',
+    description: `
+      <p class="mb-2">Assistência médica hospitalar de excelência com ampla rede credenciada dos principais hospitais, clínicas e laboratórios de Pernambuco.</p>
+      <p class="mb-2"><strong>Campanha Especial:</strong> Taxa de adesão super reduzida e condições especiais até 31 de dezembro de 2026 para associados e dependentes.</p>
+      <p class="text-primary-700 font-bold mb-1">Telefone / WhatsApp: (81) 3126-7713</p>
+      <p class="text-xs text-gray-500 italic">E-mail: cadastro@fiscosaudepe.com.br</p>
+    `
+  },
+  {
     name: 'Uniodonto Recife',
     discount: 'Planos odontológicos empresariais',
     category: 'Saúde',
@@ -72,6 +84,49 @@ export const PARTNERS: PartnerLink[] = [
 ];
 
 export const MOCK_NEWS: NewsItem[] = [
+  {
+    id: 'convenio-fisco-saude-beneficio-associados',
+    title: 'Convênio com o Fisco Saúde para benefício dos associados',
+    summary: 'Com condições exclusivas e campanha promocional de adesão até dezembro de 2026, nova parceria reforça o compromisso da entidade com o bem-estar e a assistência à saúde da categoria.',
+    date: '2026-10-08',
+    imageUrl: '/news/convenio-fisco-saude.jpeg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/convenio-fisco-saude.jpeg" alt="Assinatura do termo de convênio entre a Associação dos Auditores do TCE-PE e o Fisco Saúde" class="w-full h-auto rounded-xl shadow-lg border border-gray-100 cursor-pointer" />
+        <p class="text-xs text-gray-500 mt-2 italic text-center">Representantes da Associação dos Auditores de Controle Externo do TCE-PE e da diretoria do Fisco Saúde durante a assinatura do termo de convênio.</p>
+      </div>
+
+      <p class="mb-4">A Associação dos Auditores de Controle Externo do Tribunal de Contas do Estado de Pernambuco (TCE-PE) formalizou a assinatura de um termo de convênio com o <strong class="text-slate-900">Fisco Saúde</strong>. A iniciativa visa oferecer aos auditores filiados acesso a uma das mais consolidadas operadoras de assistência à saúde voltadas ao serviço público no estado.</p>
+
+      <p class="mb-4">O convênio assegura aos membros da categoria uma rede credenciada ampla e qualificada, composta pelos principais hospitais, clínicas especializadas e centros laboratoriais de Pernambuco, aliando atendimento humanizado, solidez institucional e cobertura assistencial completa.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Condições especiais de adesão</h3>
+      <p class="mb-4">A parceria já tem início integrada a uma campanha promocional com <strong class="text-primary-800">taxa de adesão super reduzida</strong>, em condições especiais estendidas até <strong>31 de dezembro de 2026</strong>.</p>
+      <p class="mb-4">A oportunidade permite tanto o ingresso de novos beneficiários quanto a inclusão de dependentes com facilidades administrativas e carências diferenciadas, conforme as normas regulamentares do plano.</p>
+
+      <h3 class="text-xl font-bold text-primary-900 mt-8 mb-4">Canais de Informação e atendimento</h3>
+      <p class="mb-4">Os associados interessados em conhecer as tabelas de mensalidades, coberturas, regras de transição/portabilidade e efetivar sua adesão devem entrar em contato diretamente com o setor de cadastro do Fisco Saúde:</p>
+
+      <div class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 rounded-r-xl space-y-3">
+        <div class="flex items-center gap-2 text-slate-800">
+          <strong class="text-slate-900">Telefone / WhatsApp:</strong>
+          <a href="https://wa.me/558131267713" target="_blank" rel="noopener noreferrer" class="text-primary-700 hover:text-primary-900 font-semibold underline">
+            (81) 3126-7713
+          </a>
+        </div>
+        <div class="flex items-center gap-2 text-slate-800">
+          <strong class="text-slate-900">E-mail:</strong>
+          <a href="mailto:cadastro@fiscosaudepe.com.br" class="text-primary-700 hover:text-primary-900 font-semibold underline">
+            cadastro@fiscosaudepe.com.br
+          </a>
+        </div>
+      </div>
+    `
+  },
   {
     id: 'auditores-tce-pe-apoiam-carta-de-curitiba-9-conacon',
     title: 'Auditores do TCE-PE apoiam a Carta de Curitiba e defendem 10 pilares para o fortalecimento do controle externo no 9º CONACON',
