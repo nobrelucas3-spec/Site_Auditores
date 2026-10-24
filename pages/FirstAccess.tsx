@@ -46,19 +46,34 @@ const FirstAccess: React.FC = () => {
         setVerifyError(null);
 
         try {
-            // Verificar se o e-mail pertence a um associado ativo
-            const { data: member, error: memberErr } = await supabase
-                .from('members')
-                .select('id, status, is_associado, is_filiado')
-                .or(`email.ilike.${target},email_institutional.ilike.${target},email_personal.ilike.${target}`)
-                .maybeSingle();
+            // 1. Verificar via RPC segura se o e-mail pertence a um associado ativo
+            const { data: authStatus, error: rpcErr } = await supabase.rpc('check_member_auth_status', {
+                p_email: target
+            });
 
-            if (memberErr || !member) {
-                throw new Error('E-mail não encontrado no cadastro de associados.');
-            }
+            if (!rpcErr && authStatus) {
+                const isActiveMember = typeof authStatus.is_active_member === 'boolean'
+                    ? authStatus.is_active_member
+                    : (authStatus.reason !== 'not_member' && authStatus.reason !== 'inactive_member');
 
-            if (member.status !== 'active' || (!member.is_associado && !member.is_filiado)) {
-                throw new Error('Cadastro não autorizado ou inativo.');
+                if (!isActiveMember) {
+                    throw new Error(authStatus.message || 'Cadastro não autorizado ou inativo.');
+                }
+            } else {
+                // Fallback compatível antes da execução do script SQL
+                const { data: member, error: memberErr } = await supabase
+                    .from('members')
+                    .select('id, status, is_associado, is_filiado')
+                    .or(`email.ilike.${target},email_institutional.ilike.${target},email_personal.ilike.${target}`)
+                    .maybeSingle();
+
+                if (memberErr || !member) {
+                    throw new Error('E-mail não encontrado no cadastro de associados.');
+                }
+
+                if (member.status !== 'active' || (!member.is_associado && !member.is_filiado)) {
+                    throw new Error('Cadastro não autorizado ou inativo.');
+                }
             }
 
             const { error: resendErr } = await supabase.auth.resend({
@@ -159,38 +174,69 @@ const FirstAccess: React.FC = () => {
         }
 
         try {
-            // 1. Verificar se a matrícula e o e-mail existem na base de membros
-            const { data: memberData, error: memberError } = await supabase
-                .from('members')
-                .select('*')
-                .eq('matricula', cleanMatricula)
-                .or(`email.ilike.${cleanEmail},email_institutional.ilike.${cleanEmail},email_personal.ilike.${cleanEmail}`)
-                .maybeSingle();
+            // 1. Validar E-mail + Matrícula via RPC segura (sem expor a tabela `members` para anon)
+            let memberData: {
+                full_name: string;
+                matricula: string;
+                status: string;
+                is_associado: boolean;
+                is_filiado: boolean;
+            } | null = null;
 
-            if (memberError || !memberData) {
-                setError('Dados não encontrados. Verifique se o E-mail e Matrícula conferem com seu cadastro na associação.');
-                setLoading(false);
-                return;
-            }
+            const { data: rpcVerify, error: rpcVerifyErr } = await supabase.rpc('verify_first_access_member', {
+                p_email: cleanEmail,
+                p_matricula: cleanMatricula
+            });
 
-            // Se o e-mail usado for diferente do principal, atualiza o principal
-            if (memberData.email !== cleanEmail) {
-                const { error: updateEmailError } = await supabase
+            if (!rpcVerifyErr && rpcVerify) {
+                if (!rpcVerify.ok) {
+                    setError(rpcVerify.message || 'Dados não encontrados. Verifique se o E-mail e Matrícula conferem com seu cadastro na associação.');
+                    setLoading(false);
+                    return;
+                }
+                memberData = rpcVerify.member;
+            } else {
+                // Fallback compatível caso o script SQL ainda não tenha sido aplicado no banco
+                const { data: fallbackMember, error: memberError } = await supabase
                     .from('members')
-                    .update({ email: cleanEmail })
-                    .eq('id', memberData.id);
-                
-                if (updateEmailError) throw updateEmailError;
+                    .select('*')
+                    .eq('matricula', cleanMatricula)
+                    .or(`email.ilike.${cleanEmail},email_institutional.ilike.${cleanEmail},email_personal.ilike.${cleanEmail}`)
+                    .maybeSingle();
+
+                if (memberError || !fallbackMember) {
+                    setError('Dados não encontrados. Verifique se o E-mail e Matrícula conferem com seu cadastro na associação.');
+                    setLoading(false);
+                    return;
+                }
+
+                if (fallbackMember.status !== 'active') {
+                    setError('Seu cadastro consta como inativo. Entre em contato com a associação para regularizar sua situação.');
+                    setLoading(false);
+                    return;
+                }
+
+                if (!fallbackMember.is_associado && !fallbackMember.is_filiado) {
+                    setError('Para criar o acesso, é necessário ser associado ou filiado ativo.');
+                    setLoading(false);
+                    return;
+                }
+
+                // Se o e-mail usado for diferente do principal, atualiza o principal
+                if (fallbackMember.email !== cleanEmail) {
+                    const { error: updateEmailError } = await supabase
+                        .from('members')
+                        .update({ email: cleanEmail })
+                        .eq('id', fallbackMember.id);
+                    
+                    if (updateEmailError) throw updateEmailError;
+                }
+
+                memberData = fallbackMember;
             }
 
-            if (memberData.status !== 'active') {
-                setError('Seu cadastro consta como inativo. Entre em contato com a associação para regularizar sua situação.');
-                setLoading(false);
-                return;
-            }
-
-            if (!memberData.is_associado && !memberData.is_filiado) {
-                setError('Para criar o acesso, é necessário ser associado ou filiado ativo.');
+            if (!memberData) {
+                setError('Dados não encontrados. Verifique se o E-mail e Matrícula conferem com seu cadastro na associação.');
                 setLoading(false);
                 return;
             }

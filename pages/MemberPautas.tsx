@@ -71,10 +71,11 @@ const MemberPautas: React.FC = () => {
             setUser(session.user);
 
             // Validação do membro ativo
+            const cleanSessionEmail = (session.user.email || '').trim();
             const { data: memberData } = await supabase
                 .from('members')
                 .select('*')
-                .ilike('email', session.user.email)
+                .or(`email.ilike.${cleanSessionEmail},email_institutional.ilike.${cleanSessionEmail},email_personal.ilike.${cleanSessionEmail}`)
                 .maybeSingle();
 
             if (!memberData || memberData.status !== 'active') {

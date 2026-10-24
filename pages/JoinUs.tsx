@@ -51,10 +51,19 @@ const JoinUs: React.FC = () => {
         setError(null);
 
         try {
-            // 1. Salvar no Supabase
-            const { data: appData, error: supabaseError } = await supabase
+            // 1. Gerar ID seguro no cliente e salvar no Supabase (sem exigir SELECT anônimo pós-INSERT)
+            const appId = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+                ? crypto.randomUUID()
+                : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+                    const r = (Math.random() * 16) | 0;
+                    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+                    return v.toString(16);
+                });
+
+            const { error: supabaseError } = await supabase
                 .from('membership_applications')
                 .insert([{
+                    id: appId,
                     full_name: formData.fullName,
                     cpf: formData.cpf,
                     rg: formData.rg,
@@ -70,14 +79,11 @@ const JoinUs: React.FC = () => {
                     phone_mobile: formData.phoneMobile,
                     affiliation_type: formData.affiliationType,
                     terms_accepted: formData.termsAccepted
-                }])
-                .select()
-                .single();
+                }]);
 
             if (supabaseError) throw supabaseError;
 
             // 2. Enviar via FormSubmit (Email)
-            const appId = appData?.id;
             const linkFicha = `${window.location.origin}${window.location.pathname}#/filiados/ficha/${appId}`;
 
             const mappedData = {

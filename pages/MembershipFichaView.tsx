@@ -31,6 +31,20 @@ const MembershipFichaView: React.FC = () => {
         const fetchData = async () => {
             if (!id) return;
             try {
+                // 1. Consulta segura por UUID exato via RPC (sem permitir listagem da tabela)
+                const { data: rpcData, error: rpcError } = await supabase.rpc('get_membership_application_by_id', {
+                    p_id: id
+                });
+
+                if (!rpcError) {
+                    if (!rpcData) {
+                        throw new Error('Ficha não encontrada.');
+                    }
+                    setData(rpcData as MembershipData);
+                    return;
+                }
+
+                // 2. Fallback compatível caso o script SQL ainda não tenha sido aplicado no banco
                 const { data: appData, error: fetchError } = await supabase
                     .from('membership_applications')
                     .select('*')

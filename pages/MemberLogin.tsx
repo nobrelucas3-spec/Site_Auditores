@@ -207,23 +207,38 @@ const MemberLogin: React.FC = () => {
         setVerifyOtpError(null);
 
         try {
-            // Verificar se o e-mail pertence a um associado ativo
-            const { data: member, error: memberErr } = await supabase
-                .from('members')
-                .select('id, status, is_associado, is_filiado')
-                .or(`email.ilike.${clean},email_institutional.ilike.${clean},email_personal.ilike.${clean}`)
-                .maybeSingle();
+            // 1. Verificar via RPC segura se o e-mail pertence a um associado ativo
+            const { data: authStatus, error: rpcErr } = await supabase.rpc('check_member_auth_status', {
+                p_email: clean
+            });
 
-            if (memberErr || !member) {
-                throw new Error('E-mail não encontrado no cadastro de associados.');
-            }
+            if (!rpcErr && authStatus) {
+                const isActiveMember = typeof authStatus.is_active_member === 'boolean'
+                    ? authStatus.is_active_member
+                    : (authStatus.reason !== 'not_member' && authStatus.reason !== 'inactive_member');
 
-            if (member.status !== 'active') {
-                throw new Error('Seu cadastro de associado consta como inativo. Entre em contato com a associação.');
-            }
+                if (!isActiveMember) {
+                    throw new Error(authStatus.message || 'E-mail não autorizado ou inativo no cadastro de associados.');
+                }
+            } else {
+                // Fallback compatível antes da execução do script SQL
+                const { data: member, error: memberErr } = await supabase
+                    .from('members')
+                    .select('id, status, is_associado, is_filiado')
+                    .or(`email.ilike.${clean},email_institutional.ilike.${clean},email_personal.ilike.${clean}`)
+                    .maybeSingle();
 
-            if (!member.is_associado && !member.is_filiado) {
-                throw new Error('Apenas associados ou filiados ativos podem solicitar códigos de acesso.');
+                if (memberErr || !member) {
+                    throw new Error('E-mail não encontrado no cadastro de associados.');
+                }
+
+                if (member.status !== 'active') {
+                    throw new Error('Seu cadastro de associado consta como inativo. Entre em contato com a associação.');
+                }
+
+                if (!member.is_associado && !member.is_filiado) {
+                    throw new Error('Apenas associados ou filiados ativos podem solicitar códigos de acesso.');
+                }
             }
 
             const { error: resendErr } = await supabase.auth.resend({

@@ -30,10 +30,11 @@ const MemberDashboard: React.FC = () => {
                 setUser(session.user);
 
                 // Fetch member details
+                const cleanSessionEmail = (session.user.email || '').trim();
                 const { data: memberData, error: memberError } = await supabase
                     .from('members')
                     .select('*')
-                    .ilike('email', session.user.email)
+                    .or(`email.ilike.${cleanSessionEmail},email_institutional.ilike.${cleanSessionEmail},email_personal.ilike.${cleanSessionEmail}`)
                     .maybeSingle();
 
                 // Check if user is an admin

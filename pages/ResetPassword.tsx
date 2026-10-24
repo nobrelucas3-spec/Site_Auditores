@@ -65,15 +65,26 @@ const ResetPassword: React.FC = () => {
                     throw new Error('Informe o código de segurança numérico recebido por e-mail.');
                 }
 
-                // Verificar se o e-mail pertence a um associado ativo
-                const { data: member, error: memberErr } = await supabase
-                    .from('members')
-                    .select('id, status, is_associado, is_filiado')
-                    .or(`email.ilike.${cleanEmail},email_institutional.ilike.${cleanEmail},email_personal.ilike.${cleanEmail}`)
-                    .maybeSingle();
+                // 1. Verificar via RPC segura se o e-mail pertence a um associado ativo com conta válida
+                const { data: authStatus, error: rpcErr } = await supabase.rpc('check_member_auth_status', {
+                    p_email: cleanEmail
+                });
 
-                if (memberErr || !member || member.status !== 'active' || (!member.is_associado && !member.is_filiado)) {
-                    throw new Error('E-mail não encontrado ou inativo no cadastro de associados.');
+                if (!rpcErr && authStatus) {
+                    if (!authStatus.ok) {
+                        throw new Error(authStatus.message || 'E-mail não encontrado ou não habilitado para redefinição de senha.');
+                    }
+                } else {
+                    // Fallback compatível antes da execução do script SQL
+                    const { data: member, error: memberErr } = await supabase
+                        .from('members')
+                        .select('id, status, is_associado, is_filiado')
+                        .or(`email.ilike.${cleanEmail},email_institutional.ilike.${cleanEmail},email_personal.ilike.${cleanEmail}`)
+                        .maybeSingle();
+
+                    if (memberErr || !member || member.status !== 'active' || (!member.is_associado && !member.is_filiado)) {
+                        throw new Error('E-mail não encontrado ou inativo no cadastro de associados.');
+                    }
                 }
 
                 const { error: otpErr } = await supabase.auth.verifyOtp({
