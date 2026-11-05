@@ -85,6 +85,57 @@ export const PARTNERS: PartnerLink[] = [
 
 export const MOCK_NEWS: NewsItem[] = [
   {
+    id: 'posse-novos-auditores-tce-pe-2026',
+    title: 'Associação celebra reforço no quadro técnico com novos auditores',
+    summary: 'Entidade acompanhou a solenidade de posse no TCE-PE, acolheu os novos servidores e reafirmou o compromisso permanente com a valorização e o fortalecimento da carreira.',
+    date: '2026-11-04T12:00:00',
+    imageUrl: '/news/posse-auditores-2026-turma.jpeg',
+    category: NewsCategory.INSTITUCIONAL,
+    isHighlight: true,
+    hideCoverInArticle: true,
+    author: 'Auditores TCE-PE',
+    content: `
+      <div class="mb-8">
+        <img src="/news/posse-auditores-2026-turma.jpeg" alt="Novos auditores empossados durante a solenidade de posse no TCE-PE" class="w-full h-auto rounded-xl shadow-lg border border-gray-100 cursor-zoom-in" />
+        <p class="text-xs text-gray-500 mt-2 italic text-center">Novos auditores empossados durante a solenidade realizada no auditório do TCE-PE.</p>
+      </div>
+
+      <p class="mb-4">A Associação dos Auditores de Controle Externo do Tribunal de Contas de Pernambuco (AUD-PE) acompanhou, nesta quarta-feira (4), a solenidade de posse dos novos auditores de controle externo do TCE-PE. A entidade esteve presente para recepcionar os servidores recém-empossados, celebrando a renovação dos quadros técnicos e colocando a representação associativa à disposição dos colegas desde o primeiro dia de atuação.</p>
+
+      <div class="my-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <div class="md:col-span-5">
+          <img src="/news/posse-auditores-2026-roubier.jpeg" alt="Presidente da Associação, Roubier Muniz, na solenidade de posse no TCE-PE" class="w-full h-72 md:h-80 object-cover object-top rounded-xl shadow-md border border-gray-100 cursor-zoom-in" />
+          <p class="text-xs text-gray-500 mt-2 italic text-center">Roubier Muniz, presidente da Associação, durante a solenidade de posse.</p>
+        </div>
+        <div class="md:col-span-7">
+          <p class="mb-4">O presidente da Associação, Roubier Muniz, deu as boas-vindas à nova turma e destacou o apoio da associação:</p>
+          <blockquote class="p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+            "Este é um momento de celebrar a conquista de cada um e festejar a chegada de novos colegas que vêm somar à nossa missão. A nossa associação tem como compromisso central acolher esses profissionais, lutar pela valorização da carreira e garantir condições para que atuem com independência e excelência", ressaltou Roubier Muniz.
+          </blockquote>
+        </div>
+      </div>
+
+      <p class="mb-4">A emoção e a responsabilidade com o serviço público marcaram os depoimentos dos ingressantes. O auditor recém-empossado <strong class="text-slate-900">João Gustavo Elías</strong> celebrou o início da jornada:</p>
+
+      <blockquote class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+        "Estou muito feliz por estar tomando posse neste dia. Uma etapa muito importante na minha vida profissional e que eu vou levar para o resto da vida", destacou João Gustavo.
+      </blockquote>
+
+      <p class="mb-4">O compromisso social e o esforço da trajetória até a posse também foram pontuados pela auditora <strong class="text-slate-900">Laís Carvalho</strong>:</p>
+
+      <blockquote class="my-6 p-6 bg-slate-50 border-l-4 border-primary-600 italic text-slate-800 rounded-r-lg">
+        "Essa conquista representa anos de estudo. Não só minha, mas da minha família também. Estou muito feliz e espero contribuir para um serviço de transparência e comprometimento com as contas públicas de saúde do estado", afirmou Laís.
+      </blockquote>
+
+      <div class="my-8">
+        <img src="/news/posse-auditores-2026-solenidade.jpeg" alt="Solenidade de posse dos candidatos aprovados no concurso público do TCE-PE" class="w-full h-auto rounded-xl shadow-lg border border-gray-100 cursor-zoom-in" />
+        <p class="text-xs text-gray-500 mt-2 italic text-center">Momento solene da cerimônia de posse no Tribunal de Contas de Pernambuco.</p>
+      </div>
+
+      <p class="mb-4">Com a posse formalizada, a Associação dos Auditores de Controle Externo segue acompanhando a ambientação dos novos servidores, reafirmando sua atuação contínua pela valorização da categoria e pelo aprimoramento da fiscalização pública em Pernambuco.</p>
+    `
+  },
+  {
     id: 'convenio-fisco-saude-beneficio-associados',
     title: 'Convênio com o Fisco Saúde para benefício dos associados',
     summary: 'Com condições exclusivas e campanha promocional de adesão até dezembro de 2026, nova parceria reforça o compromisso da entidade com o bem-estar e a assistência à saúde da categoria.',
@@ -1133,6 +1184,18 @@ export const MOCK_ARTICLES = [
 ];
 
 export const PHOTO_ALBUMS = [
+  {
+    id: 'posse-auditores-2026',
+    title: 'Posse dos Novos Auditores de Controle Externo 2026',
+    description: 'Registros da solenidade de posse e acolhimento dos novos servidores no TCE-PE.',
+    date: '2026/11/04',
+    cover: '/news/posse-auditores-2026-turma.jpeg',
+    photos: [
+      '/news/posse-auditores-2026-turma.jpeg',
+      '/news/posse-auditores-2026-roubier.jpeg',
+      '/news/posse-auditores-2026-solenidade.jpeg'
+    ]
+  },
   {
     id: 'dia-do-auditor-2026',
     title: 'Dia do Auditor de Controle Externo 2026',
