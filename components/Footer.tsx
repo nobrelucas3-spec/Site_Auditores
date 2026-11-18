@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-900 text-gray-300 pt-12 pb-6">
+    <footer className="bg-slate-900 text-gray-300 pt-12 pb-6 print:hidden">
       <div className="container mx-auto px-4 lg:px-8 grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 mb-8">
 
         {/* Info Column - Takes more space for text */}

@@ -179,7 +179,7 @@ const MembershipSuccess: React.FC = () => {
 
                 @media print {
                     /* Hide site elements */
-                    nav, footer, .no-print { display: none !important; }
+                    header, nav, footer, .no-print { display: none !important; }
                     
                     /* Show print element */
                     .only-print { 

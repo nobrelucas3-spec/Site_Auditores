@@ -68,8 +68,12 @@ const MembershipFichaView: React.FC = () => {
 
     const formatDate = (dateStr: string) => {
         if (!dateStr) return '';
-        const date = new Date(dateStr);
-        return date.toLocaleDateString('pt-BR');
+        const clean = dateStr.split('T')[0];
+        const parts = clean.split('-');
+        if (parts.length === 3) {
+            return `${parts[2]}/${parts[1]}/${parts[0]}`;
+        }
+        return new Date(dateStr).toLocaleDateString('pt-BR');
     };
 
     const getFullAffiliationName = (type: string) => {
@@ -113,10 +117,10 @@ const MembershipFichaView: React.FC = () => {
     const docDate = getDocumentDate(data.created_at);
 
     return (
-        <div className="min-h-screen bg-slate-100 py-10 px-4 flex flex-col items-center">
+        <div className="min-h-screen bg-slate-100 py-10 px-4 flex flex-col items-center print:p-0 print:bg-white print:min-h-0">
             
             {/* Admin Toolbar (Hidden on print) */}
-            <div className="no-print w-full max-w-4xl flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+            <div className="no-print print:hidden w-full max-w-4xl flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
                 <Link to="/" className="flex items-center gap-2 text-gray-500 hover:text-primary-700 font-medium">
                     <ArrowLeft size={18} /> Sair da Visualização
                 </Link>
@@ -186,17 +190,33 @@ const MembershipFichaView: React.FC = () => {
 
             <style>{`
                 @media print {
-                    .no-print { display: none !important; }
-                    .min-h-screen { padding: 0 !important; background: white !important; }
-                    .printable-form { 
-                        box-shadow: none !important; 
+                    header, nav, footer, .no-print { display: none !important; }
+                    html, body {
+                        background: white !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        height: auto !important;
+                        overflow: visible !important;
+                    }
+                    .min-h-screen {
+                        min-height: 0 !important;
+                        padding: 0 !important;
+                        background: white !important;
+                    }
+                    .printable-form {
+                        box-shadow: none !important;
                         border: 2px solid black !important;
                         margin: 0 !important;
+                        padding: 1.75rem !important;
                         max-width: 100% !important;
                         width: 100% !important;
+                        page-break-inside: avoid;
+                        break-inside: avoid;
                     }
-                    body { background: white !important; }
-                    @page { margin: 1.5cm; }
+                    @page {
+                        size: A4 portrait;
+                        margin: 1.2cm;
+                    }
                 }
             `}</style>
         </div>

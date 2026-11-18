@@ -80,7 +80,7 @@ const Header: React.FC = () => {
   );
 
   return (
-    <header className="w-full bg-primary-900 text-white shadow-lg sticky top-0 z-50" ref={dropdownRef}>
+    <header className="w-full bg-primary-900 text-white shadow-lg sticky top-0 z-50 print:hidden" ref={dropdownRef}>
       {/* Top Bar */}
       <div className="bg-primary-800 py-2 border-b border-primary-700 hidden md:block">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
