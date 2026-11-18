@@ -21,6 +21,7 @@ const Footer: React.FC = () => {
           <ul className="space-y-2 text-sm">
             <li><a href="#" className="hover:text-secondary-400 transition-colors block py-1">Estatuto Social</a></li>
             <li><Link to="/area-do-filiado/financeiro" className="hover:text-secondary-400 transition-colors block py-1">Prestação de Contas</Link></li>
+            <li><Link to="/validar-declaracao" className="hover:text-secondary-400 transition-colors block py-1">Validar Declaração</Link></li>
             <li><a href="#" className="hover:text-secondary-400 transition-colors block py-1">Clube de Vantagens</a></li>
             <li><a href="https://www.tce.pe.gov.br/" target="_blank" rel="noopener noreferrer" className="hover:text-secondary-400 transition-colors block py-1">TCE-PE Oficial</a></li>
             <li><Link to="/contato" className="hover:text-secondary-400 transition-colors block py-1">Fale Conosco</Link></li>

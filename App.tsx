@@ -35,6 +35,8 @@ import Conacon from './pages/Conacon';
 import MemberAnnouncements from './pages/MemberAnnouncements';
 import ArticleTetoRemuneratorio from './pages/ArticleTetoRemuneratorio';
 import MemberPautas from './pages/MemberPautas';
+import MemberDeclaration from './pages/MemberDeclaration';
+import ValidateDeclaration from './pages/ValidateDeclaration';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -88,7 +90,9 @@ const App: React.FC = () => {
               {/* Área do Filiado */}
               <Route path="/area-do-filiado" element={<MemberLogin />} />
               <Route path="/area-do-filiado/dashboard" element={<MemberDashboard />} />
+              <Route path="/area-do-filiado/declaracao" element={<MemberDeclaration />} />
               <Route path="/area-do-filiado/pautas" element={<MemberPautas />} />
+              <Route path="/validar-declaracao" element={<ValidateDeclaration />} />
               <Route path="/area-do-filiado/documentos" element={<MemberDocuments />} />
               <Route path="/area-do-filiado/financeiro" element={<FinancialDashboard />} />
               <Route path="/area-do-filiado/financeiro/detalhes" element={<FinancialDetailed />} />

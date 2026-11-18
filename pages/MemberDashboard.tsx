@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../services/supabaseClient';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, FileText, CreditCard, Award, Loader, Download, BookOpen, LayoutDashboard, Mail, Calendar, Hash, Info, Bell, ChevronRight, ListFilter } from 'lucide-react';
+import { LogOut, User, FileText, CreditCard, Award, Loader, Download, BookOpen, LayoutDashboard, Mail, Calendar, Hash, Info, Bell, ChevronRight, ListFilter, FileCheck2 } from 'lucide-react';
 import { MOCK_ANNOUNCEMENTS } from '../constants';
 
 import useInactivityTimer from '../hooks/useInactivityTimer';
@@ -151,7 +151,14 @@ const MemberDashboard: React.FC = () => {
                                 <div className="text-right"><p className="text-[10px] opacity-70">Validade</p><p className="font-mono text-sm">12/2026</p></div>
                             </div>
                         </div>
-                        <button onClick={() => setIsProfileModalOpen(true)} className="w-full mt-4 bg-white border border-gray-200 text-gray-700 py-3 rounded-xl font-bold text-sm shadow-sm hover:bg-gray-50 transition-all flex items-center justify-center gap-2 group">
+                        <button
+                            onClick={() => navigate('/area-do-filiado/declaracao')}
+                            className="w-full mt-4 bg-primary-900 text-white py-3 rounded-xl font-bold text-sm shadow-sm hover:bg-primary-800 transition-all flex items-center justify-center gap-2"
+                        >
+                            <FileCheck2 size={16} />
+                            <span>Emitir Declaração de Filiação</span>
+                        </button>
+                        <button onClick={() => setIsProfileModalOpen(true)} className="w-full mt-2.5 bg-white border border-gray-200 text-gray-700 py-3 rounded-xl font-bold text-sm shadow-sm hover:bg-gray-50 transition-all flex items-center justify-center gap-2 group">
                             <User size={16} className="text-primary-600" /> Meus Dados
                         </button>
                     </div>
