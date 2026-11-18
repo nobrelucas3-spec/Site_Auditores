@@ -245,33 +245,17 @@ BEGIN
     LIMIT 1;
 
     IF v_existing.id IS NOT NULL THEN
-        IF (v_existing.issued_at AT TIME ZONE 'America/Recife')::date < (now() AT TIME ZONE 'America/Recife')::date
-           OR v_existing.custom_recipient IS DISTINCT FROM v_recipient
-           OR v_existing.member_name IS DISTINCT FROM v_member.full_name
-           OR v_existing.member_email IS DISTINCT FROM v_auth_email
-           OR v_existing.signer_name IS DISTINCT FROM 'AUDITORES-TCE/PE'
-           OR v_existing.signer_role IS DISTINCT FROM 'Assinado e autenticado eletronicamente pelo Portal Oficial'
-           OR v_existing.valid_until > (v_existing.issued_at + interval '61 days') THEN
-            UPDATE public.membership_declarations
-            SET
-                member_name = v_member.full_name,
-                member_email = v_auth_email,
-                custom_recipient = v_recipient,
-                issued_at = CASE
-                    WHEN (issued_at AT TIME ZONE 'America/Recife')::date < (now() AT TIME ZONE 'America/Recife')::date
-                    THEN now()
-                    ELSE issued_at
-                END,
-                valid_until = CASE
-                    WHEN (issued_at AT TIME ZONE 'America/Recife')::date < (now() AT TIME ZONE 'America/Recife')::date
-                    THEN now() + interval '60 days'
-                    ELSE issued_at + interval '60 days'
-                END,
-                signer_name = 'AUDITORES-TCE/PE',
-                signer_role = 'Assinado e autenticado eletronicamente pelo Portal Oficial'
-            WHERE id = v_existing.id
-            RETURNING * INTO v_existing;
-        END IF;
+        UPDATE public.membership_declarations
+        SET
+            member_name = v_member.full_name,
+            member_email = v_auth_email,
+            custom_recipient = v_recipient,
+            issued_at = now(),
+            valid_until = now() + interval '60 days',
+            signer_name = 'AUDITORES-TCE/PE',
+            signer_role = 'Assinado e autenticado eletronicamente pelo Portal Oficial'
+        WHERE id = v_existing.id
+        RETURNING * INTO v_existing;
 
         RETURN json_build_object(
             'ok', true,
