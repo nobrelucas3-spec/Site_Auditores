@@ -115,9 +115,13 @@ const MembershipSuccess: React.FC = () => {
 
             {/* FORMULÁRIO PARA IMPRESSÃO (Visível apenas no print) */}
             <div className="only-print p-8 text-black bg-white font-serif max-w-4xl mx-auto border-2 border-black">
-                <div className="text-center mb-6 border-b-2 border-black pb-4">
-                    <h1 className="text-xl font-bold uppercase">Formulário de Admissão de Membro</h1>
-                    <p className="text-sm">Associação e Sindicato dos Auditores de Controle Externo do TCE-PE</p>
+                <div className="text-center mb-5 border-b-2 border-black pb-3">
+                    <img
+                        src="/logo-declaracao.png"
+                        alt="Associação dos Auditores de Controle Externo do TCE-PE"
+                        className="h-20 w-auto mx-auto object-contain mb-2"
+                    />
+                    <h1 className="text-xl font-bold uppercase tracking-wider">Formulário de Admissão</h1>
                 </div>
 
                 <div className="space-y-4">

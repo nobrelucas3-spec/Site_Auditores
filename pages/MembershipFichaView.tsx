@@ -134,14 +134,18 @@ const MembershipFichaView: React.FC = () => {
 
             {/* PRINTABLE FORM */}
             <div className="bg-white p-10 text-black font-serif max-w-4xl w-full shadow-2xl border-2 border-slate-200 printable-form">
-                <div className="text-center mb-6 border-b-2 border-black pb-4">
-                    <h1 className="text-2xl font-bold uppercase mb-1">Formulário de Admissão de Membro</h1>
-                    <p className="text-base">Associação e Sindicato dos Auditores de Controle Externo do TCE-PE</p>
+                <div className="text-center mb-5 border-b-2 border-black pb-3">
+                    <img
+                        src="/logo-declaracao.png"
+                        alt="Associação dos Auditores de Controle Externo do TCE-PE"
+                        className="h-20 w-auto mx-auto object-contain mb-2"
+                    />
+                    <h1 className="text-xl font-bold uppercase tracking-wider">Formulário de Admissão</h1>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3.5">
                     <div className="bg-slate-100 p-2 font-bold uppercase text-sm border-y border-black">1. Dados Pessoais</div>
-                    <div className="grid grid-cols-2 gap-x-10 gap-y-2.5 text-sm leading-relaxed">
+                    <div className="grid grid-cols-2 gap-x-10 gap-y-2 text-sm leading-relaxed">
                         <div className="col-span-2"><span className="font-bold">Nome Completo:</span> {data.full_name}</div>
                         <div><span className="font-bold">CPF:</span> {data.cpf}</div>
                         <div><span className="font-bold">RG:</span> {data.rg}</div>
@@ -151,7 +155,7 @@ const MembershipFichaView: React.FC = () => {
                     </div>
 
                     <div className="bg-slate-100 p-2 font-bold uppercase text-sm border-y border-black">2. Dados Funcionais e Contato</div>
-                    <div className="grid grid-cols-2 gap-x-10 gap-y-2.5 text-sm leading-relaxed">
+                    <div className="grid grid-cols-2 gap-x-10 gap-y-2 text-sm leading-relaxed">
                         <div><span className="font-bold">Matrícula TCE-PE:</span> {data.matricula}</div>
                         <div><span className="font-bold">Cargo Atual:</span> {data.role}</div>
                         <div><span className="font-bold">E-mail Institucional:</span> {data.email_institutional}</div>
@@ -166,11 +170,11 @@ const MembershipFichaView: React.FC = () => {
                         <span className="font-bold">Entidade(s) para Adesão:</span> {getFullAffiliationName(data.affiliation_type)}
                     </div>
 
-                    <div className="mt-6 p-5 border border-black text-xs leading-6">
-                        <p className="mb-4">
+                    <div className="mt-5 p-4 border border-black text-xs leading-6">
+                        <p className="mb-3">
                             Solicito a minha inclusão conforme selecionado acima e <span className="font-bold underline">autorizo o débito da contribuição mensal</span> em minha conta corrente ou por desconto direto em meus vencimentos na folha de pagamento do TCE-PE. Declaro estar ciente e de acordo com as regras estatutárias das entidades representativas, as quais tive prévio conhecimento.
                         </p>
-                        <div className="flex justify-between items-end mt-12 px-4">
+                        <div className="flex justify-between items-end mt-10 px-4">
                             <div>
                                 <p className="text-sm font-medium">Recife - PE, {docDate.day} de {docDate.month} de {docDate.year}</p>
                             </div>
@@ -181,7 +185,7 @@ const MembershipFichaView: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="mt-6 text-[10px] text-gray-500 text-center border-t border-slate-200 pt-3">
+                    <div className="mt-4 text-[10px] text-gray-500 text-center border-t border-slate-200 pt-2.5">
                         Este documento é uma representação digital da proposta enviada em {new Date(data.created_at).toLocaleString('pt-BR')} via Site Auditores TCE-PE.<br/>
                         ID de Autenticidade: {id}
                     </div>
