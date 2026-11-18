@@ -212,20 +212,42 @@ GRANT EXECUTE ON FUNCTION public.verify_first_access_member(text, text) TO anon,
 
 
 -- ==============================================================================
--- 4. FUNÇÃO RPC: public.get_membership_application_by_id(p_id uuid)
---    Retorna exclusivamente a ficha correspondente ao UUID exato informado,
---    impedindo listagem pública (enumeração em massa) de CPFs/RGs/endereços.
+-- 4. FUNÇÃO RPC: public.get_membership_application_by_id(p_id, p_cpf, p_matricula)
+--    Retorna a ficha exclusivamente mediante sessão administrativa válida OU
+--    conferência simultânea de CPF + Matrícula com o registro exato.
 -- ==============================================================================
-CREATE OR REPLACE FUNCTION public.get_membership_application_by_id(p_id uuid)
+DROP FUNCTION IF EXISTS public.get_membership_application_by_id(uuid);
+DROP FUNCTION IF EXISTS public.get_membership_application_by_id(uuid, text, text);
+
+CREATE OR REPLACE FUNCTION public.get_membership_application_by_id(
+    p_id uuid,
+    p_cpf text DEFAULT NULL,
+    p_matricula text DEFAULT NULL
+)
 RETURNS jsonb
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public
 AS $$
 DECLARE
+    v_cpf text := regexp_replace(coalesce(p_cpf, ''), '\D', '', 'g');
+    v_matricula text := trim(coalesce(p_matricula, ''));
     v_result jsonb;
 BEGIN
     IF p_id IS NULL THEN
+        RETURN NULL;
+    END IF;
+
+    IF public.is_admin() THEN
+        SELECT to_jsonb(ma)
+        INTO v_result
+        FROM public.membership_applications ma
+        WHERE ma.id = p_id
+        LIMIT 1;
+        RETURN v_result;
+    END IF;
+
+    IF length(v_cpf) <> 11 OR v_matricula = '' THEN
         RETURN NULL;
     END IF;
 
@@ -233,13 +255,15 @@ BEGIN
     INTO v_result
     FROM public.membership_applications ma
     WHERE ma.id = p_id
+      AND regexp_replace(coalesce(ma.cpf, ''), '\D', '', 'g') = v_cpf
+      AND trim(coalesce(ma.matricula, '')) = v_matricula
     LIMIT 1;
 
     RETURN v_result;
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.get_membership_application_by_id(uuid) TO anon, authenticated, service_role;
+GRANT EXECUTE ON FUNCTION public.get_membership_application_by_id(uuid, text, text) TO anon, authenticated, service_role;
 
 
 -- ==============================================================================

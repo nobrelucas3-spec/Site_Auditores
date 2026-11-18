@@ -23,6 +23,7 @@ interface Member {
     is_associado: boolean;
     is_filiado: boolean;
     joined_at: string;
+    created_at?: string;
 }
 
 const MembersTab: React.FC = () => {
@@ -32,6 +33,7 @@ const MembersTab: React.FC = () => {
     const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'inactive'>('all');
     const [filterVinculo, setFilterVinculo] = useState<'all' | 'associado' | 'filiado' | 'ambos' | 'nenhum'>('all');
     const [filterRetired, setFilterRetired] = useState<'all' | 'active' | 'retired'>('all');
+    const [sortBy, setSortBy] = useState<'name' | 'recent'>('name');
 
     const [searchTerm, setSearchTerm] = useState('');
     const [processingId, setProcessingId] = useState<string | null>(null);
@@ -163,6 +165,15 @@ const MembersTab: React.FC = () => {
         return matchesSearch && matchesStatus && matchesVinculo && matchesRetired;
     });
 
+    const sortedMembers = [...filteredMembers].sort((a, b) => {
+        if (sortBy === 'recent') {
+            const dateA = new Date(a.created_at || a.joined_at || 0).getTime();
+            const dateB = new Date(b.created_at || b.joined_at || 0).getTime();
+            if (dateB !== dateA) return dateB - dateA;
+        }
+        return (a.full_name || '').localeCompare(b.full_name || '', 'pt-BR');
+    });
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -176,8 +187,26 @@ const MembersTab: React.FC = () => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
-                <div className="text-sm text-gray-500">
-                    Total: <span className="font-bold text-slate-800">{filteredMembers.length}</span> membros encontrados
+                <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+                    <div className="flex bg-gray-100 p-1 rounded-lg">
+                        <button
+                            type="button"
+                            onClick={() => setSortBy('name')}
+                            className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${sortBy === 'name' ? 'bg-white shadow-sm text-primary-600' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Ordenar: A–Z
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setSortBy('recent')}
+                            className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${sortBy === 'recent' ? 'bg-white shadow-sm text-primary-600' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Mais Recentes
+                        </button>
+                    </div>
+                    <div className="text-sm text-gray-500 whitespace-nowrap">
+                        Total: <span className="font-bold text-slate-800">{sortedMembers.length}</span>
+                    </div>
                 </div>
             </div>
 
@@ -242,17 +271,17 @@ const MembersTab: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y text-sm">
-                                {filteredMembers.length > 0 ? (
-                                    filteredMembers.map(member => (
+                                {sortedMembers.length > 0 ? (
+                                    sortedMembers.map(member => (
                                         <tr key={member.id} className="hover:bg-gray-50">
                                             <td className="px-6 py-4">
                                                 <div className="font-bold text-slate-900">{member.full_name}</div>
                                                 <div className="text-xs text-gray-500">{member.email}</div>
                                                 <div className="flex gap-2 mt-1">
-                                                    {member.email_institutional && member.email_institutional.toLowerCase().trim() !== member.email.toLowerCase().trim() && (
+                                                    {member.email_institutional && member.email_institutional.toLowerCase().trim() !== member.email?.toLowerCase().trim() && (
                                                         <span className="text-[10px] text-gray-400 bg-gray-50 px-1 rounded" title="Institucional">Inst: {member.email_institutional}</span>
                                                     )}
-                                                    {member.email_personal && member.email_personal.toLowerCase().trim() !== member.email.toLowerCase().trim() && member.email_personal.toLowerCase().trim() !== member.email_institutional?.toLowerCase().trim() && (
+                                                    {member.email_personal && member.email_personal.toLowerCase().trim() !== member.email?.toLowerCase().trim() && member.email_personal.toLowerCase().trim() !== member.email_institutional?.toLowerCase().trim() && (
                                                         <span className="text-[10px] text-gray-400 bg-gray-50 px-1 rounded" title="Pessoal">Pers: {member.email_personal}</span>
                                                     )}
                                                 </div>
