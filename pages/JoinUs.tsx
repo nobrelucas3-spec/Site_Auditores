@@ -175,29 +175,20 @@ const JoinUs: React.FC = () => {
 
             if (supabaseError) throw supabaseError;
 
-            // 2. Notificar a Associação em segundo plano (sem travar a jornada)
-            const linkFicha = `${window.location.origin}${window.location.pathname}#/filiados/ficha/${appId}`;
+            // 2. Notificar a Associação em segundo plano com minimização de dados (LGPD)
+            const adminUrl = `${window.location.origin}${window.location.pathname}#/admin`;
             const emailBody = {
-                _subject: `Nova Solicitação de Filiação: ${payload.full_name}`,
+                _subject: `Nova Solicitação de Filiação: ${payload.full_name} (Mat. ${payload.matricula})`,
                 _template: 'table',
                 _captcha: 'false',
                 _language: 'pt',
-                Link_Ficha_Oficial: linkFicha,
-                'Nome Completo': payload.full_name,
-                'CPF': payload.cpf,
-                'RG': payload.rg,
-                'Data de Nascimento': payload.birth_date,
-                'Naturalidade': payload.birthplace,
-                'Endereço': payload.address,
+                'Associado': payload.full_name,
                 'Matrícula TCE-PE': payload.matricula,
                 'Cargo': payload.role,
                 'Situação Funcional': payload.is_retired ? 'Aposentado' : 'Auditores na Ativa',
-                'E-mail Institucional': payload.email_institutional,
-                'E-mail Particular': payload.email_personal,
-                'Telefone Fixo': payload.phone_fixed,
-                'Celular/WhatsApp': payload.phone_mobile,
                 'Tipo de Adesão': payload.affiliation_type,
-                'Aceitou os Termos': payload.terms_accepted ? 'Sim' : 'Não'
+                'Painel_Administrativo': adminUrl,
+                'Proteção_LGPD': 'Dados pessoais sensíveis (CPF, RG, endereço e ficha assinada Gov.br) protegidos e acessíveis exclusivamente via login administrativo no portal.'
             };
 
             fetch('https://formsubmit.co/ajax/13ae6adc7181116bc0173267ef273d47', {

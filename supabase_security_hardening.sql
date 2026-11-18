@@ -360,6 +360,12 @@ DECLARE
     pol record;
 BEGIN
     IF to_regclass('public.membership_applications') IS NOT NULL THEN
+        ALTER TABLE public.membership_applications
+            ADD COLUMN IF NOT EXISTS signed_pdf_url text,
+            ADD COLUMN IF NOT EXISTS signed_pdf_name text,
+            ADD COLUMN IF NOT EXISTS signature_metadata jsonb,
+            ADD COLUMN IF NOT EXISTS signed_at timestamp with time zone;
+
         ALTER TABLE public.membership_applications ENABLE ROW LEVEL SECURITY;
 
         FOR pol IN SELECT policyname FROM pg_policies WHERE schemaname = 'public' AND tablename = 'membership_applications' LOOP
@@ -372,7 +378,15 @@ BEGIN
 
         CREATE POLICY "Public insert membership applications"
             ON public.membership_applications FOR INSERT TO anon, authenticated
-            WITH CHECK (true);
+            WITH CHECK (
+                coalesce(status, 'Pendente') = 'Pendente'
+                AND signed_pdf_url IS NULL
+                AND signature_metadata IS NULL
+                AND signed_at IS NULL
+                AND length(regexp_replace(coalesce(cpf, ''), '\D', '', 'g')) = 11
+                AND length(trim(coalesce(full_name, ''))) BETWEEN 3 AND 180
+                AND length(trim(coalesce(matricula, ''))) BETWEEN 1 AND 30
+            );
 
         CREATE POLICY "Admins select membership applications"
             ON public.membership_applications FOR SELECT TO authenticated
@@ -451,6 +465,22 @@ BEGIN
     CREATE POLICY "Restrict documents bucket delete to admins"
         ON storage.objects AS RESTRICTIVE FOR DELETE TO anon, authenticated
         USING (bucket_id <> 'documents' OR public.is_admin());
+
+    DROP POLICY IF EXISTS "Restrict documents bucket select for anon" ON storage.objects;
+    CREATE POLICY "Restrict documents bucket select for anon"
+        ON storage.objects AS RESTRICTIVE FOR SELECT TO anon
+        USING (
+            bucket_id <> 'documents'
+            OR EXISTS (
+                SELECT 1
+                FROM public.documents d
+                WHERE d.is_public = true
+                  AND (
+                      d.file_url LIKE '%/' || storage.objects.name
+                      OR replace(d.file_url, '%20', ' ') LIKE '%/' || storage.objects.name
+                  )
+            )
+        );
 EXCEPTION
     WHEN OTHERS THEN
         RAISE NOTICE 'Aviso: Não foi possível aplicar políticas restritivas em storage.objects automaticamente (%).', SQLERRM;

@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient';
+
 export interface FichaPdfData {
     full_name: string;
     cpf: string;
@@ -544,11 +546,17 @@ export async function generateAndDownloadFichaPdf(data: FichaPdfData, id: string
     return { fileName, blob };
 }
 
-export function openOrDownloadPdfUrl(url: string, fileName?: string): void {
-    if (!url) return;
-    if (url.startsWith('data:')) {
+export async function openOrDownloadPdfUrl(urlOrPath: string, fileName?: string): Promise<void> {
+    if (!urlOrPath) return;
+
+    if (urlOrPath.startsWith('blob:')) {
+        window.open(urlOrPath, '_blank', 'noopener,noreferrer');
+        return;
+    }
+
+    if (urlOrPath.startsWith('data:')) {
         try {
-            const parts = url.split(',');
+            const parts = urlOrPath.split(',');
             const base64 = parts[1];
             const binary = atob(base64);
             const bytes = new Uint8Array(binary.length);
@@ -569,5 +577,27 @@ export function openOrDownloadPdfUrl(url: string, fileName?: string): void {
             // fallback below
         }
     }
-    window.open(url, '_blank', 'noopener,noreferrer');
+
+    const isRelativeStoragePath = !urlOrPath.startsWith('http');
+    const isSignedFichasUrl = urlOrPath.includes('/signed-fichas/');
+
+    if (isRelativeStoragePath || isSignedFichasUrl) {
+        const storagePath = isSignedFichasUrl
+            ? decodeURIComponent(urlOrPath.split('/signed-fichas/')[1].split('?')[0])
+            : urlOrPath;
+
+        const { data, error } = await supabase.storage
+            .from('signed-fichas')
+            .createSignedUrl(storagePath, 120);
+
+        if (error || !data?.signedUrl) {
+            alert('Acesso restrito: apenas administradores autenticados podem abrir ou baixar o PDF assinado armazenado no cofre.');
+            return;
+        }
+
+        window.open(data.signedUrl, '_blank', 'noopener,noreferrer');
+        return;
+    }
+
+    window.open(urlOrPath, '_blank', 'noopener,noreferrer');
 }

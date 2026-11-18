@@ -1,40 +1,83 @@
 -- ==============================================================================
--- FLUXO DE FILIAÇÃO 100% ONLINE + VALIDAÇÃO GOV.BR (COM TRAVA DE CREDENCIAIS)
+-- FLUXO DE FILIAÇÃO 100% ONLINE + COFRE PRIVADO GOV.BR (LGPD) - AUDITORES TCE-PE
 -- ==============================================================================
--- 1. Exige credenciais (CPF + Matrícula) ou sessão Admin para consultar a ficha.
--- 2. Exige credenciais (CPF + Matrícula) ou sessão Admin para anexar o PDF
---    assinado pelo Gov.br e impede sobrescrita após validação ou aprovação.
--- 3. Restringe o bucket `signed-fichas` para aceitar somente arquivos .pdf.
+-- 1. Torna o bucket `signed-fichas` 100% PRIVADO (`public = false`), legível
+--    exclusivamente por administradores autenticados (`public.is_admin()`).
+-- 2. Exige credenciais (CPF + Matrícula) ou sessão Admin para consultar ou
+--    anexar o PDF assinado pelo Gov.br, bloqueando sobrescrita após validação.
+-- 3. Impede que visitantes anônimos listem arquivos internos do bucket `documents`.
+-- 4. Endurece o INSERT público em `membership_applications` (status Pendente,
+--    sem assinatura forjada e CPF de 11 dígitos obrigatório).
 -- ==============================================================================
 
 BEGIN;
 
--- 1. Novas colunas na tabela `public.membership_applications`
+-- 1. Garantir colunas de assinatura digital em `public.membership_applications`
 ALTER TABLE public.membership_applications
     ADD COLUMN IF NOT EXISTS signed_pdf_url text,
     ADD COLUMN IF NOT EXISTS signed_pdf_name text,
     ADD COLUMN IF NOT EXISTS signature_metadata jsonb,
     ADD COLUMN IF NOT EXISTS signed_at timestamp with time zone;
 
--- 2. Bucket no Supabase Storage para armazenar as fichas assinadas em PDF
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('signed-fichas', 'signed-fichas', true)
-ON CONFLICT (id) DO UPDATE SET public = true;
+-- 2. Política endurecida para INSERT público de solicitações de filiação
+DROP POLICY IF EXISTS "Public insert membership applications" ON public.membership_applications;
+CREATE POLICY "Public insert membership applications"
+    ON public.membership_applications FOR INSERT TO anon, authenticated
+    WITH CHECK (
+        coalesce(status, 'Pendente') = 'Pendente'
+        AND signed_pdf_url IS NULL
+        AND signature_metadata IS NULL
+        AND signed_at IS NULL
+        AND length(regexp_replace(coalesce(cpf, ''), '\D', '', 'g')) = 11
+        AND length(trim(coalesce(full_name, ''))) BETWEEN 3 AND 180
+        AND length(trim(coalesce(matricula, ''))) BETWEEN 1 AND 30
+    );
 
--- Políticas de acesso ao bucket 'signed-fichas'
+-- 3. Função auxiliar SECURITY DEFINER para validar pasta de upload sem expor tabela
+CREATE OR REPLACE FUNCTION public.can_upload_signed_ficha(p_object_name text)
+RETURNS boolean
+LANGUAGE sql
+SECURITY DEFINER
+STABLE
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.membership_applications ma
+    WHERE ma.id::text = split_part(coalesce(p_object_name, ''), '/', 1)
+      AND ma.status = 'Pendente'
+      AND coalesce((ma.signature_metadata ->> 'verified')::boolean, false) = false
+  );
+$$;
+
+GRANT EXECUTE ON FUNCTION public.can_upload_signed_ficha(text) TO anon, authenticated, service_role;
+
+-- 4. Bucket PRIVADO no Supabase Storage para armazenar as fichas assinadas
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('signed-fichas', 'signed-fichas', false)
+ON CONFLICT (id) DO UPDATE SET public = false;
+
+-- Políticas de acesso aos buckets `signed-fichas` e `documents`
 DO $$
 BEGIN
+    -- Cofre `signed-fichas`: leitura/download APENAS por Administradores
     DROP POLICY IF EXISTS "Public read signed fichas" ON storage.objects;
-    CREATE POLICY "Public read signed fichas"
-        ON storage.objects FOR SELECT TO anon, authenticated
-        USING (bucket_id = 'signed-fichas');
+    DROP POLICY IF EXISTS "Admins read signed fichas" ON storage.objects;
+    CREATE POLICY "Admins read signed fichas"
+        ON storage.objects FOR SELECT TO authenticated
+        USING (bucket_id = 'signed-fichas' AND public.is_admin());
 
+    -- Upload restrito a PDFs dentro da pasta de ficha pendente e ainda não assinada
     DROP POLICY IF EXISTS "Public insert signed fichas" ON storage.objects;
     CREATE POLICY "Public insert signed fichas"
         ON storage.objects FOR INSERT TO anon, authenticated
         WITH CHECK (
             bucket_id = 'signed-fichas'
             AND lower(name) LIKE '%.pdf'
+            AND (
+                public.is_admin()
+                OR public.can_upload_signed_ficha(name)
+            )
         );
 
     DROP POLICY IF EXISTS "Admins update signed fichas" ON storage.objects;
@@ -47,12 +90,29 @@ BEGIN
     CREATE POLICY "Admins delete signed fichas"
         ON storage.objects FOR DELETE TO authenticated
         USING (bucket_id = 'signed-fichas' AND public.is_admin());
+
+    -- Bucket `documents`: bloquear listagem anônima de documentos internos (apenas `is_public = true`)
+    DROP POLICY IF EXISTS "Restrict documents bucket select for anon" ON storage.objects;
+    CREATE POLICY "Restrict documents bucket select for anon"
+        ON storage.objects AS RESTRICTIVE FOR SELECT TO anon
+        USING (
+            bucket_id <> 'documents'
+            OR EXISTS (
+                SELECT 1
+                FROM public.documents d
+                WHERE d.is_public = true
+                  AND (
+                      d.file_url LIKE '%/' || storage.objects.name
+                      OR replace(d.file_url, '%20', ' ') LIKE '%/' || storage.objects.name
+                  )
+            )
+        );
 EXCEPTION
     WHEN OTHERS THEN
-        RAISE NOTICE 'Aviso ao configurar políticas do bucket signed-fichas: %', SQLERRM;
+        RAISE NOTICE 'Aviso ao configurar políticas em storage.objects: %', SQLERRM;
 END $$;
 
--- 3. RPC Segura para leitura da ficha apenas mediante Admin OU CPF + Matrícula
+-- 5. RPC Segura para leitura da ficha apenas mediante Admin OU CPF + Matrícula
 DROP FUNCTION IF EXISTS public.get_membership_application_by_id(uuid);
 DROP FUNCTION IF EXISTS public.get_membership_application_by_id(uuid, text, text);
 
@@ -102,7 +162,7 @@ $$;
 
 GRANT EXECUTE ON FUNCTION public.get_membership_application_by_id(uuid, text, text) TO anon, authenticated, service_role;
 
--- 4. RPC Segura para anexar o PDF assinado pelo Gov.br com verificação de credenciais
+-- 6. RPC Segura para anexar o PDF assinado pelo Gov.br com verificação de credenciais
 DROP FUNCTION IF EXISTS public.submit_signed_membership_ficha(uuid, text, text, jsonb);
 DROP FUNCTION IF EXISTS public.submit_signed_membership_ficha(uuid, text, text, text, text, jsonb);
 
@@ -127,7 +187,7 @@ DECLARE
     v_updated jsonb;
 BEGIN
     IF p_id IS NULL OR coalesce(trim(p_signed_pdf_url), '') = '' THEN
-        RAISE EXCEPTION 'ID da ficha e URL do documento assinado são obrigatórios.';
+        RAISE EXCEPTION 'ID da ficha e caminho do documento assinado são obrigatórios.';
     END IF;
 
     SELECT id, cpf, matricula, status, signature_metadata
@@ -174,7 +234,7 @@ $$;
 
 GRANT EXECUTE ON FUNCTION public.submit_signed_membership_ficha(uuid, text, text, text, text, jsonb) TO anon, authenticated, service_role;
 
--- 5. RPC Segura para o associado localizar a própria ficha via CPF + Matrícula
+-- 7. RPC Segura para o associado localizar a própria ficha via CPF + Matrícula
 CREATE OR REPLACE FUNCTION public.lookup_membership_application(
     p_cpf text,
     p_matricula text
@@ -214,4 +274,4 @@ GRANT EXECUTE ON FUNCTION public.lookup_membership_application(text, text) TO an
 
 COMMIT;
 
-SELECT 'Migração de filiação online e proteção por credenciais aplicada com sucesso!' AS status;
+SELECT 'Cofre privado, bloqueio de listagem e validação LGPD aplicados com sucesso!' AS status;

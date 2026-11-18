@@ -88,8 +88,17 @@ const MembershipFichaView: React.FC = () => {
     const [uploadError, setUploadError] = useState<string | null>(null);
     const [uploadSuccessMsg, setUploadSuccessMsg] = useState<string | null>(null);
     const [showReplaceUpload, setShowReplaceUpload] = useState(false);
+    const [localSignedBlobUrl, setLocalSignedBlobUrl] = useState<string | null>(null);
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (localSignedBlobUrl) {
+                URL.revokeObjectURL(localSignedBlobUrl);
+            }
+        };
+    }, [localSignedBlobUrl]);
 
     const loadFichaWithAuth = async (
         targetId: string,
@@ -338,7 +347,7 @@ const MembershipFichaView: React.FC = () => {
                 typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
                     ? crypto.randomUUID()
                     : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-            const safePath = `ficha-${id}-${randSuffix}.pdf`;
+            const safePath = `${id}/ficha-${randSuffix}.pdf`;
 
             const { error: storageError } = await supabase.storage
                 .from('signed-fichas')
@@ -355,14 +364,11 @@ const MembershipFichaView: React.FC = () => {
                 );
             }
 
-            const { data: pub } = supabase.storage.from('signed-fichas').getPublicUrl(safePath);
-            const finalPdfUrl = pub.publicUrl;
-
             const { data: rpcUpdated, error: rpcError } = await supabase.rpc('submit_signed_membership_ficha', {
                 p_id: id,
                 p_cpf: isAdmin ? '' : verifiedCreds?.cpf || '',
                 p_matricula: isAdmin ? '' : verifiedCreds?.matricula || '',
-                p_signed_pdf_url: finalPdfUrl,
+                p_signed_pdf_url: safePath,
                 p_signed_pdf_name: file.name,
                 p_signature_metadata: sigMeta
             });
@@ -376,6 +382,7 @@ const MembershipFichaView: React.FC = () => {
             }
 
             const updatedRecord = rpcUpdated as MembershipData;
+            setLocalSignedBlobUrl(URL.createObjectURL(file));
             setData((prev) => (prev ? { ...prev, ...updatedRecord } : updatedRecord));
             setShowReplaceUpload(false);
             setUploadSuccessMsg('Ficha assinada verificada e salva com sucesso! Sua solicitação aguarda a aprovação final da Diretoria.');
@@ -590,14 +597,20 @@ const MembershipFichaView: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap gap-2 shrink-0">
-                                <button
-                                    type="button"
-                                    onClick={() => openOrDownloadPdfUrl(data.signed_pdf_url!, data.signed_pdf_name || buildFichaFileName(data.full_name))}
-                                    className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm transition-colors"
-                                >
-                                    <FileCheck2 size={16} /> Ver PDF Assinado
-                                </button>
+                            <div className="flex flex-wrap items-center gap-2 shrink-0">
+                                {(isAdmin || localSignedBlobUrl) ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => openOrDownloadPdfUrl(localSignedBlobUrl || data.signed_pdf_url!, data.signed_pdf_name || buildFichaFileName(data.full_name))}
+                                        className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm transition-colors"
+                                    >
+                                        <FileCheck2 size={16} /> Ver PDF Assinado
+                                    </button>
+                                ) : (
+                                    <span className="inline-flex items-center gap-1.5 bg-white border border-emerald-200 text-emerald-900 font-semibold px-3.5 py-2 rounded-xl text-xs">
+                                        <Lock size={14} className="text-emerald-700 shrink-0" /> Arquivo PDF armazenado em cofre privado para conferência exclusiva da Diretoria.
+                                    </span>
+                                )}
                                 {isAdmin && (
                                     <button
                                         type="button"
