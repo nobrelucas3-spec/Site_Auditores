@@ -96,32 +96,99 @@ const ApplicationsTab: React.FC = () => {
         setError(null);
 
         try {
-            const isAssociado = app.affiliation_type === 'Associação' || app.affiliation_type === 'Ambos';
-            const isFiliado = app.affiliation_type === 'Sindicato' || app.affiliation_type === 'Ambos';
-            const email = (app.email_institutional || app.email_personal || '').trim();
+            const cleanMatricula = (app.matricula || '').trim();
+            const cleanEmailInst = (app.email_institutional || '').trim();
+            const cleanEmailPers = (app.email_personal || '').trim();
+            const primaryEmail = cleanEmailInst || cleanEmailPers;
+            const addAssociado = app.affiliation_type === 'Associação' || app.affiliation_type === 'Ambos';
+            const addFiliado = app.affiliation_type === 'Sindicato' || app.affiliation_type === 'Ambos';
 
-            // 1. Inserir na base oficial de membros
-            const { error: memberError } = await supabase
-                .from('members')
-                .insert([{
-                    full_name: cleanName,
-                    email: email,
-                    email_institutional: (app.email_institutional || '').trim(),
-                    email_personal: (app.email_personal || '').trim(),
-                    matricula: app.matricula.trim(),
-                    is_retired: app.is_retired,
-                    status: 'active',
-                    is_associado: isAssociado,
-                    is_filiado: isFiliado,
-                    created_at: new Date().toISOString()
-                }]);
-
-            if (memberError) {
-                if (memberError.code === '23505') throw new Error('Este usuário já consta na base de membros.');
-                throw memberError;
+            // 1. Verificar se o auditor já consta na base oficial de membros (por matrícula ou e-mail)
+            let existingMember: any = null;
+            if (cleanMatricula) {
+                const { data: byMat, error: matErr } = await supabase
+                    .from('members')
+                    .select('*')
+                    .eq('matricula', cleanMatricula)
+                    .limit(1);
+                if (matErr) throw matErr;
+                if (byMat && byMat.length > 0) {
+                    existingMember = byMat[0];
+                }
             }
 
-            // 2. Atualizar status da solicitação
+            if (!existingMember) {
+                const emailFilters: string[] = [];
+                if (cleanEmailInst) {
+                    emailFilters.push(
+                        `email.ilike.${cleanEmailInst}`,
+                        `email_institutional.ilike.${cleanEmailInst}`,
+                        `email_personal.ilike.${cleanEmailInst}`
+                    );
+                }
+                if (cleanEmailPers) {
+                    emailFilters.push(
+                        `email.ilike.${cleanEmailPers}`,
+                        `email_institutional.ilike.${cleanEmailPers}`,
+                        `email_personal.ilike.${cleanEmailPers}`
+                    );
+                }
+                if (emailFilters.length > 0) {
+                    const { data: byEmail, error: emailErr } = await supabase
+                        .from('members')
+                        .select('*')
+                        .or(emailFilters.join(','))
+                        .limit(1);
+                    if (emailErr) throw emailErr;
+                    if (byEmail && byEmail.length > 0) {
+                        existingMember = byEmail[0];
+                    }
+                }
+            }
+
+            // 2. Atualizar cadastro existente (somando vínculos) ou criar novo membro
+            let wasMerged = false;
+            if (existingMember) {
+                wasMerged = true;
+                const mergedAssociado = Boolean(existingMember.is_associado) || addAssociado;
+                const mergedFiliado = Boolean(existingMember.is_filiado) || addFiliado;
+
+                const { error: updateMemberError } = await supabase
+                    .from('members')
+                    .update({
+                        full_name: existingMember.full_name?.trim() || cleanName,
+                        email: existingMember.email?.trim() || primaryEmail,
+                        email_institutional: cleanEmailInst || existingMember.email_institutional || '',
+                        email_personal: cleanEmailPers || existingMember.email_personal || '',
+                        matricula: cleanMatricula || existingMember.matricula,
+                        is_retired: app.is_retired,
+                        status: 'active',
+                        is_associado: mergedAssociado,
+                        is_filiado: mergedFiliado
+                    })
+                    .eq('id', existingMember.id);
+
+                if (updateMemberError) throw updateMemberError;
+            } else {
+                const { error: insertMemberError } = await supabase
+                    .from('members')
+                    .insert([{
+                        full_name: cleanName,
+                        email: primaryEmail,
+                        email_institutional: cleanEmailInst,
+                        email_personal: cleanEmailPers,
+                        matricula: cleanMatricula,
+                        is_retired: app.is_retired,
+                        status: 'active',
+                        is_associado: addAssociado,
+                        is_filiado: addFiliado,
+                        created_at: new Date().toISOString()
+                    }]);
+
+                if (insertMemberError) throw insertMemberError;
+            }
+
+            // 3. Atualizar status da solicitação
             const { error: updateAppError } = await supabase
                 .from('membership_applications')
                 .update({ status: 'Aprovado' })
@@ -130,7 +197,11 @@ const ApplicationsTab: React.FC = () => {
             if (updateAppError) throw updateAppError;
 
             setApplications(prev => prev.map(a => a.id === app.id ? { ...a, status: 'Aprovado' } : a));
-            alert('Filiação aprovada com sucesso! O associado já foi incluído na tabela de membros ativos e pode realizar o Primeiro Acesso pelo site.');
+            alert(
+                wasMerged
+                    ? 'Filiação aprovada! Como o auditor já constava na base de membros, o novo vínculo foi unificado ao cadastro existente sem gerar duplicidade.'
+                    : 'Filiação aprovada com sucesso! O associado já foi incluído na tabela de membros ativos e pode realizar o Primeiro Acesso pelo site.'
+            );
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Erro ao aprovar.';
             setError(message);
