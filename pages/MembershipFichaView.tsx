@@ -175,7 +175,7 @@ const MembershipFichaView: React.FC = () => {
                                 <p className="text-sm font-medium">Recife - PE, {docDate.day} de {docDate.month} de {docDate.year}</p>
                             </div>
                             <div className="text-center w-72 border-t border-black pt-2">
-                                <p className="text-sm font-bold uppercase">Assinatura do Membro</p>
+                                <p className="text-sm font-bold uppercase">Assinatura do Associado</p>
                                 <p className="text-[11px] text-gray-500 mt-1">{data.full_name}</p>
                             </div>
                         </div>

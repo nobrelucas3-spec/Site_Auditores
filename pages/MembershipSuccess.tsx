@@ -161,7 +161,7 @@ const MembershipSuccess: React.FC = () => {
                                 <p>Recife - PE, {today.day} de {today.month} de {today.year}</p>
                             </div>
                             <div className="text-center w-64 border-t border-black pt-2">
-                                <p>Assinatura do Membro</p>
+                                <p>Assinatura do Associado</p>
                                 <p className="text-[10px] text-gray-500">{state.fullName}</p>
                             </div>
                         </div>
