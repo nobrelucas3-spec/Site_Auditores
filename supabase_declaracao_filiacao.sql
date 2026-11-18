@@ -2,16 +2,15 @@
 -- EMISSÃO E VALIDAÇÃO DE DECLARAÇÃO OFICIAL DE FILIAÇÃO - AUDITORES TCE-PE
 -- ==============================================================================
 -- Objetivo:
---   1. Criar a tabela `public.membership_declarations` para registrar todas as
---      declarações emitidas exclusivamente por associados autenticados e ativos.
---   2. Garantir RLS restrita: anônimos não leem nem gravam; associados veem apenas
---      suas próprias declarações; admins gerenciam todas.
---   3. Disponibilizar RPC `issue_membership_declaration` (autenticada, SECURITY DEFINER)
---      exigindo sessão válida em `auth.users` com e-mail confirmado, cadastro em
---      `public.members` com `status = 'active'` e `is_associado = true`.
---   4. Disponibilizar RPC pública `verify_membership_declaration` (SECURITY DEFINER)
---      que valida exclusivamente códigos registrados na tabela oficial e confirma
---      em tempo real a situação cadastral ativa do associado em `public.members`.
+--   1. Suportar emissão diferenciada pela Associação (AUDITORES-TCE/PE) e pelo
+--      Sindicato (AUDITORES SINDICAL), respeitando `is_associado` e `is_filiado`.
+--   2. Garantir RLS restrita: anônimos não leem nem gravam; associados/filiados veem
+--      apenas suas próprias declarações; admins gerenciam todas.
+--   3. Manter no máximo 1 declaração ativa por `(matrícula, entidade, finalidade)`,
+--      renovando data/hora de emissão e prazo de 60 dias a cada solicitação e
+--      removendo automaticamente registros expirados.
+--   4. Validar publicamente códigos exclusivos gerados no banco (`AUT-...` ou
+--      `SIN-...`), conferindo em tempo real o vínculo ativo na tabela `members`.
 --
 -- Seguro para reexecução (idempotente).
 -- ==============================================================================
@@ -48,6 +47,7 @@ CREATE TABLE IF NOT EXISTS public.membership_declarations (
     member_name text NOT NULL,
     member_matricula text NOT NULL,
     member_email text,
+    entity_type text NOT NULL DEFAULT 'associacao' CHECK (entity_type IN ('associacao', 'sindicato')),
     purpose text NOT NULL DEFAULT 'fisco_saude' CHECK (purpose IN ('fisco_saude', 'geral', 'custom')),
     custom_recipient text,
     issued_at timestamptz NOT NULL DEFAULT now(),
@@ -57,6 +57,32 @@ CREATE TABLE IF NOT EXISTS public.membership_declarations (
     signer_role text NOT NULL DEFAULT 'Assinado e autenticado eletronicamente pelo Portal Oficial',
     created_at timestamptz NOT NULL DEFAULT now()
 );
+
+-- Migração segura caso a tabela já exista sem a coluna `entity_type`
+ALTER TABLE public.membership_declarations
+    ADD COLUMN IF NOT EXISTS entity_type text;
+
+UPDATE public.membership_declarations
+SET entity_type = 'associacao'
+WHERE entity_type IS NULL;
+
+ALTER TABLE public.membership_declarations
+    ALTER COLUMN entity_type SET DEFAULT 'associacao',
+    ALTER COLUMN entity_type SET NOT NULL;
+
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_constraint
+        WHERE conname = 'membership_declarations_entity_type_check'
+          AND conrelid = 'public.membership_declarations'::regclass
+    ) THEN
+        ALTER TABLE public.membership_declarations
+            ADD CONSTRAINT membership_declarations_entity_type_check
+            CHECK (entity_type IN ('associacao', 'sindicato'));
+    END IF;
+END $$;
 
 ALTER TABLE public.membership_declarations
     ALTER COLUMN valid_until SET DEFAULT (now() + interval '60 days');
@@ -74,6 +100,8 @@ CREATE INDEX IF NOT EXISTS idx_membership_declarations_matricula_issued
     ON public.membership_declarations (member_matricula, issued_at DESC);
 
 -- Limpeza inicial de registros expirados e eventuais duplicatas antigas
+DROP INDEX IF EXISTS public.idx_membership_declarations_unique_active_purpose;
+
 DELETE FROM public.membership_declarations
 WHERE valid_until <= now();
 
@@ -81,7 +109,7 @@ DELETE FROM public.membership_declarations d
 USING (
     SELECT id,
            row_number() OVER (
-               PARTITION BY member_matricula, purpose
+               PARTITION BY member_matricula, entity_type, purpose
                ORDER BY issued_at DESC, created_at DESC
            ) AS rn
     FROM public.membership_declarations
@@ -91,7 +119,7 @@ WHERE d.id = dup.id
   AND dup.rn > 1;
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_membership_declarations_unique_active_purpose
-    ON public.membership_declarations (member_matricula, purpose)
+    ON public.membership_declarations (member_matricula, entity_type, purpose)
     WHERE status = 'valid';
 
 
@@ -138,13 +166,16 @@ CREATE POLICY "Admins delete declarations"
 
 
 -- ==============================================================================
--- 4. RPC: public.issue_membership_declaration(p_purpose, p_custom_recipient)
---    Emite declaração oficial exclusivamente para associado logado, confirmado
---    em `auth.users` e com vínculo ativo (`status = 'active'` e `is_associado = true`).
+-- 4. RPC: public.issue_membership_declaration(p_purpose, p_custom_recipient, p_entity_type)
+--    Emite declaração oficial exclusivamente para associado/filiado logado,
+--    confirmado em `auth.users` e com o respectivo vínculo ativo.
 -- ==============================================================================
+DROP FUNCTION IF EXISTS public.issue_membership_declaration(text, text);
+
 CREATE OR REPLACE FUNCTION public.issue_membership_declaration(
     p_purpose text DEFAULT 'fisco_saude',
-    p_custom_recipient text DEFAULT NULL
+    p_custom_recipient text DEFAULT NULL,
+    p_entity_type text DEFAULT 'associacao'
 )
 RETURNS json
 LANGUAGE plpgsql
@@ -156,8 +187,12 @@ DECLARE
     v_auth_user record;
     v_auth_email text;
     v_member record;
+    v_entity text := lower(trim(coalesce(p_entity_type, 'associacao')));
     v_purpose text := lower(trim(coalesce(p_purpose, 'fisco_saude')));
     v_recipient text;
+    v_prefix text;
+    v_signer_name text;
+    v_signer_role constant text := 'Assinado e autenticado eletronicamente pelo Portal Oficial';
     v_existing record;
     v_code text;
     v_year text := to_char(timezone('America/Recife', now()), 'YYYY');
@@ -193,6 +228,10 @@ BEGIN
         );
     END IF;
 
+    IF v_entity NOT IN ('associacao', 'sindicato') THEN
+        v_entity := 'associacao';
+    END IF;
+
     IF v_purpose NOT IN ('fisco_saude', 'geral', 'custom') THEN
         v_purpose := 'fisco_saude';
     END IF;
@@ -206,8 +245,8 @@ BEGIN
         v_recipient := NULL;
     END IF;
 
-    -- Localizar associado correspondente ao e-mail autenticado
-    SELECT id, full_name, matricula, email, email_institutional, email_personal, status, is_associado
+    -- Localizar cadastro correspondente ao e-mail autenticado
+    SELECT id, full_name, matricula, email, email_institutional, email_personal, status, is_associado, is_filiado
     INTO v_member
     FROM public.members
     WHERE lower(trim(coalesce(email, ''))) = v_auth_email
@@ -218,26 +257,44 @@ BEGIN
     IF v_member.id IS NULL THEN
         RETURN json_build_object(
             'ok', false,
-            'message', 'Associado não localizado na base cadastral.'
+            'message', 'Cadastro não localizado na base da entidade.'
         );
     END IF;
 
-    IF v_member.status != 'active' OR coalesce(v_member.is_associado, false) = false THEN
+    IF v_member.status != 'active' THEN
         RETURN json_build_object(
             'ok', false,
-            'message', 'A emissão de declaração está disponível apenas para associados com filiação ativa e regular.'
+            'message', 'Seu cadastro consta como inativo. Entre em contato com a secretaria.'
         );
     END IF;
+
+    IF v_entity = 'associacao' AND coalesce(v_member.is_associado, false) = false THEN
+        RETURN json_build_object(
+            'ok', false,
+            'message', 'Seu cadastro não possui vínculo ativo como associado da AUDITORES-TCE/PE.'
+        );
+    END IF;
+
+    IF v_entity = 'sindicato' AND coalesce(v_member.is_filiado, false) = false THEN
+        RETURN json_build_object(
+            'ok', false,
+            'message', 'Seu cadastro não possui vínculo ativo como filiado do Sindicato (AUDITORES SINDICAL).'
+        );
+    END IF;
+
+    v_prefix := CASE WHEN v_entity = 'sindicato' THEN 'SIN-' ELSE 'AUT-' END;
+    v_signer_name := CASE WHEN v_entity = 'sindicato' THEN 'AUDITORES SINDICAL – TCE/PE' ELSE 'AUDITORES-TCE/PE' END;
 
     -- Limpeza automática de declarações com prazo de 60 dias já expirado
     DELETE FROM public.membership_declarations
     WHERE valid_until <= now();
 
-    -- Manter no máximo 1 declaração ativa por (matrícula, finalidade), reaproveitando o mesmo código
+    -- Manter no máximo 1 declaração ativa por (matrícula, entidade, finalidade), renovando emissão e prazo
     SELECT *
     INTO v_existing
     FROM public.membership_declarations
     WHERE member_matricula = v_member.matricula
+      AND entity_type = v_entity
       AND purpose = v_purpose
       AND status = 'valid'
       AND valid_until > now()
@@ -252,8 +309,8 @@ BEGIN
             custom_recipient = v_recipient,
             issued_at = now(),
             valid_until = now() + interval '60 days',
-            signer_name = 'AUDITORES-TCE/PE',
-            signer_role = 'Assinado e autenticado eletronicamente pelo Portal Oficial'
+            signer_name = v_signer_name,
+            signer_role = v_signer_role
         WHERE id = v_existing.id
         RETURNING * INTO v_existing;
 
@@ -262,6 +319,7 @@ BEGIN
             'verification_code', v_existing.verification_code,
             'member_name', v_existing.member_name,
             'member_matricula', v_existing.member_matricula,
+            'entity_type', v_existing.entity_type,
             'purpose', v_existing.purpose,
             'custom_recipient', v_existing.custom_recipient,
             'issued_at', v_existing.issued_at,
@@ -272,10 +330,10 @@ BEGIN
         );
     END IF;
 
-    -- Gerar código único criptograficamente aleatório AUT-YYYY-XXXXXXXX
+    -- Gerar código único criptograficamente aleatório (AUT-YYYY-XXXXXXXX ou SIN-YYYY-XXXXXXXX)
     LOOP
         v_attempts := v_attempts + 1;
-        v_code := 'AUT-' || v_year || '-' || upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 8));
+        v_code := v_prefix || v_year || '-' || upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 8));
 
         EXIT WHEN NOT EXISTS (
             SELECT 1 FROM public.membership_declarations WHERE verification_code = v_code
@@ -287,6 +345,7 @@ BEGIN
         member_name,
         member_matricula,
         member_email,
+        entity_type,
         purpose,
         custom_recipient,
         issued_at,
@@ -300,13 +359,14 @@ BEGIN
         v_member.full_name,
         v_member.matricula,
         v_auth_email,
+        v_entity,
         v_purpose,
         v_recipient,
         now(),
         now() + interval '60 days',
         'valid',
-        'AUDITORES-TCE/PE',
-        'Assinado e autenticado eletronicamente pelo Portal Oficial'
+        v_signer_name,
+        v_signer_role
     )
     RETURNING * INTO v_inserted;
 
@@ -315,6 +375,7 @@ BEGIN
         'verification_code', v_inserted.verification_code,
         'member_name', v_inserted.member_name,
         'member_matricula', v_inserted.member_matricula,
+        'entity_type', v_inserted.entity_type,
         'purpose', v_inserted.purpose,
         'custom_recipient', v_inserted.custom_recipient,
         'issued_at', v_inserted.issued_at,
@@ -326,14 +387,14 @@ BEGIN
 END;
 $$;
 
-REVOKE ALL ON FUNCTION public.issue_membership_declaration(text, text) FROM PUBLIC, anon;
-GRANT EXECUTE ON FUNCTION public.issue_membership_declaration(text, text) TO authenticated, service_role;
+REVOKE ALL ON FUNCTION public.issue_membership_declaration(text, text, text) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.issue_membership_declaration(text, text, text) TO authenticated, service_role;
 
 
 -- ==============================================================================
 -- 5. RPC PÚBLICA: public.verify_membership_declaration(p_code)
 --    Valida exclusivamente códigos gravados em `public.membership_declarations`
---    e confirma em tempo real se o titular segue ativo em `public.members`.
+--    e confirma em tempo real se o titular segue ativo na entidade emissora.
 -- ==============================================================================
 CREATE OR REPLACE FUNCTION public.verify_membership_declaration(p_code text)
 RETURNS json
@@ -345,6 +406,8 @@ DECLARE
     v_code text := upper(trim(coalesce(p_code, '')));
     v_decl record;
     v_member record;
+    v_entity text;
+    v_has_entity_bond boolean;
 BEGIN
     IF v_code = '' THEN
         RETURN json_build_object(
@@ -362,9 +425,11 @@ BEGIN
     IF v_decl.id IS NULL THEN
         RETURN json_build_object(
             'valid', false,
-            'reason', 'Código de autenticidade não encontrado na base oficial da AUDITORES-TCE/PE.'
+            'reason', 'Código de autenticidade não encontrado na base oficial da entidade.'
         );
     END IF;
+
+    v_entity := coalesce(v_decl.entity_type, 'associacao');
 
     IF v_decl.status = 'revoked' THEN
         RETURN json_build_object(
@@ -374,6 +439,7 @@ BEGIN
                 'verification_code', v_decl.verification_code,
                 'member_name', v_decl.member_name,
                 'member_matricula', v_decl.member_matricula,
+                'entity_type', v_entity,
                 'purpose', v_decl.purpose,
                 'custom_recipient', v_decl.custom_recipient,
                 'issued_at', v_decl.issued_at,
@@ -393,6 +459,7 @@ BEGIN
                 'verification_code', v_decl.verification_code,
                 'member_name', v_decl.member_name,
                 'member_matricula', v_decl.member_matricula,
+                'entity_type', v_entity,
                 'purpose', v_decl.purpose,
                 'custom_recipient', v_decl.custom_recipient,
                 'issued_at', v_decl.issued_at,
@@ -404,21 +471,31 @@ BEGIN
         );
     END IF;
 
-    -- Confirmar em tempo real a situação cadastral atual do associado na tabela `members`
-    SELECT id, status, is_associado
+    -- Confirmar em tempo real a situação cadastral atual na tabela `members`
+    SELECT id, status, is_associado, is_filiado
     INTO v_member
     FROM public.members
     WHERE upper(trim(coalesce(matricula, ''))) = upper(trim(v_decl.member_matricula))
     LIMIT 1;
 
-    IF v_member.id IS NULL OR v_member.status != 'active' OR coalesce(v_member.is_associado, false) = false THEN
+    v_has_entity_bond := CASE
+        WHEN v_entity = 'sindicato' THEN coalesce(v_member.is_filiado, false)
+        ELSE coalesce(v_member.is_associado, false)
+    END;
+
+    IF v_member.id IS NULL OR v_member.status != 'active' OR NOT v_has_entity_bond THEN
         RETURN json_build_object(
             'valid', false,
-            'reason', 'O titular desta declaração não consta mais como associado ativo no cadastro atual.',
+            'reason', CASE
+                WHEN v_entity = 'sindicato'
+                THEN 'O titular desta declaração não consta mais como filiado ativo no Sindicato.'
+                ELSE 'O titular desta declaração não consta mais como associado ativo na Associação.'
+            END,
             'record', json_build_object(
                 'verification_code', v_decl.verification_code,
                 'member_name', v_decl.member_name,
                 'member_matricula', v_decl.member_matricula,
+                'entity_type', v_entity,
                 'purpose', v_decl.purpose,
                 'custom_recipient', v_decl.custom_recipient,
                 'issued_at', v_decl.issued_at,
@@ -436,6 +513,7 @@ BEGIN
             'verification_code', v_decl.verification_code,
             'member_name', v_decl.member_name,
             'member_matricula', v_decl.member_matricula,
+            'entity_type', v_entity,
             'purpose', v_decl.purpose,
             'custom_recipient', v_decl.custom_recipient,
             'issued_at', v_decl.issued_at,
@@ -453,4 +531,4 @@ GRANT EXECUTE ON FUNCTION public.verify_membership_declaration(text) TO anon, au
 
 COMMIT;
 
-SELECT 'Blindagem de segurança da Declaração de Filiação aplicada com sucesso!' AS status;
+SELECT 'Estrutura de Declaração (Associação e Sindicato) aplicada com sucesso!' AS status;

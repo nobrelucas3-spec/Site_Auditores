@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Printer, Loader2, ArrowLeft } from 'lucide-react';
 import {
+    ENTITY_CONFIG,
     INSTITUTION_INFO,
     VerificationResult,
     getPurposeLabel,
@@ -88,7 +89,8 @@ const ValidateDeclaration: React.FC = () => {
                         Validação de Declaração de Filiação
                     </h1>
                     <p className="text-sm text-slate-600 mb-5">
-                        {INSTITUTION_INFO.fullName} — CNPJ: {INSTITUTION_INFO.cnpj}
+                        {ENTITY_CONFIG.associacao.shortName} (CNPJ: {ENTITY_CONFIG.associacao.cnpj}) e{' '}
+                        {ENTITY_CONFIG.sindicato.shortName} (CNPJ: {ENTITY_CONFIG.sindicato.cnpj})
                     </p>
 
                     <form onSubmit={handleSubmit} className="no-print flex flex-col sm:flex-row gap-2.5">
@@ -98,7 +100,7 @@ const ValidateDeclaration: React.FC = () => {
                             aria-label="Código de Autenticidade"
                             value={inputCode}
                             onChange={(e) => setInputCode(e.target.value.toUpperCase())}
-                            placeholder="Digite o código de autenticidade (ex.: AUT-2026-XXXXXXXX)"
+                            placeholder="Digite o código (ex.: AUT-2026-XXXXXXXX ou SIN-2026-XXXXXXXX)"
                             className="flex-1 px-3.5 py-2.5 border border-slate-300 rounded-lg font-mono text-sm uppercase tracking-wider focus:outline-none focus:border-primary-700"
                         />
                         <button
@@ -118,7 +120,13 @@ const ValidateDeclaration: React.FC = () => {
                     </div>
                 )}
 
-                {!loading && hasChecked && result && (
+                {!loading && hasChecked && result && (() => {
+                    const entityMeta = result.record
+                        ? ENTITY_CONFIG[result.record.entity_type]
+                        : ENTITY_CONFIG.associacao;
+                    const memberRoleLabel =
+                        result.record?.entity_type === 'sindicato' ? 'Filiado(a)' : 'Associado(a)';
+                    return (
                     <div className="bg-white rounded-xl border border-slate-300 shadow-sm overflow-hidden printable-validation">
                         {result.valid && result.record ? (
                             <>
@@ -143,12 +151,11 @@ const ValidateDeclaration: React.FC = () => {
                                     <div className="px-6 py-3 grid grid-cols-1 sm:grid-cols-3 gap-1">
                                         <span className="font-semibold text-slate-500">Entidade Emissora</span>
                                         <span className="sm:col-span-2 text-slate-900 font-medium">
-                                            {INSTITUTION_INFO.fullName} ({INSTITUTION_INFO.shortName}) — CNPJ:{' '}
-                                            {INSTITUTION_INFO.cnpj}
+                                            {entityMeta.fullName} ({entityMeta.shortName}) — CNPJ: {entityMeta.cnpj}
                                         </span>
                                     </div>
                                     <div className="px-6 py-3 grid grid-cols-1 sm:grid-cols-3 gap-1">
-                                        <span className="font-semibold text-slate-500">Associado(a)</span>
+                                        <span className="font-semibold text-slate-500">{memberRoleLabel}</span>
                                         <span className="sm:col-span-2 text-slate-900 font-bold uppercase">
                                             {result.record.member_name}
                                         </span>
@@ -162,7 +169,7 @@ const ValidateDeclaration: React.FC = () => {
                                     <div className="px-6 py-3 grid grid-cols-1 sm:grid-cols-3 gap-1">
                                         <span className="font-semibold text-slate-500">Situação Cadastral</span>
                                         <span className="sm:col-span-2 text-emerald-800 font-semibold">
-                                            Associado(a) Ativo(a) e Regular com as obrigações estatutárias
+                                            {entityMeta.statusValidText}
                                         </span>
                                     </div>
                                     <div className="px-6 py-3 grid grid-cols-1 sm:grid-cols-3 gap-1">
@@ -256,7 +263,8 @@ const ValidateDeclaration: React.FC = () => {
                             </>
                         )}
                     </div>
-                )}
+                    );
+                })()}
             </div>
 
             <style>{`

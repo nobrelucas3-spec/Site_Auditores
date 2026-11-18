@@ -5,8 +5,10 @@ import { ArrowLeft, Printer, Loader2, AlertCircle } from 'lucide-react';
 import { supabase } from '../services/supabaseClient';
 import useInactivityTimer from '../hooks/useInactivityTimer';
 import {
+    DeclarationEntityType,
     DeclarationPurpose,
     DeclarationRecord,
+    ENTITY_CONFIG,
     INSTITUTION_INFO,
     buildValidationUrl,
     issueDeclaration,
@@ -29,6 +31,7 @@ const MemberDeclaration: React.FC = () => {
     const [issuing, setIssuing] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [member, setMember] = useState<MemberProfile | null>(null);
+    const [entityType, setEntityType] = useState<DeclarationEntityType>('associacao');
     const [purpose, setPurpose] = useState<DeclarationPurpose>('fisco_saude');
     const [customRecipient, setCustomRecipient] = useState('');
     const [debouncedRecipient, setDebouncedRecipient] = useState('');
@@ -87,14 +90,18 @@ const MemberDeclaration: React.FC = () => {
                 return;
             }
 
-            if (Boolean(memberData.is_associado) !== true) {
+            const hasAssoc = Boolean(memberData.is_associado);
+            const hasSind = Boolean(memberData.is_filiado);
+
+            if (!hasAssoc && !hasSind) {
                 setError(
-                    'A emissão da Declaração de Filiação Associativa está disponível apenas para associados com vínculo ativo e regular junto à AUDITORES-TCE/PE.'
+                    'A emissão da Declaração está disponível apenas para associados da AUDITORES-TCE/PE ou filiados do Sindicato (AUDITORES SINDICAL) com vínculo ativo.'
                 );
                 setLoading(false);
                 return;
             }
 
+            setEntityType(hasAssoc ? 'associacao' : 'sindicato');
             setMember(memberData as MemberProfile);
             setLoading(false);
         };
@@ -106,10 +113,12 @@ const MemberDeclaration: React.FC = () => {
         if (!member) return;
         setIssuing(true);
         setError(null);
+        setLogoFallback(false);
         try {
             const rec = await issueDeclaration(
                 purpose,
-                purpose === 'custom' ? debouncedRecipient : undefined
+                purpose === 'custom' ? debouncedRecipient : undefined,
+                entityType
             );
             setDeclaration(rec);
 
@@ -132,7 +141,7 @@ const MemberDeclaration: React.FC = () => {
         } finally {
             setIssuing(false);
         }
-    }, [member, purpose, debouncedRecipient]);
+    }, [member, entityType, purpose, debouncedRecipient]);
 
     useEffect(() => {
         if (member) {
@@ -204,6 +213,10 @@ const MemberDeclaration: React.FC = () => {
             ? (declaration?.custom_recipient || customRecipient).trim()
             : '';
 
+    const canIssueAssoc = Boolean(member?.is_associado);
+    const canIssueSind = Boolean(member?.is_filiado);
+    const activeEntityMeta = ENTITY_CONFIG[declaration?.entity_type || entityType];
+
     return (
         <div className="min-h-screen bg-slate-100 py-8 px-4 flex flex-col items-center">
             {/* Barra Horizontal Enxuta (Oculta na impressão) */}
@@ -216,6 +229,20 @@ const MemberDeclaration: React.FC = () => {
                 </Link>
 
                 <div className="flex flex-wrap items-center gap-2.5 justify-end">
+                    <select
+                        aria-label="Entidade Emissora"
+                        value={entityType}
+                        onChange={(e) => setEntityType(e.target.value as DeclarationEntityType)}
+                        className="text-sm border border-slate-300 rounded-lg px-3 py-2 bg-white text-slate-800 focus:outline-none focus:border-primary-600 font-medium"
+                    >
+                        <option value="associacao" disabled={!canIssueAssoc}>
+                            Associação (AUDITORES-TCE/PE){!canIssueAssoc ? ' — Não vinculado' : ''}
+                        </option>
+                        <option value="sindicato" disabled={!canIssueSind}>
+                            Sindicato (AUDITORES SINDICAL){!canIssueSind ? ' — Não vinculado' : ''}
+                        </option>
+                    </select>
+
                     <select
                         aria-label="Finalidade da Declaração"
                         value={purpose}
@@ -267,22 +294,22 @@ const MemberDeclaration: React.FC = () => {
             {declaration && !error && !issuing && (
             <div className="bg-white text-black w-full max-w-[21cm] min-h-[26cm] shadow-lg border border-slate-300 px-10 py-12 sm:px-14 sm:py-14 printable-declaration flex flex-col justify-between">
                 <div>
-                    {/* Cabeçalho Institucional fiel ao modelo */}
+                    {/* Cabeçalho Institucional conforme entidade emissora */}
                     <div className="flex flex-col items-center justify-center mb-8">
                         {!logoFallback ? (
                             <img
-                                src="/logo-declaracao.png"
-                                alt="Associação dos Auditores de Controle Externo do TCE-PE"
+                                src={activeEntityMeta.logoUrl}
+                                alt={activeEntityMeta.fullName}
                                 onError={() => setLogoFallback(true)}
                                 className="h-24 sm:h-28 w-auto object-contain"
                             />
                         ) : (
                             <div className="flex items-center gap-4">
-                                <img src="/logo.png" alt="AUDITORES TCE-PE" className="h-20 w-20 object-contain" />
+                                <img src="/logo.png" alt={activeEntityMeta.shortName} className="h-20 w-20 object-contain" />
                                 <div className="text-left">
                                     <div className="text-2xl font-extrabold tracking-tight text-[#0070c0]">AUDITORES</div>
-                                    <div className="text-base font-bold text-[#1e3a8a]">ASSOCIAÇÃO TCE-PE</div>
-                                    <div className="text-xs text-slate-600">{INSTITUTION_INFO.fullName}</div>
+                                    <div className="text-base font-bold text-[#1e3a8a]">{activeEntityMeta.shortName}</div>
+                                    <div className="text-xs text-slate-600">{activeEntityMeta.fullName}</div>
                                 </div>
                             </div>
                         )}
@@ -298,15 +325,14 @@ const MemberDeclaration: React.FC = () => {
                     {/* Corpo Jurídico Direto e Fundamentado */}
                     <div className="font-serif text-[15px] sm:text-[15.5px] leading-[1.85] text-justify text-black space-y-5">
                         <p className="indent-10">
-                            A{' '}
+                            {activeEntityMeta.article}{' '}
                             <strong>
-                                Associação dos Auditores de Controle Externo do Tribunal de Contas do Estado de
-                                Pernambuco – AUDITORES-TCE/PE
+                                {activeEntityMeta.fullName} – {activeEntityMeta.shortName}
                             </strong>{' '}
-                            (CNPJ: <strong>{INSTITUTION_INFO.cnpj}</strong>) vem declarar,{' '}
+                            (CNPJ: <strong>{activeEntityMeta.cnpj}</strong>) vem declarar,{' '}
                             {purpose === 'fisco_saude' && (
                                 <>
-                                    para os devidos fins de direito, inclusive para associação ao{' '}
+                                    para os devidos fins de direito, inclusive para adesão ao{' '}
                                     <strong>Fisco Saúde</strong> (CNPJ:{' '}
                                     <strong>{INSTITUTION_INFO.fiscoSaudeCnpj}</strong>), nos termos do convênio firmado
                                     entre estas entidades,{' '}
@@ -334,9 +360,10 @@ const MemberDeclaration: React.FC = () => {
                                 </>
                             )}
                             que <strong>{declaration.member_name}</strong>, Matrícula TCE-PE nº{' '}
-                            <strong>{declaration.member_matricula}</strong>, é integrante do quadro de associados desta entidade
-                            na condição de <strong>associado(a) ativo(a)</strong>, estando em pleno gozo de seus
-                            direitos e em dia com suas obrigações estatutárias e financeiras.
+                            <strong>{declaration.member_matricula}</strong>, é integrante do{' '}
+                            {activeEntityMeta.groupLabel} na condição de{' '}
+                            <strong>{activeEntityMeta.memberLabel}</strong>, estando em pleno gozo de seus direitos e
+                            em dia com suas obrigações estatutárias e financeiras.
                         </p>
 
                         <p className="indent-10">
@@ -361,10 +388,10 @@ const MemberDeclaration: React.FC = () => {
 
                         <div className="border-t border-b border-slate-300 py-2.5 px-6 text-center max-w-md mx-auto">
                             <p className="font-sans font-bold text-xs uppercase tracking-wider text-slate-900">
-                                AUDITORES-TCE/PE
+                                {declaration.signer_name || activeEntityMeta.signerName}
                             </p>
                             <p className="font-sans text-[11px] text-slate-600 mt-0.5">
-                                Assinado e autenticado eletronicamente pelo Portal Oficial
+                                {declaration.signer_role || INSTITUTION_INFO.defaultSignerRole}
                             </p>
                         </div>
                     </div>
@@ -391,15 +418,13 @@ const MemberDeclaration: React.FC = () => {
                             <p>
                                 <strong>Código de Autenticidade:</strong>{' '}
                                 <span className="font-mono font-bold text-black">
-                                    {declaration?.verification_code || 'GERANDO...'}
+                                    {declaration.verification_code}
                                 </span>
                             </p>
-                            {declaration && (
-                                <p className="mt-0.5">
-                                    <strong>Emissão:</strong> {formatDateTimePt(declaration.issued_at)} &nbsp;|&nbsp;{' '}
-                                    <strong>Válida até:</strong> {formatShortDatePt(declaration.valid_until)} (60 dias)
-                                </p>
-                            )}
+                            <p className="mt-0.5">
+                                <strong>Emissão:</strong> {formatDateTimePt(declaration.issued_at)} &nbsp;|&nbsp;{' '}
+                                <strong>Válida até:</strong> {formatShortDatePt(declaration.valid_until)} (60 dias)
+                            </p>
                             <p className="mt-0.5 text-[10.5px] text-slate-700">
                                 <strong>Validação Pública:</strong> aponte a câmera para o QR Code ou acesse{' '}
                                 <a
@@ -416,10 +441,10 @@ const MemberDeclaration: React.FC = () => {
 
                     <div className="mt-3 pt-2.5 border-t border-slate-300 text-center text-[10px] text-slate-600 leading-snug">
                         <p className="font-semibold text-slate-800">
-                            {INSTITUTION_INFO.fullName} – AUDITORES TCE/PE
+                            {activeEntityMeta.footerTitle}
                         </p>
                         <p>
-                            CNPJ: {INSTITUTION_INFO.cnpj} • {INSTITUTION_INFO.address} • Telefone:{' '}
+                            CNPJ: {activeEntityMeta.cnpj} • {INSTITUTION_INFO.address} • Telefone:{' '}
                             {INSTITUTION_INFO.phone}
                         </p>
                     </div>
